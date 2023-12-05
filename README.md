@@ -2,10 +2,8 @@
 
 
 Entità:
-    
-- Persona: ID, Nome, Email, Data di Nascita
 
-- Cliente (sottoclasse di Persona): Attributi Aggiuntivi: Codice Cliente, Indirizzo di Spedizione, Preferenze di Gusto
+- Cliente: ID, Nome, Email, Data di Nascita, Indirizzo di Spedizione, Preferenze di Gusto
 
 - Birrificio: ID Birrificio, Nome, Località, Anno di Fondazione
 
@@ -19,7 +17,7 @@ Relazioni:
 
 - Assaggio (tra Cliente e Birra): Un Cliente può assaporare molte Birre, e una Birra può essere assaporata da molti Clienti (many-to-many).
 
-- Conosce (relazione self-loop su Persona): Una Persona può conoscere altre Persone. Questa relazione rappresenta la connessione tra i clienti o degustatori esperti che si conoscono all'interno della comunità birraia.
+- Conosce (relazione self-loop su Cliente): Un cliente può conoscere altri clienti. Questa relazione rappresenta la connessione tra i clienti o degustatori esperti che si conoscono all'interno della comunità birraia.
 
 - Recensione (tra Cliente e Birra): Un Cliente può scrivere molte Recensioni, ma una Recensione è associata a un solo Cliente e a una sola Birra (many-to-one).
 
