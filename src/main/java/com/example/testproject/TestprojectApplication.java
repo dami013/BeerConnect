@@ -17,14 +17,16 @@ public class TestprojectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TestprojectApplication.class, args);
 	}
+	/*
+	@Bean
+	CommandLineRunner commandLineRunner(PubRepository pubRepository){
+		return args -> {
+			Pub pub = new Pub("full","cassano magnago",1989);
+		pubRepository.save(pub);
+		};
+	}
+	*/
 
-	// @Bean
-	// CommandLineRunner commandLineRunner(PubRepository pubRepository){
-		// return args -> {
-			// Pub pub = new Pub("full","cassano magnago",1989);
-		//pubRepository.save(pub);
-		//};
-	//}
 	/*
 	@Bean
 	CommandLineRunner commandLineRunner(BeerRepository beerRepository){
@@ -39,11 +41,11 @@ public class TestprojectApplication {
 					"Italy",
 					"Acqua",
 					"Very strong beer",
-					6.0,
+					6.0f,
 					100
 			);
 			beerRepository.save(beer);
 		};
 	}
-	*/
+	 */
 }

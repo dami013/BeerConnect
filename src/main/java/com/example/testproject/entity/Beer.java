@@ -3,6 +3,8 @@ package com.example.testproject.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 
@@ -14,7 +16,6 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
         }
 )
 public class Beer {
-
     @Id
     @SequenceGenerator(name="beer_sequence", sequenceName = "beer_sequence", allocationSize = 1)
     @GeneratedValue(strategy = SEQUENCE, generator = "beer_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
@@ -48,8 +49,8 @@ public class Beer {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "price", nullable = false, columnDefinition = "DOUBLE")
-    private Double price;
+    @Column(name = "price", nullable = false, columnDefinition = "FLOAT")
+    private Float price;
 
     @Column(name = "quantity_in_stock", nullable = false, columnDefinition = "INTEGER")
     private Integer quantityInStock;
@@ -60,13 +61,11 @@ public class Beer {
     @JoinColumn(name = "id_pub") // id del pub
     private Pub pub;
 
-    public Beer(String name, String type,
-                String aroma, Double alcohol, String color,
-                String label, String country,
-                String ingredients,
-                String description, Double price,
-                Integer quantityInStock) {
-        this.name_beer = name;
+    @ManyToMany(mappedBy = "beers")
+    private List<Client> clients;
+
+    public Beer(String name_beer, String type, String aroma, Double alcohol, String color, String label, String country, String ingredients, String description, Float price, Integer quantityInStock) {
+        this.name_beer = name_beer;
         this.type = type;
         this.aroma = aroma;
         this.alcohol = alcohol;
@@ -77,6 +76,7 @@ public class Beer {
         this.description = description;
         this.price = price;
         this.quantityInStock = quantityInStock;
+        // this.pub = pub;
     }
 
     public Beer() {
@@ -163,11 +163,11 @@ public class Beer {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
