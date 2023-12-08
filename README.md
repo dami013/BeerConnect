@@ -9,7 +9,7 @@ Entità:
 
 - Birra: ID Birra, Nome, Tipo (Lager, Ale, Stout, ecc.), Grado Alcolico, IBU (Unità Bitterness)
 
-- Edizione Limitata: ID Edizione, Nome, Anno di Produzione, Quantità Limitata
+- Edizione Limitata: ID Edizione, Nome Birra Originale, Nome Edizione Limitata, Anno di Produzione, Quantità Limitata
 
 Relazioni:
 
