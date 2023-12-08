@@ -2,6 +2,8 @@ package com.example.testproject.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Client")
@@ -28,6 +30,14 @@ public class Client {
 
     @Column(name = "preferences", nullable = false, columnDefinition = "TEXT")
     private String preferences;
+
+    @ManyToMany
+    @JoinTable(
+            name = "client review",
+            joinColumns = @JoinColumn(name = "id_client"),
+            inverseJoinColumns = @JoinColumn(name = "id_beer")
+    )
+    private List<Beer> beers;
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
         this.name_client = name;
