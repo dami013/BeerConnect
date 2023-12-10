@@ -1,13 +1,15 @@
 package com.example.testproject.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity (name = "LimitedEditionBeer")
 public class LimitedEditionBeer extends Beer {
     @Id
     @Column(name = "limited_edition_id")
+    @SequenceGenerator(name="beer_limited_sequence", sequenceName = "beer_limited_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "beer_limited_sequence")
     private Long limitedEditionId;
 
     @Column(name = "original_beer_name")
@@ -28,6 +30,10 @@ public class LimitedEditionBeer extends Beer {
         this.limitedEditionName = limitedEditionName;
         this.productionYear = productionYear;
         this.limitedQuantity = limitedQuantity;
+    }
+
+    public LimitedEditionBeer() {
+
     }
 
     // Additional methods specific to LimitedEditionBeer
