@@ -12,16 +12,16 @@ public class LimitedEditionBeer extends Beer {
     @GeneratedValue(strategy = SEQUENCE, generator = "beer_limited_sequence")
     private Long limitedEditionId;
 
-    @Column(name = "original_beer_name")
+    @Column(name = "original_beer_name", nullable = false, columnDefinition = "TEXT")
     private String originalBeerName;
 
-    @Column(name = "limited_edition_name")
+    @Column(name = "limited_edition_name", nullable = false, columnDefinition = "TEXT")
     private String limitedEditionName;
 
-    @Column(name = "production_year")
-    private int productionYear;
+    @Column(name = "production_year", nullable = false, columnDefinition = "INTEGER")
+    private Integer productionYear;
 
-    @Column(name = "limited_quantity")
+    @Column(name = "limited_quantity", nullable = false, columnDefinition = "INTEGER")
     private int limitedQuantity;
     public LimitedEditionBeer(String name_beer, String type, String aroma, Double alcohol, String color, String label, String country, String ingredients, String description, Float price, Integer quantityInStock, Long limitedEditionId, String originalBeerName, String limitedEditionName, int productionYear, int limitedQuantity) {
         super(name_beer, type, aroma, alcohol, color, label, country, ingredients, description, price, quantityInStock);
