@@ -10,8 +10,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>testproject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>testproject</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Beer connect</name>
+	<description>Application about beer</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
