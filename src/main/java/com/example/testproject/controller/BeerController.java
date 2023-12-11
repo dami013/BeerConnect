@@ -29,7 +29,9 @@ public class BeerController {
         Optional<Beer> beerData = beerRepository.findById(id);
 
         if (beerData.isPresent()) {
+            System.out.println("Birra");
             return new ResponseEntity<>(beerData.get(), HttpStatus.OK);
+
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -37,17 +37,11 @@ public class Beer {
     @Column(name = "color", nullable = false, columnDefinition = "TEXT")
     private String color;
 
-    @Column(name = "label", columnDefinition = "TEXT")
-    private String label;
-
     @Column(name = "country", nullable = false, columnDefinition = "TEXT")
     private String country;
 
     @Column(name = "ingredients", nullable = false, columnDefinition = "TEXT")
     private String ingredients;
-
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    private String description;
 
     @Column(name = "price", nullable = false, columnDefinition = "FLOAT")
     private Float price;
@@ -70,10 +64,8 @@ public class Beer {
         this.aroma = aroma;
         this.alcohol = alcohol;
         this.color = color;
-        this.label = label;
         this.country = country;
         this.ingredients = ingredients;
-        this.description = description;
         this.price = price;
         this.quantityInStock = quantityInStock;
         // this.pub = pub;
@@ -131,14 +123,6 @@ public class Beer {
         this.color = color;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -153,14 +137,6 @@ public class Beer {
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Float getPrice() {
@@ -188,10 +164,8 @@ public class Beer {
                 ", aroma='" + aroma + '\'' +
                 ", alcohol=" + alcohol +
                 ", color='" + color + '\'' +
-                ", label='" + label + '\'' +
                 ", country='" + country + '\'' +
                 ", ingredients=" + ingredients +
-                ", description='" + description + '\'' +
                 ", price=" + price +
                 ", quantityInStock=" + quantityInStock +
                 '}';
