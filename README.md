@@ -1,5 +1,13 @@
 # 2023_assignment3_BEerConnect
 
+Link Repo GitLab https://gitlab.com/bicoccaprojects/2023_assignment3_beerconnect
+
+Partecipanti
+
+- Ficara Damiano - 919386
+
+- Ricci Claudio - 918956
+
 
 Entità:
 
