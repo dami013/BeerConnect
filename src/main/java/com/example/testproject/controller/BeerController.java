@@ -45,20 +45,20 @@ public class BeerController {
         return beerRepository.findAll();
     }
 
-   /* @PutMapping("/beer")
-    public Employee updateEmployeeById(@RequestBody Employee inputEmployee){
-        Optional<Employee> employee = employeeRepository.findById(inputEmployee.getId());
-        Employee updatedEmployee = employee.get();
-        updatedEmployee.setEmployeeName(inputEmployee.getEmployeeName());
-        updatedEmployee.setDesignation(inputEmployee.getDesignation());
-        updatedEmployee.setExperience(inputEmployee.getExperience());
-        return employeeRepository.save(updatedEmployee);
+    // Update a beer
+    @PutMapping("/update")
+    public Beer updateEmployeeById(@RequestBody Beer inBeer){
+        Optional<Beer> beer = beerRepository.findById(inBeer.getId_beer());
+        Beer updateBeer = beer.get();
+        updateBeer.setName_beer(inBeer.getName_beer());
+        return beerRepository.save(updateBeer);
     }
 
-    @DeleteMapping(“/employee/{id}”)
-    public void deleteEmployeeById(@PathVariable(value = “id”) Integer id){
-        employeeRepository.deleteById(id);
+    // Delete a beer
+    @DeleteMapping("/update/{id_beer}")
+    public void deleteEmployeeById(@PathVariable(value = "id_beer") Long id){
+        beerRepository.deleteById(id);
     }
-*/
+
 
 }
