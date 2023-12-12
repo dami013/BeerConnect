@@ -26,26 +26,24 @@ public class TestprojectApplication {
 		};
 	}
 	*/
-
 	/*
 	@Bean
 	CommandLineRunner commandLineRunner(BeerRepository beerRepository){
 		return args -> {
 			Beer beer = new Beer(
 					"slalom",
-					"IPA",
+					"ipa",
 					"strong",
 					9.9,
 					"yellow",
-					null,
-					"Italy",
-					"Acqua",
-					"Very strong beer",
-					6.0f,
+					"italy",
+					"water",
+					5F,
 					100
-			);
+					);
 			beerRepository.save(beer);
 		};
 	}
-	*/
+
+	 */
 }

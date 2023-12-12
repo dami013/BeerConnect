@@ -58,7 +58,7 @@ public class Beer {
     @ManyToMany(mappedBy = "beers")
     private List<Client> clients;
 
-    public Beer(String name_beer, String type, String aroma, Double alcohol, String color, String label, String country, String ingredients, String description, Float price, Integer quantityInStock) {
+    public Beer(String name_beer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
         this.name_beer = name_beer;
         this.type = type;
         this.aroma = aroma;
