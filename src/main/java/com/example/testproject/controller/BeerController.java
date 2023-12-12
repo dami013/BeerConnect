@@ -48,10 +48,17 @@ public class BeerController {
         return beerRepository.save(beer);
     }
 
-    // PUT: http://localhost:8080/beers/1
+    // PUT: http://localhost:8080/beers/id_beer
     @RequestMapping(value="/{id_beer}", method=RequestMethod.PUT)
-    public Beer updateBeer(@PathVariable long userId, @RequestBody Beer beer) {
-        beer.setId_beer(userId);
+    public Beer updateBeer(@PathVariable long beerId, @RequestBody Beer beer) {
+        beer.setId_beer(beerId);
         return beerRepository.save(beer);
+    }
+
+    // DELETE: http://localhost:8080/beers/id_beer
+    @RequestMapping(value="/{id_beer}", method=RequestMethod.DELETE)
+    public String deleteBeer(@PathVariable long id_beer) {
+        beerRepository.delete(id_beer);
+        return id_beer + " is Deleted";
     }
 }
