@@ -15,21 +15,20 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/beers") // definisce un prefisso per tutti i metodi all'interno del controller
+@RequestMapping("/api") // definisce un prefisso per tutti i metodi all'interno del controller
 public class BeerController {
-
-    protected static final Logger LOGGER = LoggerFactory.getLogger(BeerController.class);
 
     @Autowired
     BeerRepository beerRepository;
 
-    @RequestMapping
-    public String HelloWorld(){ // se vai a http://localhost:8080/beerconnect ti esce la scritta
-        return "Hello world!";
+    // add a beer (POST)
+    @PostMapping("/beer")
+    public Beer addBeer(@RequestBody Beer beer) {
+        System.out.println(beer);
+        return beerRepository.save(beer);
     }
-
-    // in teoria se andassimo a http://localhost:8080/beerconnect/beers/{id} da una pagina web con birre aventi ID quello cercato
-    @GetMapping("/{id_beer}")
+    // Read beer with an id (Get + Id)
+    @GetMapping("/beers/{id_beer}")
     public ResponseEntity<Beer> getBeerById(@PathVariable("id_beer") long id) {
         Optional<Beer> beerData = beerRepository.findById(id);
 
@@ -40,25 +39,26 @@ public class BeerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    // POST: http://localhost:8080/beers
-    @RequestMapping(value="", method=RequestMethod.POST)
-    public Beer createBeer(@RequestBody Beer beer){ // @RequestBody indica a Spring di deserializzare il corpo della richiesta HTTP (JSON, XML, ecc.) in un oggetto Beer
-        LOGGER.debug("Ricevuta richiesta di crare "+beer.toString());
-        return beerRepository.save(beer);
+    // Retrive all the beers available
+    @GetMapping("/beers")
+    public List<Beer> getAllBeer(){
+        return beerRepository.findAll();
     }
 
-    // PUT: http://localhost:8080/beers/id_beer
-    @RequestMapping(value="/{id_beer}", method=RequestMethod.PUT)
-    public Beer updateBeer(@PathVariable long beerId, @RequestBody Beer beer) {
-        beer.setId_beer(beerId);
-        return beerRepository.save(beer);
+   /* @PutMapping("/beer")
+    public Employee updateEmployeeById(@RequestBody Employee inputEmployee){
+        Optional<Employee> employee = employeeRepository.findById(inputEmployee.getId());
+        Employee updatedEmployee = employee.get();
+        updatedEmployee.setEmployeeName(inputEmployee.getEmployeeName());
+        updatedEmployee.setDesignation(inputEmployee.getDesignation());
+        updatedEmployee.setExperience(inputEmployee.getExperience());
+        return employeeRepository.save(updatedEmployee);
     }
 
-    // DELETE: http://localhost:8080/beers/id_beer
-    @RequestMapping(value="/{id_beer}", method=RequestMethod.DELETE)
-    public String deleteBeer(@PathVariable long id_beer) {
-        beerRepository.delete(id_beer);
-        return id_beer + " is Deleted";
+    @DeleteMapping(“/employee/{id}”)
+    public void deleteEmployeeById(@PathVariable(value = “id”) Integer id){
+        employeeRepository.deleteById(id);
     }
+*/
+
 }
