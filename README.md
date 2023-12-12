@@ -31,4 +31,8 @@ Relazioni:
 
 - Edizione Speciale (tra Birra e Edizione Limitata): Una Birra può avere una sola Edizione Limitata, e un'Edizione Limitata è associata a una sola Birra (one-to-one).
 
+<div align="center">
+  <img src="ER.png" alt="Image" width="300"/>
+</div>
+
 Questo contesto consente agli utenti di esplorare una vasta gamma di birre prodotte dai birrifici, assaporare le birre, condividere opinioni attraverso recensioni e conoscere altri appassionati di birra all'interno di una comunità. L'aggiunta dell'entità "Edizione Limitata" consente di gestire particolari versioni speciali e limitate di birre.
