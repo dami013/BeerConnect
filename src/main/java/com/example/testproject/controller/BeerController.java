@@ -2,14 +2,10 @@ package com.example.testproject.controller;
 
 import com.example.testproject.entity.Beer;
 import com.example.testproject.repository.BeerRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +41,7 @@ public class BeerController {
         return beerRepository.findAll();
     }
 
-    // Update a beer
+    // Update a beer with an id sent with body
     @PutMapping("/update")
     public Beer updateEmployeeById(@RequestBody Beer inBeer){
         Optional<Beer> beer = beerRepository.findById(inBeer.getId_beer());
@@ -54,7 +50,7 @@ public class BeerController {
         return beerRepository.save(updateBeer);
     }
 
-    // Delete a beer
+    // Delete a beer with given id
     @DeleteMapping("/delete/{id_beer}")
     public void deleteEmployeeById(@PathVariable(value = "id_beer") Long id){
         beerRepository.deleteById(id);
