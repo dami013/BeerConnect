@@ -34,7 +34,7 @@ public class ClientController {
         }
     }
     // Retrive all the beers available
-    @GetMapping("/client")
+    @GetMapping("/clients")
     public List<Client> getAllClients(){
         return clientRepository.findAll();
     }
