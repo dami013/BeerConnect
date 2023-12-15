@@ -26,13 +26,9 @@ https://gitlab.com/bicoccaprojects/2023_assignment3_beerconnect
 
 - Produzione (tra Birrificio e Birra): Un Birrificio può produrre molte Birre, ma una Birra è prodotta da un solo Birrificio (one-to-many).
 
-- Assaggio (tra Cliente e Birra): Un Cliente può assaporare molte Birre, e una Birra può essere assaporata da molti Clienti (many-to-many).
-
 - Conosce (relazione self-loop su Cliente): Un cliente può conoscere altri clienti. Questa relazione rappresenta la connessione tra i clienti o degustatori esperti che si conoscono all'interno della comunità birraia.
 
-- Recensione (tra Cliente e Birra): Un Cliente può scrivere molte Recensioni, ma una Recensione è associata a un solo Cliente e a una sola Birra (many-to-one).
-
-- Edizione Speciale (tra Birra e Edizione Limitata): Una Birra può avere una sola Edizione Limitata, e un'Edizione Limitata è associata a una sola Birra (one-to-one).
+- Recensione (tra Cliente e Birra): Un Cliente può scrivere molte Recensioni, ma una Recensione è associata a un solo Cliente e a una sola Birra (many-to-many).
 
 ## Diagramma ER
 
