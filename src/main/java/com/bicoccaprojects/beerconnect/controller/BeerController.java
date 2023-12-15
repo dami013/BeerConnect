@@ -43,9 +43,9 @@ public class BeerController {
     // Update a beer with an id sent with body
     @PutMapping("/updatebeer")
     public Beer updateBeerById(@RequestBody Beer inBeer){
-        Optional<Beer> beer = beerRepository.findById(inBeer.getId_beer());
+        Optional<Beer> beer = beerRepository.findById(inBeer.getIdBeer());
         Beer updateBeer = beer.get();
-        updateBeer.setName_beer(inBeer.getName_beer());
+        updateBeer.setNameBeer(inBeer.getNameBeer());
         return beerRepository.save(updateBeer);
     }
 

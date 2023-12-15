@@ -20,10 +20,10 @@ public class Beer {
     @SequenceGenerator(name="beer_sequence", sequenceName = "beer_sequence", allocationSize = 1)
     @GeneratedValue(strategy = SEQUENCE, generator = "beer_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
     @Column(name = "id_beer", updatable = false)
-    private Long id_beer;
+    private Long idBeer;
 
     @Column(name = "name_beer", nullable = false, columnDefinition = "TEXT", unique = true)
-    private String name_beer;
+    private String nameBeer;
 
     @Column(name = "type", nullable = false, columnDefinition = "TEXT")
     private String type;
@@ -31,7 +31,7 @@ public class Beer {
     @Column(name = "aroma", nullable = false, columnDefinition = "TEXT")
     private String aroma;
 
-    @Column(name = "alchol", nullable = false, columnDefinition = "FLOAT")
+    @Column(name = "alcohol", nullable = false, columnDefinition = "FLOAT")
     private Double alcohol;
 
     @Column(name = "color", nullable = false, columnDefinition = "TEXT")
@@ -59,7 +59,7 @@ public class Beer {
     private List<Client> clients;
 
     public Beer(String name_beer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
-        this.name_beer = name_beer;
+        this.nameBeer = name_beer;
         this.type = type;
         this.aroma = aroma;
         this.alcohol = alcohol;
@@ -75,20 +75,20 @@ public class Beer {
 
     }
 
-    public Long getId_beer() {
-        return id_beer;
+    public Long getIdBeer() {
+        return idBeer;
     }
 
-    public void setId_beer(Long id) {
-        this.id_beer = id;
+    public void setIdBeer(Long id) {
+        this.idBeer = id;
     }
 
-    public String getName_beer() {
-        return name_beer;
+    public String getNameBeer() {
+        return nameBeer;
     }
 
-    public void setName_beer(String name) {
-        this.name_beer = name;
+    public void setNameBeer(String name) {
+        this.nameBeer = name;
     }
 
     public String getType() {
@@ -158,8 +158,8 @@ public class Beer {
     @Override
     public String toString() {
         return "Beer{" +
-                "id=" + id_beer +
-                ", name='" + name_beer + '\'' +
+                "id=" + idBeer +
+                ", name='" + nameBeer + '\'' +
                 ", type='" + type + '\'' +
                 ", aroma='" + aroma + '\'' +
                 ", alcohol=" + alcohol +
