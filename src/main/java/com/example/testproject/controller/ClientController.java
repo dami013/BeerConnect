@@ -22,7 +22,7 @@ public class ClientController {
     public Client addClient(@RequestBody Client c) {
         return clientRepository.save(c);
     }
-    @GetMapping("/beers/{id_client}")
+    @GetMapping("/clients/{id_client}")
     public ResponseEntity<Client> getBeerById(@PathVariable("id_client") long id) {
         Optional<Client> clientData = clientRepository.findById(id);
 
