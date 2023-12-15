@@ -22,7 +22,7 @@ public class TestprojectApplication {
 	CommandLineRunner commandLineRunner(PubRepository pubRepository){
 		return args -> {
 			Pub pub = new Pub("full","cassano magnago",1989);
-		pubRepository.save(pub);
+			pubRepository.save(pub);
 		};
 	}
 	*/

@@ -1,6 +1,5 @@
 package com.example.testproject.controller;
 
-import com.example.testproject.entity.Beer;
 import com.example.testproject.entity.Pub;
 import com.example.testproject.repository.PubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class PubController {
         return pubRepository.save(pub);
     }
 
-    // Read pub with an id (Get + Id)
+    // Read pub with an id (Get + Id) - funziona
     @GetMapping("/pubs/{id_pub}")
     public ResponseEntity<Pub> getPubById(@PathVariable("id_pub") long id) {
         Optional<Pub> pubData = pubRepository.findById(id);
@@ -39,7 +38,7 @@ public class PubController {
         }
     }
 
-    // Retrive all the pubs available
+    // Retrive all the pubs available - funziona
     @GetMapping("/pubs")
     public List<Pub> getAllPub(){
         return pubRepository.findAll();

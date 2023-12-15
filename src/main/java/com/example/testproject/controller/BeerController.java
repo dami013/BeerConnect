@@ -23,7 +23,7 @@ public class BeerController {
         System.out.println(beer);
         return beerRepository.save(beer);
     }
-    // Read beer with an id (Get + Id)
+    // Read beer with an id (Get + Id) - funziona
     @GetMapping("/beers/{id_beer}")
     public ResponseEntity<Beer> getBeerById(@PathVariable("id_beer") long id) {
         Optional<Beer> beerData = beerRepository.findById(id);
@@ -35,13 +35,14 @@ public class BeerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    // Retrive all the beers available
+    // Retrive all the beers available - funziona
     @GetMapping("/beers")
     public List<Beer> getAllBeer(){
         return beerRepository.findAll();
     }
 
-    // Update a beer with an id sent with body
+    // commentate perchè danno problemi quando si lancia il main
+    /*// Update a beer with an id sent with body
     @PutMapping("/update")
     public Beer updateBeerById(@RequestBody Beer inBeer){
         Optional<Beer> beer = beerRepository.findById(inBeer.getId_beer());
@@ -55,5 +56,5 @@ public class BeerController {
     public void deleteBeerById(@PathVariable(value = "id_beer") Long id){
         beerRepository.deleteById(id);
     }
-
+*/
 }
