@@ -20,7 +20,6 @@ public class BeerController {
     // add a beer (POST)
     @PostMapping("/beer")
     public Beer addBeer(@RequestBody Beer beer) {
-        System.out.println(beer);
         return beerRepository.save(beer);
     }
     // Read beer with an id (Get + Id) - funziona
