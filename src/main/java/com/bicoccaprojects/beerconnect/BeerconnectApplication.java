@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.example.testproject")
+@EntityScan(basePackages = "com.bicoccaprojects.beerconnect")
 public class BeerconnectApplication {
 
 	public static void main(String[] args) {
