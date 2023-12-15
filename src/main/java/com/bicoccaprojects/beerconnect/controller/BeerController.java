@@ -50,7 +50,7 @@ public class BeerController {
     }
 
     // Delete a beer with given id
-    @DeleteMapping("/delete/{id_beer}")
+    @DeleteMapping("/deletebeer/{id_beer}")
     public void deleteBeerById(@PathVariable(value = "id_beer") Long id){
         beerRepository.deleteById(id);
     }

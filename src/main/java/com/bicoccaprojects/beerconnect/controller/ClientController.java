@@ -49,7 +49,7 @@ public class ClientController {
     }
 
     // Delete a beer with given id
-    @DeleteMapping("/delete/{id_client}")
+    @DeleteMapping("/deleteclient/{id_client}")
     public void deleteClientById(@PathVariable(value = "id_client") Long id){
         clientRepository.deleteById(id);
     }

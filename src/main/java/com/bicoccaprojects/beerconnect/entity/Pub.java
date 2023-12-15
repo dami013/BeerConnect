@@ -22,10 +22,10 @@ public class Pub {
     @Column(name = "country", nullable = false, columnDefinition = "TEXT")
     private String Country;
 
-    @Column(name = "year_of_foundation")
+    @Column(name = "year_of_foundation", nullable = false, columnDefinition = "INTEGER")
     private Integer yearOfFoundation;
 
-    public Pub(String name, String address, int yearOfFoundation) {
+    public Pub(String name, String address, Integer yearOfFoundation) {
         this.name_pub = name;
         this.Country = address;
         this.yearOfFoundation = yearOfFoundation;

@@ -54,7 +54,7 @@ public class PubController {
     }
 
     // Delete a beer with given id
-    @DeleteMapping("/delete/{id_pub}")
+    @DeleteMapping("/deletepub/{id_pub}")
     public void deletePubById(@PathVariable(value = "id_pub") Long id){
         pubRepository.deleteById(id);
     }
