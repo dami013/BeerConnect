@@ -40,9 +40,8 @@ public class BeerController {
         return beerRepository.findAll();
     }
 
-    // commentate perchè danno problemi quando si lancia il main
-    /*// Update a beer with an id sent with body
-    @PutMapping("/update")
+    // Update a beer with an id sent with body
+    @PutMapping("/updatebeer")
     public Beer updateBeerById(@RequestBody Beer inBeer){
         Optional<Beer> beer = beerRepository.findById(inBeer.getId_beer());
         Beer updateBeer = beer.get();
@@ -55,5 +54,5 @@ public class BeerController {
     public void deleteBeerById(@PathVariable(value = "id_beer") Long id){
         beerRepository.deleteById(id);
     }
-*/
+
 }
