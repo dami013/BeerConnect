@@ -14,20 +14,20 @@ public class Pub {
     @SequenceGenerator(name="pub_sequence", sequenceName = "pub_sequence", allocationSize = 1)
     @GeneratedValue(strategy = SEQUENCE, generator = "pub_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
     @Column(name = "id_pub", updatable = false)
-    private Long id_pub;
+    private Long idPub;
 
     @Column(name = "name_pub", nullable = false, columnDefinition = "TEXT") // nullable = false -> not null, "TEXT"-> varchar
-    private String name_pub;
+    private String namePub;
 
     @Column(name = "country", nullable = false, columnDefinition = "TEXT")
-    private String Country;
+    private String country;
 
     @Column(name = "year_of_foundation", nullable = false, columnDefinition = "INTEGER")
     private Integer yearOfFoundation;
 
     public Pub(String name, String address, Integer yearOfFoundation) {
-        this.name_pub = name;
-        this.Country = address;
+        this.namePub = name;
+        this.country = address;
         this.yearOfFoundation = yearOfFoundation;
     }
 
@@ -39,28 +39,28 @@ public class Pub {
     private List<Beer> beers;
 
 
-    public Long getId_pub() {
-        return id_pub;
+    public Long getIdPub() {
+        return idPub;
     }
 
-    public void setId_pub(Long id) {
-        this.id_pub = id;
+    public void setIdPub(Long id) {
+        this.idPub = id;
     }
 
-    public String getName_pub() {
-        return name_pub;
+    public String getNamePub() {
+        return namePub;
     }
 
-    public void setName_pub(String name) {
-        this.name_pub = name;
+    public void setNamePub(String name) {
+        this.namePub = name;
     }
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String country) {
-        this.Country = country;
+        this.country = country;
     }
 
     public Integer getYearOfFoundation() {
@@ -74,9 +74,9 @@ public class Pub {
     @Override
     public String toString() {
         return "Pub{" +
-                "id=" + id_pub +
-                ", name='" + name_pub + '\'' +
-                ", address='" + Country + '\'' +
+                "id=" + idPub +
+                ", name='" + namePub + '\'' +
+                ", address='" + country + '\'' +
                 ", yearOfFoundation=" + yearOfFoundation +
                 '}';
     }

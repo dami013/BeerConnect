@@ -47,9 +47,9 @@ public class PubController {
     // Update a pub with an id sent with body
     @PutMapping("/updatepub")
     public Pub updatePubById(@RequestBody Pub inPub){
-        Optional<Pub> pub = pubRepository.findById(inPub.getId_pub());
+        Optional<Pub> pub = pubRepository.findById(inPub.getIdPub());
         Pub updatePub = pub.get();
-        updatePub.setName_pub(inPub.getName_pub());
+        updatePub.setNamePub(inPub.getNamePub());
         return pubRepository.save(updatePub);
     }
 
