@@ -44,7 +44,7 @@ public class ClientController {
     public Client updateClientById(@RequestBody Client inClient){
         Optional<Client> client = clientRepository.findById(inClient.getId_client());
         Client updateClient = client.get();
-        updateClient.setName_client(client.get().getName_client());
+        updateClient.setName_client(inClient.getName_client());
         return clientRepository.save(updateClient);
     }
 
