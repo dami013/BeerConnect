@@ -43,7 +43,7 @@ public class BeerController {
 
     // Update a beer with an id sent with body
     @PutMapping("/update")
-    public Beer updateEmployeeById(@RequestBody Beer inBeer){
+    public Beer updateBeerById(@RequestBody Beer inBeer){
         Optional<Beer> beer = beerRepository.findById(inBeer.getId_beer());
         Beer updateBeer = beer.get();
         updateBeer.setName_beer(inBeer.getName_beer());
@@ -52,9 +52,8 @@ public class BeerController {
 
     // Delete a beer with given id
     @DeleteMapping("/delete/{id_beer}")
-    public void deleteEmployeeById(@PathVariable(value = "id_beer") Long id){
+    public void deleteBeerById(@PathVariable(value = "id_beer") Long id){
         beerRepository.deleteById(id);
     }
-
 
 }
