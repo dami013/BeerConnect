@@ -41,7 +41,7 @@ public class ClientController {
 
     // Update a beer with an id sent with body
     @PutMapping("/updateclient")
-    public Client updateEmployeeById(@RequestBody Client inClient){
+    public Client updateClientById(@RequestBody Client inClient){
         Optional<Client> client = clientRepository.findById(inClient.getId_client());
         Client updateClient = client.get();
         updateClient.setName_client(client.get().getName_client());
@@ -50,7 +50,7 @@ public class ClientController {
 
     // Delete a beer with given id
     @DeleteMapping("/delete/{id_client}")
-    public void deleteEmployeeById(@PathVariable(value = "id_client") Long id){
+    public void deleteClientById(@PathVariable(value = "id_client") Long id){
         clientRepository.deleteById(id);
     }
 
