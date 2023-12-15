@@ -1,4 +1,4 @@
-package com.example.testproject.entity;
+package com.bicoccaprojects.beerconnect.entity;
 
 
 import jakarta.persistence.*;

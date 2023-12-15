@@ -1,21 +1,15 @@
-package com.example.testproject;
+package com.bicoccaprojects.beerconnect;
 
-import com.example.testproject.entity.Beer;
-import com.example.testproject.entity.Pub;
-import com.example.testproject.repository.BeerRepository;
-import com.example.testproject.repository.PubRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EntityScan(basePackages = "com.example.testproject")
-public class TestprojectApplication {
+public class BeerconnectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestprojectApplication.class, args);
+		SpringApplication.run(BeerconnectApplication.class, args);
 	}
 	/*
 	@Bean

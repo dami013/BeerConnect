@@ -1,6 +1,6 @@
-package com.example.testproject.repository;
+package com.bicoccaprojects.beerconnect.repository;
 
-import com.example.testproject.entity.Client;
+import com.bicoccaprojects.beerconnect.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

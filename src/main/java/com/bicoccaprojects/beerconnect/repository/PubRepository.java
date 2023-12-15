@@ -1,6 +1,6 @@
-package com.example.testproject.repository;
+package com.bicoccaprojects.beerconnect.repository;
 
-import com.example.testproject.entity.Pub;
+import com.bicoccaprojects.beerconnect.entity.Pub;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PubRepository extends JpaRepository<Pub, Long> { // Long perchè ID di Pub è Long

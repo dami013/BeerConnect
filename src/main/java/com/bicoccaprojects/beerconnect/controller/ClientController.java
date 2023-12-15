@@ -1,7 +1,7 @@
-package com.example.testproject.controller;
+package com.bicoccaprojects.beerconnect.controller;
 
-import com.example.testproject.entity.Client;
-import com.example.testproject.repository.ClientRepository;
+import com.bicoccaprojects.beerconnect.repository.ClientRepository;
+import com.bicoccaprojects.beerconnect.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
