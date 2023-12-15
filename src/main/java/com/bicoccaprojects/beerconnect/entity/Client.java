@@ -39,6 +39,7 @@ public class Client {
     )
     private List<Beer> beers;
 
+
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
         this.nameClient = name;
         this.email = email;

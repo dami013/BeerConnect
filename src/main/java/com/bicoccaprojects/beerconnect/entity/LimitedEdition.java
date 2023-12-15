@@ -1,5 +1,8 @@
 package com.bicoccaprojects.beerconnect.entity;
 
+import jakarta.persistence.DiscriminatorValue;
+
+@DiscriminatorValue("limited")
 public class LimitedEdition extends Beer{
     String limitedEditionName;
     int productionYear;

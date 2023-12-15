@@ -15,6 +15,8 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
                 @UniqueConstraint(name = "beer_name_unique", columnNames = "name_beer")
         }
 )
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="beer_type")
 public class Beer {
     @Id
     @SequenceGenerator(name="beer_sequence", sequenceName = "beer_sequence", allocationSize = 1)
@@ -49,6 +51,10 @@ public class Beer {
     @Column(name = "quantity_in_stock", nullable = false, columnDefinition = "INTEGER")
     private Integer quantityInStock;
 
+    // Aggiungi una colonna discriminatoria per identificare il tipo di birra
+    @Column(name = "beer_type", insertable = false, updatable = false)
+    private String beerType;
+
     // un birrificio può produrre tante birre ma una birra è prodotta da un solo birrificio
     // quando si crea una birra va assegnata a un birrificio
     @ManyToOne
@@ -58,8 +64,8 @@ public class Beer {
     @ManyToMany(mappedBy = "beers")
     private List<Client> clients;
 
-    public Beer(String name_beer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
-        this.nameBeer = name_beer;
+    public Beer(String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
+        this.nameBeer = nameBeer;
         this.type = type;
         this.aroma = aroma;
         this.alcohol = alcohol;
