@@ -14,16 +14,16 @@ public class Client {
     @SequenceGenerator(name="client_sequence", sequenceName = "client_sequence", allocationSize = 1)
     @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
     @Column(name = "id_client", updatable = false)
-    private Long id_client;
+    private Long idClient;
 
-    @Column(name = "name", nullable = false, columnDefinition = "TEXT")
-    private String name_client;
+    @Column(name = "name_client", nullable = false, columnDefinition = "TEXT")
+    private String nameClient;
 
     @Column(name = "email", nullable = false, columnDefinition = "TEXT", unique = true)
     private String email;
 
     @Column(name = "date_birth", nullable = false, columnDefinition = "INTEGER")
-    private Integer date_birth;
+    private Integer dateBirth;
 
     @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
@@ -40,9 +40,9 @@ public class Client {
     private List<Beer> beers;
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
-        this.name_client = name;
+        this.nameClient = name;
         this.email = email;
-        this.date_birth = date_birth;
+        this.dateBirth = date_birth;
         this.address = address;
         this.preferences = preferences;
     }
@@ -51,20 +51,20 @@ public class Client {
 
     }
 
-    public Long getId_client() {
-        return id_client;
+    public Long getIdClient() {
+        return idClient;
     }
 
-    public void setId_client(Long id) {
-        this.id_client = id;
+    public void setIdClient(Long id) {
+        this.idClient = id;
     }
 
-    public String getName_client() {
-        return name_client;
+    public String getNameClient() {
+        return nameClient;
     }
 
-    public void setName_client(String name) {
-        this.name_client = name;
+    public void setNameClient(String name) {
+        this.nameClient = name;
     }
 
     public String getEmail() {
@@ -75,12 +75,12 @@ public class Client {
         this.email = email;
     }
 
-    public Integer getDate_birth() {
-        return date_birth;
+    public Integer getDateBirth() {
+        return dateBirth;
     }
 
-    public void setDate_birth(Integer date_birth) {
-        this.date_birth = date_birth;
+    public void setDateBirth(Integer date_birth) {
+        this.dateBirth = date_birth;
     }
 
     public String getAddress() {
@@ -102,10 +102,10 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id_client +
-                ", name='" + name_client + '\'' +
+                "id=" + idClient +
+                ", name='" + nameClient + '\'' +
                 ", email='" + email + '\'' +
-                ", date_birth=" + date_birth +
+                ", date_birth=" + dateBirth +
                 ", address='" + address + '\'' +
                 ", preferences='" + preferences + '\'' +
                 '}';

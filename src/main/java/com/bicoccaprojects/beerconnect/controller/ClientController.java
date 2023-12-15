@@ -42,9 +42,9 @@ public class ClientController {
     // Update a beer with an id sent with body
     @PutMapping("/updateclient")
     public Client updateClientById(@RequestBody Client inClient){
-        Optional<Client> client = clientRepository.findById(inClient.getId_client());
+        Optional<Client> client = clientRepository.findById(inClient.getIdClient());
         Client updateClient = client.get();
-        updateClient.setName_client(inClient.getName_client());
+        updateClient.setNameClient(inClient.getNameClient());
         return clientRepository.save(updateClient);
     }
 
