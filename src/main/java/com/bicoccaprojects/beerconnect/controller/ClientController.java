@@ -1,58 +1,63 @@
 package com.bicoccaprojects.beerconnect.controller;
 
-import com.bicoccaprojects.beerconnect.repository.ClientRepository;
 import com.bicoccaprojects.beerconnect.entity.Client;
+import com.bicoccaprojects.beerconnect.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/api") // definisce un prefisso per tutti i metodi all'interno del controller
+@RequestMapping("/api")
 public class ClientController {
 
     @Autowired
-    ClientRepository clientRepository;
-
+    private ClientService clientService;
 
     @PostMapping("/client")
-    public Client addClient(@RequestBody Client c) {
-        return clientRepository.save(c);
+    public ResponseEntity<String> addClient(@RequestBody Client client) {
+        clientService.addClient(client);
+        return new ResponseEntity<>("Client added successfully", HttpStatus.CREATED);
     }
+
     @GetMapping("/clients/{id_client}")
-    public ResponseEntity<Client> getBeerById(@PathVariable("id_client") long id) {
-        Optional<Client> clientData = clientRepository.findById(id);
+    public ResponseEntity<Client> getClientById(@PathVariable("id_client") long id) {
+        Optional<Client> clientData = clientService.getClient(id);
 
-        if (clientData.isPresent()) {
-            return new ResponseEntity<>(clientData.get(), HttpStatus.OK);
+        return clientData.map(client -> new ResponseEntity<>(client, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
+    @GetMapping("/clients")
+    public Iterable<Client> getAllClients() {
+        return clientService.getClients();
+    }
+
+    @PutMapping("/updateclient")
+    public ResponseEntity<String> updateClientById(@RequestBody Client inClient) {
+        Optional<Client> client = clientService.getClient(inClient.getIdClient());
+
+        if (client.isPresent()) {
+            Client updateClient = client.get();
+            updateClient.setNameClient(inClient.getNameClient());
+            clientService.updateClient(updateClient);
+            return new ResponseEntity<>("Client updated successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Client not found", HttpStatus.NOT_FOUND);
         }
     }
-    // Retrive all the beers available
-    @GetMapping("/clients")
-    public List<Client> getAllClients(){
-        return clientRepository.findAll();
-    }
 
-    // Update a beer with an id sent with body
-    @PutMapping("/updateclient")
-    public Client updateClientById(@RequestBody Client inClient){
-        Optional<Client> client = clientRepository.findById(inClient.getIdClient());
-        Client updateClient = client.get();
-        updateClient.setNameClient(inClient.getNameClient());
-        return clientRepository.save(updateClient);
-    }
-
-    // Delete a beer with given id
     @DeleteMapping("/deleteclient/{id_client}")
-    public void deleteClientById(@PathVariable(value = "id_client") Long id){
-        clientRepository.deleteById(id);
+    public ResponseEntity<String> deleteClientById(@PathVariable(value = "id_client") Long id) {
+        if (clientService.getClient(id).isPresent()) {
+            clientService.deleteClient(id);
+            return new ResponseEntity<>("Client deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Client not found", HttpStatus.NOT_FOUND);
+        }
     }
-
-
 }
