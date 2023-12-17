@@ -2,13 +2,17 @@ package com.bicoccaprojects.beerconnect.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
+@Entity
 @DiscriminatorValue("limited")
+@PrimaryKeyJoinColumn(name = "id_beer") // Indicates the foreign key relationship
 public class LimitedEdition extends Beer{
-    @Column(name = "le_beer", nullable = false, columnDefinition = "TEXT", unique = true)
+    @Column(name = "le_beer", columnDefinition = "TEXT")
     private String limitedEditionName;
 
-    @Column(name = "production_year", nullable = false, columnDefinition = "INTEGER", unique = true)
+    @Column(name = "production_year", columnDefinition = "INTEGER")
     private Integer productionYear;
 
     public LimitedEdition(String name_beer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, String limitedEditionName, Integer productionYear) {

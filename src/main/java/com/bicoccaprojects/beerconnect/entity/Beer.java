@@ -17,6 +17,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="beer_type")
+@DiscriminatorValue("normal")
 public class Beer {
     @Id
     @SequenceGenerator(name="beer_sequence", sequenceName = "beer_sequence", allocationSize = 1)
