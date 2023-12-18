@@ -1,7 +1,7 @@
 package com.bicoccaprojects.beerconnect.controller;
 
 import com.bicoccaprojects.beerconnect.entity.Pub;
-import com.bicoccaprojects.beerconnect.repository.PubRepository;
+import com.bicoccaprojects.beerconnect.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,47 +16,48 @@ import java.util.Optional;
 public class PubController {
 
     @Autowired
-    PubRepository pubRepository;
+    private PubService pubService;
 
-    // add a pub (POST)
     @PostMapping("/pub")
-    public Pub addPub(@RequestBody Pub pub) {
-        System.out.println(pub);
-        return pubRepository.save(pub);
+    public ResponseEntity<String> addPub(@RequestBody Pub pub) {
+        pubService.addPub(pub);
+        return new ResponseEntity<>("Pub added successfully", HttpStatus.CREATED);
     }
 
-    // Read pub with an id (Get + Id) - funziona
     @GetMapping("/pubs/{id_pub}")
     public ResponseEntity<Pub> getPubById(@PathVariable("id_pub") long id) {
-        Optional<Pub> pubData = pubRepository.findById(id);
+        Optional<Pub> pubData = pubService.getPub(id);
 
-        if (pubData.isPresent()) {
-            return new ResponseEntity<>(pubData.get(), HttpStatus.OK);
+        return pubData.map(pub -> new ResponseEntity<>(pub, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
+    @GetMapping("/pubs")
+    public Iterable<Pub> getAllPubs() {
+        return pubService.getPubs();
+    }
+
+    @PutMapping("/updatepub")
+    public ResponseEntity<String> updatePubById(@RequestBody Pub inPub) {
+        Optional<Pub> pub = pubService.getPub(inPub.getIdPub());
+
+        if (pub.isPresent()) {
+            Pub updatePub = pub.get();
+            updatePub.setNamePub(inPub.getNamePub());
+            pubService.updatePub(updatePub);
+            return new ResponseEntity<>("Pub updated successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Pub not found", HttpStatus.NOT_FOUND);
         }
     }
 
-    // Retrive all the pubs available - funziona
-    @GetMapping("/pubs")
-    public List<Pub> getAllPub(){
-        return pubRepository.findAll();
-    }
-
-    // Update a pub with an id sent with body
-    @PutMapping("/updatepub")
-    public Pub updatePubById(@RequestBody Pub inPub){
-        Optional<Pub> pub = pubRepository.findById(inPub.getIdPub());
-        Pub updatePub = pub.get();
-        updatePub.setNamePub(inPub.getNamePub());
-        return pubRepository.save(updatePub);
-    }
-
-    // Delete a beer with given id
     @DeleteMapping("/deletepub/{id_pub}")
-    public void deletePubById(@PathVariable(value = "id_pub") Long id){
-        pubRepository.deleteById(id);
+    public ResponseEntity<String> deletePubById(@PathVariable(value = "id_pub") Long id) {
+        if (pubService.getPub(id).isPresent()) {
+            pubService.deletePub(id);
+            return new ResponseEntity<>("Pub deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Pub not found", HttpStatus.NOT_FOUND);
+        }
     }
-
 }

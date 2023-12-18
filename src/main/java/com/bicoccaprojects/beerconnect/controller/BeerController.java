@@ -1,58 +1,61 @@
 package com.bicoccaprojects.beerconnect.controller;
 
-import com.bicoccaprojects.beerconnect.repository.BeerRepository;
 import com.bicoccaprojects.beerconnect.entity.Beer;
+import com.bicoccaprojects.beerconnect.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/api") // definisce un prefisso per tutti i metodi all'interno del controller
+@RequestMapping("/api")
 public class BeerController {
 
     @Autowired
-    BeerRepository beerRepository;
+    private BeerService beerService;
 
-    // add a beer (POST)
     @PostMapping("/beer")
-    public Beer addBeer(@RequestBody Beer beer) {
-        return beerRepository.save(beer);
+    public ResponseEntity<String> addBeer(@RequestBody Beer beer) {
+        beerService.addBeer(beer);
+        return new ResponseEntity<>("Beer added successfully", HttpStatus.CREATED);
     }
-    // Read beer with an id (Get + Id) - funziona
+
     @GetMapping("/beers/{id_beer}")
     public ResponseEntity<Beer> getBeerById(@PathVariable("id_beer") long id) {
-        Optional<Beer> beerData = beerRepository.findById(id);
+        Optional<Beer> beerData = beerService.getBeer(id);
 
-        if (beerData.isPresent()) {
-            return new ResponseEntity<>(beerData.get(), HttpStatus.OK);
+        return beerData.map(beer -> new ResponseEntity<>(beer, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
+    @GetMapping("/beers")
+    public Iterable<Beer> getAllBeer() {
+        return beerService.getBeers();
+    }
+
+    @PutMapping("/updatebeer")
+    public ResponseEntity<String> updateBeerById(@RequestBody Beer inBeer) {
+        Optional<Beer> beer = beerService.getBeer(inBeer.getIdBeer());
+
+        if (beer.isPresent()) {
+            Beer updateBeer = beer.get();
+            updateBeer.setNameBeer(inBeer.getNameBeer());
+            beerService.updateBeer(updateBeer);
+            return new ResponseEntity<>("Beer updated successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Beer not found", HttpStatus.NOT_FOUND);
         }
     }
-    // Retrive all the beers available - funziona
-    @GetMapping("/beers")
-    public List<Beer> getAllBeer(){
-        return beerRepository.findAll();
-    }
 
-    // Update a beer with an id sent with body
-    @PutMapping("/updatebeer")
-    public Beer updateBeerById(@RequestBody Beer inBeer){
-        Optional<Beer> beer = beerRepository.findById(inBeer.getIdBeer());
-        Beer updateBeer = beer.get();
-        updateBeer.setNameBeer(inBeer.getNameBeer());
-        return beerRepository.save(updateBeer);
-    }
-
-    // Delete a beer with given id
     @DeleteMapping("/deletebeer/{id_beer}")
-    public void deleteBeerById(@PathVariable(value = "id_beer") Long id){
-        beerRepository.deleteById(id);
+    public ResponseEntity<String> deleteBeerById(@PathVariable(value = "id_beer") Long id) {
+        if (beerService.getBeer(id).isPresent()) {
+            beerService.deleteBeer(id);
+            return new ResponseEntity<>("Beer deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Beer not found", HttpStatus.NOT_FOUND);
+        }
     }
-
 }
