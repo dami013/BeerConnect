@@ -9,6 +9,8 @@ https://gitlab.com/bicoccaprojects/2023_assignment3_beerconnect
 
 - Ricci Claudio - 918956
 
+## Descrizione dell'applicazione
+L'applicazione vuole proporre un sistema di amministrazione per un network di amanti delle birre.
 
 ## Struttura progetto
 
