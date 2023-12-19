@@ -31,7 +31,7 @@ public class BeerController {
     }
 
     @GetMapping("/beers")
-    public Iterable<Beer> getAllBeer() {
+    public Iterable<Beer> getAllBeers() {
         return beerService.getBeers();
     }
 

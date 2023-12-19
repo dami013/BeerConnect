@@ -1,6 +1,5 @@
 package com.bicoccaprojects.beerconnect.service;
 
-import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.LimitedEdition;
 import com.bicoccaprojects.beerconnect.repository.LimitedEditionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

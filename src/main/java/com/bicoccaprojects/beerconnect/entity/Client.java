@@ -1,5 +1,6 @@
 package com.bicoccaprojects.beerconnect.entity;
 
+import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -31,6 +32,10 @@ public class Client {
     @Column(name = "preferences", nullable = false, columnDefinition = "TEXT")
     private String preferences;
 
+    @OneToMany(mappedBy = "idClient")
+    private List<ClientReview> clientReviews;
+
+    /*
     @ManyToMany
     @JoinTable(
             name = "client review",
@@ -38,6 +43,7 @@ public class Client {
             inverseJoinColumns = @JoinColumn(name = "id_beer")
     )
     private List<Beer> beers;
+     */
 
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {

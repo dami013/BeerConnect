@@ -1,6 +1,7 @@
 package com.bicoccaprojects.beerconnect.entity;
 
 
+import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -62,8 +63,13 @@ public class Beer {
     @JoinColumn(name = "id_pub") // id del pub
     private Pub pub;
 
+    @OneToMany(mappedBy = "idBeer")
+    private List<ClientReview> clientReviews;
+
+    /*
     @ManyToMany(mappedBy = "beers")
     private List<Client> clients;
+     */
 
     public Beer(String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
         this.nameBeer = nameBeer;
