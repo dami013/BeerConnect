@@ -1,5 +1,6 @@
 package com.bicoccaprojects.beerconnect.controller;
 
+import com.bicoccaprojects.beerconnect.api_endpoint.BeerEP;
 import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ public class BeerController {
     @Autowired
     private BeerService beerService;
 
-    @PostMapping("/beer")
+    @PostMapping(BeerEP.ADD_BEER)
     public ResponseEntity<String> addBeer(@RequestBody Beer beer) {
         beerService.addBeer(beer);
         return new ResponseEntity<>("Beer added successfully", HttpStatus.CREATED);
     }
 
-    @GetMapping("/beers/{id_beer}")
+    @GetMapping(BeerEP.GET_BEER_BY_ID)
     public ResponseEntity<Beer> getBeerById(@PathVariable("id_beer") long id) {
         Optional<Beer> beerData = beerService.getBeer(id);
 
@@ -30,12 +31,12 @@ public class BeerController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/beers")
+    @GetMapping(BeerEP.GET_ALL_BEERS)
     public Iterable<Beer> getAllBeers() {
         return beerService.getBeers();
     }
 
-    @PutMapping("/updatebeer")
+    @PutMapping(BeerEP.UPDATE_BEER)
     public ResponseEntity<String> updateBeerById(@RequestBody Beer inBeer) {
         Optional<Beer> beer = beerService.getBeer(inBeer.getIdBeer());
 
@@ -49,7 +50,7 @@ public class BeerController {
         }
     }
 
-    @DeleteMapping("/deletebeer/{id_beer}")
+    @DeleteMapping(BeerEP.DELETE_BEER_BY_ID)
     public ResponseEntity<String> deleteBeerById(@PathVariable(value = "id_beer") Long id) {
         if (beerService.getBeer(id).isPresent()) {
             beerService.deleteBeer(id);
