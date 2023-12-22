@@ -9,7 +9,7 @@ import java.util.List;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 
-@Entity(name = "Beer") // rappresenta entita' nel db
+@Entity(name = "Beer")
 @Table(
         name = "beer",
         uniqueConstraints = {
@@ -66,10 +66,6 @@ public class Beer {
     @OneToMany(mappedBy = "idBeer")
     private List<ClientReview> clientReviews;
 
-    /*
-    @ManyToMany(mappedBy = "beers")
-    private List<Client> clients;
-     */
 
     public Beer(String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
         this.nameBeer = nameBeer;
@@ -81,7 +77,6 @@ public class Beer {
         this.ingredients = ingredients;
         this.price = price;
         this.quantityInStock = quantityInStock;
-        // this.pub = pub;
     }
 
     public Beer() {

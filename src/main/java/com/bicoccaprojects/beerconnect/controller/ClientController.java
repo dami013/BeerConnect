@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -52,7 +51,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/deleteclient/{id_client}")
-    public ResponseEntity<String> deleteClientById(@PathVariable(value = "id_client") Long id) {
+    public ResponseEntity<String> deleteClientById(@PathVariable(value = "id_client") java.lang.Long id) {
         if (clientService.getClient(id).isPresent()) {
             clientService.deleteClient(id);
             return new ResponseEntity<>("Client deleted successfully", HttpStatus.OK);

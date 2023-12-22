@@ -13,7 +13,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 public class Client {
     @Id
     @SequenceGenerator(name="client_sequence", sequenceName = "client_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
+    @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence") // generate an ID that starts from 1 and increments by 1 for each new entity
     @Column(name = "id_client", updatable = false)
     private Long idClient;
 
@@ -35,16 +35,6 @@ public class Client {
     @OneToMany(mappedBy = "idClient")
     private List<ClientReview> clientReviews;
 
-    /*
-    @ManyToMany
-    @JoinTable(
-            name = "client review",
-            joinColumns = @JoinColumn(name = "id_client"),
-            inverseJoinColumns = @JoinColumn(name = "id_beer")
-    )
-    private List<Beer> beers;
-     */
-
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
         this.nameClient = name;
@@ -62,7 +52,7 @@ public class Client {
         return idClient;
     }
 
-    public void setIdClient(Long id) {
+    public void setIdClient(java.lang.Long id) {
         this.idClient = id;
     }
 

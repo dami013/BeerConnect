@@ -16,8 +16,8 @@ public class ClientReview {
     @Column(name = "id_review", updatable = false)
     private Long idReview;
 
-    // nonostante si usino i tag @ManyToOne questa rimane una relazione @ManyToMany
-    // questa entità intermedia permette relazione ManyToMany
+    // despite using @ManyToOne tag, this is a @ManyToMany relationship
+    // this intermediate entity allow the ManyToMany relationship
 
     @ManyToOne
     @JoinColumn(name = "id_client")
@@ -27,9 +27,7 @@ public class ClientReview {
     @JoinColumn(name = "id_beer")
     private Beer idBeer;
 
-    // Altre colonne aggiuntive della tabella
-
-    @Column(name = "review", columnDefinition = "VARCHAR(255)")
+    @Column(name = "review", columnDefinition = "TEXT")
     private String review;
 
     @Column(name = "rating", nullable = false, columnDefinition = "INTEGER")
@@ -43,8 +41,7 @@ public class ClientReview {
         }
     }
 
-    public ClientReview(Long idReview, Client idClient, Beer idBeer, Integer rating, String review) {
-        this.idReview = idReview;
+    public ClientReview(Client idClient, Beer idBeer, Integer rating, String review) {
         this.idClient = idClient;
         this.idBeer = idBeer;
         this.rating = rating;
@@ -62,22 +59,6 @@ public class ClientReview {
         this.idReview = idReview;
     }
 
-    public Client getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(Client client) {
-        this.idClient = client;
-    }
-
-    public Beer getIdBeer() {
-        return idBeer;
-    }
-
-    public void setIdBeer(Beer beer) {
-        this.idBeer = beer;
-    }
-
     public Integer getRating() {
         return rating;
     }
@@ -92,5 +73,32 @@ public class ClientReview {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public Client getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(Client idClient) {
+        this.idClient = idClient;
+    }
+
+    public Beer getIdBeer() {
+        return idBeer;
+    }
+
+    public void setIdBeer(Beer idBeer) {
+        this.idBeer = idBeer;
+    }
+
+    @Override
+    public String toString() {
+        return "ClientReview{" +
+                "idReview=" + idReview +
+                ", idClient=" + idClient +
+                ", idBeer=" + idBeer +
+                ", review='" + review + '\'' +
+                ", rating=" + rating +
+                '}';
     }
 }
