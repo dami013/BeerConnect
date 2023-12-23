@@ -39,8 +39,11 @@ public class Client {
     @ManyToMany
     @JoinTable(
             name = "client_follow",
-            joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "followed_id")
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id"),
+            uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"client_id", "followed_id"})
+    }
     )
     private List<Client> followers = new ArrayList<>();
 
