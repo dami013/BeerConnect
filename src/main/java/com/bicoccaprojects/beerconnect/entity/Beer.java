@@ -79,6 +79,10 @@ public class Beer {
         this.quantityInStock = quantityInStock;
     }
 
+    public Beer(Long idBeer) {
+        this.idBeer = idBeer;
+    }
+
     public Beer() {
 
     }

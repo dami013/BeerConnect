@@ -19,31 +19,4 @@ public class BeerconnectApplication {
 		SpringApplication.run(BeerconnectApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner commandLineRunner(ClientReviewService clientReviewService, ClientService clientService){
-		return args -> {
-			Client client = new Client(
-					"damiano",
-					"damianoficaxdxd@gmail.com",
-					2004,
-					"canzo",
-					"qualunque");
-
-			Beer beer = new Beer(
-					"xmas",
-					"lager",
-					"strong",
-					6.5,
-					"green",
-					"ireland",
-					"luppolo",
-					5.0f,
-					100
-			);
-
-			ClientReview clientReview = new ClientReview(client, beer,4, "Birra molto buona");
-			clientReviewService.addReview(clientReview);
-		};
-	}
-
 }

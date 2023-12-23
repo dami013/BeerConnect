@@ -44,6 +44,10 @@ public class Client {
         this.preferences = preferences;
     }
 
+    public Client(Long idClient) {
+        this.idClient = idClient;
+    }
+
     public Client() {
 
     }

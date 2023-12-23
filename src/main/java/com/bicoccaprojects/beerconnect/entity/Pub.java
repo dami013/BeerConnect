@@ -29,6 +29,10 @@ public class Pub {
         this.yearOfFoundation = yearOfFoundation;
     }
 
+    public Pub(Long idPub) {
+        this.idPub = idPub;
+    }
+
     public Pub() {}
 
     @OneToMany(mappedBy = "pub")
