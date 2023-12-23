@@ -1,5 +1,6 @@
 package com.bicoccaprojects.beerconnect.entity;
 
+import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 public class Client {
     @Id
     @SequenceGenerator(name="client_sequence", sequenceName = "client_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
+    @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence") // generate an ID that starts from 1 and increments by 1 for each new entity
     @Column(name = "id_client", updatable = false)
     private Long idClient;
 
@@ -31,13 +32,8 @@ public class Client {
     @Column(name = "preferences", nullable = false, columnDefinition = "TEXT")
     private String preferences;
 
-    @ManyToMany
-    @JoinTable(
-            name = "client review",
-            joinColumns = @JoinColumn(name = "id_client"),
-            inverseJoinColumns = @JoinColumn(name = "id_beer")
-    )
-    private List<Beer> beers;
+    @OneToMany(mappedBy = "idClient")
+    private List<ClientReview> clientReviews;
 
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
@@ -48,6 +44,10 @@ public class Client {
         this.preferences = preferences;
     }
 
+    public Client(Long idClient) {
+        this.idClient = idClient;
+    }
+
     public Client() {
 
     }
@@ -56,7 +56,7 @@ public class Client {
         return idClient;
     }
 
-    public void setIdClient(Long id) {
+    public void setIdClient(java.lang.Long id) {
         this.idClient = id;
     }
 

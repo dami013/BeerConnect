@@ -16,10 +16,10 @@ public class ClientService {
         return  clientRespository.findAll();
     }
 
-    public Optional<Client> getClient(Long id) {
+    public Optional<Client> getClient(java.lang.Long id) {
         return clientRespository.findById(id);
     }
-    public void deleteClient(Long id) {
+    public void deleteClient(java.lang.Long id) {
         clientRespository.deleteById(id);
     }
     public void deleteClients() {

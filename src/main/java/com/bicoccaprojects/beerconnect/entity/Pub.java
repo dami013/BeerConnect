@@ -6,9 +6,7 @@ import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-// di default viene dato il nome della classe ma è buona pratica specificare
-// utile nel caso in cui nome della classe è molto lungo ma nome entità è diverso
-@Entity(name="Pub") // serve a mappare questa tabella nel DB
+@Entity(name="Pub")
 public class Pub {
     @Id
     @SequenceGenerator(name="pub_sequence", sequenceName = "pub_sequence", allocationSize = 1)
@@ -31,9 +29,11 @@ public class Pub {
         this.yearOfFoundation = yearOfFoundation;
     }
 
-    public Pub() {
-
+    public Pub(Long idPub) {
+        this.idPub = idPub;
     }
+
+    public Pub() {}
 
     @OneToMany(mappedBy = "pub")
     private List<Beer> beers;
