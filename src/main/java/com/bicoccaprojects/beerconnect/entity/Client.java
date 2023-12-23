@@ -45,10 +45,10 @@ public class Client {
             @UniqueConstraint(columnNames = {"client_id", "followed_id"})
     }
     )
-    private List<Client> followers = new ArrayList<>();
+    private List<Client> followers = new ArrayList<>(); // lazy initialization
 
     @ManyToMany(mappedBy = "followers")
-    private List<Client> following = new ArrayList<>();
+    private List<Client> following = new ArrayList<>(); // lazy initialization
 
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
@@ -71,7 +71,7 @@ public class Client {
         return idClient;
     }
 
-    public void setIdClient(java.lang.Long id) {
+    public void setIdClient(Long id) {
         this.idClient = id;
     }
 
