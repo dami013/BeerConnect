@@ -3,6 +3,7 @@ package com.bicoccaprojects.beerconnect.entity;
 import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
@@ -34,6 +35,17 @@ public class Client {
 
     @OneToMany(mappedBy = "idClient")
     private List<ClientReview> clientReviews;
+
+    @ManyToMany
+    @JoinTable(
+            name = "client_follow",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+    private List<Client> followers = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "followers")
+    private List<Client> following = new ArrayList<>();
 
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
@@ -98,6 +110,14 @@ public class Client {
 
     public void setPreferences(String preferences) {
         this.preferences = preferences;
+    }
+
+    public List<Client> getFollowers(){
+        return followers;
+    }
+
+    public List<Client> getFollowing(){
+        return following;
     }
 
     @Override

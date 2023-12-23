@@ -22,5 +22,15 @@ public class BeerconnectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BeerconnectApplication.class, args);
 	}
-	
+	@Bean
+	CommandLineRunner commandLineRunner(ClientService clientService){
+		return args -> {
+			Client client1 = new Client(3L);
+
+			Client client2 = new Client(4L);
+
+			clientService.followClient(client1,client2);
+
+		};
+	}
 }
