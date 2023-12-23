@@ -26,12 +26,6 @@ public class ClientReviewService {
     public void deleteReviews() {
         clientReviewRepository.deleteAll();
     }
-    public void addReview(ClientReview clientReview) {
-
-
-        clientReviewRepository.save(clientReview);
-    }
-    public void updateReview(ClientReview clientReview) {
-        clientReviewRepository.save(clientReview);
-    }
+    public void addReview(ClientReview clientReview) {clientReviewRepository.save(clientReview);}
+    public void updateReview(ClientReview clientReview) {clientReviewRepository.save(clientReview);}
 }

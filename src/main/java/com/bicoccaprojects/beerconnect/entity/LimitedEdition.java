@@ -15,8 +15,8 @@ public class LimitedEdition extends Beer{
     @Column(name = "production_year", columnDefinition = "INTEGER")
     private Integer productionYear;
 
-    public LimitedEdition(String name_beer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, String originalBeer, Integer productionYear) {
-        super(name_beer, type, aroma, alcohol, color, country, ingredients, price, quantityInStock);
+    public LimitedEdition(String nameBeer, Pub idPub, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, String originalBeer, Integer productionYear) {
+        super(nameBeer, idPub, type, aroma, alcohol, color, country, ingredients, price, quantityInStock);
         this.originalBeer = originalBeer;
         this.productionYear = productionYear;
     }
