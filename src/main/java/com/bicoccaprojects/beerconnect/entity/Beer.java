@@ -67,8 +67,9 @@ public class Beer {
     private List<ClientReview> clientReviews;
 
 
-    public Beer(String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
+    public Beer(String nameBeer, Pub idPub, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
         this.nameBeer = nameBeer;
+        this.pub = idPub;
         this.type = type;
         this.aroma = aroma;
         this.alcohol = alcohol;
