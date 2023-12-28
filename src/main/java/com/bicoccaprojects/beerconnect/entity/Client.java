@@ -3,7 +3,6 @@ package com.bicoccaprojects.beerconnect.entity;
 import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,17 +39,19 @@ public class Client {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "client_follow",
+            name = "client_to_client",
             joinColumns = @JoinColumn(name = "client_id"),
-            inverseJoinColumns = @JoinColumn(name = "followed_id"),
+            inverseJoinColumns = @JoinColumn(name = "id_client_followed"),
             uniqueConstraints = {
-                    @UniqueConstraint(columnNames = {"client_id", "followed_id"})
+                    @UniqueConstraint(columnNames = {"client_id", "id_client_followed"})
             })
 
-    private Set<Client> followers = new HashSet<Client>(); // lazy initialization
+    // altri utenti che seguono il Client soggetto
+    private Set<Client> clientFollowers = new HashSet<Client>(); // lazy initialization
 
-    @ManyToMany(mappedBy = "followers")
-    private Set<Client> following = new HashSet<Client>(); // lazy initialization
+    // utenti seguiti dal client soggetto
+    @ManyToMany(mappedBy = "clientFollowers")
+    private Set<Client> followedByClient = new HashSet<Client>(); // lazy initialization
 
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
@@ -117,20 +118,20 @@ public class Client {
         this.preferences = preferences;
     }
 
-    public Set<Client> getFollowers(){
-        return followers;
+    public Set<Client> getClientFollowers(){
+        return clientFollowers;
     }
 
-    public Set<Client> getFollowing(){
-        return following;
+    public Set<Client> getFollowedByClient(){
+        return followedByClient;
     }
 
-    public void setFollowers(Set<Client> followers) {
-        this.followers = followers;
+    public void setClientFollowers(Set<Client> followers) {
+        this.clientFollowers = followers;
     }
 
-    public void setFollowing(Set<Client> following) {
-        this.following = following;
+    public void setFollowedByClient(Set<Client> following) {
+        this.followedByClient = following;
     }
 
     @Override
