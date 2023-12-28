@@ -23,8 +23,8 @@ public class BeerconnectApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(ClientService clientService) {
 		return args -> {
-			Optional<Client> customer = clientService.getClient(2L);
-			Optional<Client> customerFriend = clientService.getClient(1L);
+			Optional<Client> customer = clientService.getClient(1L);
+			Optional<Client> customerFriend = clientService.getClient(2L);
 
 			if (customer.isPresent() && customerFriend.isPresent()) {
 				Client client = customer.get();
@@ -34,7 +34,7 @@ public class BeerconnectApplication {
 				clientService.followedByClient(client, friend);
 
 				// Stampa tutti i seguiti del cliente
-				clientService.printClientFollowed(friend);
+				clientService.printFollowedByClient(client);
 			} else {
 				System.out.println("errore");
 			}
