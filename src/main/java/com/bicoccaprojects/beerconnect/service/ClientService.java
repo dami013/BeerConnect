@@ -45,18 +45,17 @@ public class ClientService {
     }
 
     @Transactional
-    public void followedByClient(Client client, Client followed) {
+    public void followedByClient(Client soggetto, Client followed) {
         // Carica le liste all'interno della stessa transazione
-        client = clientRepository.findById(client.getIdClient()).orElse(null);
+        soggetto = clientRepository.findById(soggetto.getIdClient()).orElse(null);
         followed = clientRepository.findById(followed.getIdClient()).orElse(null);
 
-        if (client != null && followed != null) {
+        if (soggetto != null && followed != null) {
             // Aggiungi la relazione di follow
-            client.getFollowing().add(followed);
-            followed.getFollowers().add(client);
+            soggetto.getFollowedByClient().add(followed); // followed è un Client che viene seguito dall'client soggetto
+            followed.getClientFollowers().add(soggetto); // ai follower di questo client viene aggiunto 'soggetto'
 
-            // Salva le modifiche nel repository
-            clientRepository.save(client);
+            clientRepository.save(soggetto);
             clientRepository.save(followed);
         } else {
             System.out.println("errore");
@@ -64,31 +63,28 @@ public class ClientService {
     }
 
     @Transactional
-    public void unfollowClient(Client client, Client followed) {
-        client.getFollowing().remove(followed);
-        followed.getFollowers().remove(client);
-        clientRepository.save(client);
-        clientRepository.save(followed);
-    }
-    @Transactional
-    public void printClientFollowed(Client client) {
-        // Carica il client all'interno della stessa transazione
+    public void printFollowedByClient(Client client) {
         client = clientRepository.findById(client.getIdClient()).orElse(null);
 
         if (client != null) {
-            Set<Client> followers = client.getFollowers();
-            System.out.println("Followers for Client " + client.getIdClient() + ":");
+            Set<Client> followedByClient = client.getFollowedByClient();
+            System.out.println("Client " + client.getIdClient() + " follows: ");
 
-            for (Client follower : followers) {
-                System.out.println("  - " + follower.getNameClient());  // Assuming there is a 'getName()' method in the Client class
+            for (Client followed : followedByClient) {
+                System.out.println("  - " + followed.getNameClient());
             }
         } else {
             System.out.println("Client not found");
         }
     }
 
-
-
+    @Transactional
+    public void unfollowClient(Client client, Client followed) {
+        client.getFollowedByClient().remove(followed);
+        followed.getClientFollowers().remove(client);
+        clientRepository.save(client);
+        clientRepository.save(followed);
+    }
 
 }
 
