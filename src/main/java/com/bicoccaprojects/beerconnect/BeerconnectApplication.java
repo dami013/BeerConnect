@@ -1,19 +1,16 @@
 package com.bicoccaprojects.beerconnect;
 
-import com.bicoccaprojects.beerconnect.entity.Beer;
+
 import com.bicoccaprojects.beerconnect.entity.Client;
-import com.bicoccaprojects.beerconnect.entity.LimitedEdition;
-import com.bicoccaprojects.beerconnect.entity.Pub;
-import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
-import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.ClientService;
-import com.bicoccaprojects.beerconnect.service.LimitedEditionService;
-import com.bicoccaprojects.beerconnect.service.relational_service.ClientReviewService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Optional;
+
 
 @SpringBootApplication
 @EntityScan(basePackages = "com.bicoccaprojects.beerconnect")
@@ -22,15 +19,25 @@ public class BeerconnectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BeerconnectApplication.class, args);
 	}
+
 	@Bean
-	CommandLineRunner commandLineRunner(ClientService clientService){
+	CommandLineRunner commandLineRunner(ClientService clientService) {
 		return args -> {
-			Client client1 = new Client(3L);
+			Optional<Client> customer = clientService.getClient(2L);
+			Optional<Client> customerFriend = clientService.getClient(1L);
 
-			Client client2 = new Client(4L);
+			if (customer.isPresent() && customerFriend.isPresent()) {
+				Client client = customer.get();
+				Client friend = customerFriend.get();
 
-			clientService.followClient(client1,client2);
+				// Aggiungi la relazione di follow
+				clientService.followedByClient(client, friend);
 
+				// Stampa tutti i seguiti del cliente
+				clientService.printClientFollowed(friend);
+			} else {
+				System.out.println("errore");
+			}
 		};
 	}
 }

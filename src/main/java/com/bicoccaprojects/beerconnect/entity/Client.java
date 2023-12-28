@@ -4,7 +4,9 @@ import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -36,19 +38,19 @@ public class Client {
     @OneToMany(mappedBy = "idClient")
     private List<ClientReview> clientReviews;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "client_follow",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "followed_id"),
             uniqueConstraints = {
-            @UniqueConstraint(columnNames = {"client_id", "followed_id"})
-    }
-    )
-    private List<Client> followers = new ArrayList<>(); // lazy initialization
+                    @UniqueConstraint(columnNames = {"client_id", "followed_id"})
+            })
+
+    private Set<Client> followers = new HashSet<Client>(); // lazy initialization
 
     @ManyToMany(mappedBy = "followers")
-    private List<Client> following = new ArrayList<>(); // lazy initialization
+    private Set<Client> following = new HashSet<Client>(); // lazy initialization
 
 
     public Client(String name, String email, Integer date_birth, String address, String preferences) {
@@ -115,12 +117,20 @@ public class Client {
         this.preferences = preferences;
     }
 
-    public List<Client> getFollowers(){
+    public Set<Client> getFollowers(){
         return followers;
     }
 
-    public List<Client> getFollowing(){
+    public Set<Client> getFollowing(){
         return following;
+    }
+
+    public void setFollowers(Set<Client> followers) {
+        this.followers = followers;
+    }
+
+    public void setFollowing(Set<Client> following) {
+        this.following = following;
     }
 
     @Override
