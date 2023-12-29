@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,4 +43,7 @@ public class PubService {
     public void updatePub(Pub beer) {
         pubRepository.save(beer);
     }
+
+    @Transactional
+    public List<String> findBeerByPub(Long idPub){ return pubRepository.findBeerByPub(idPub); }
 }

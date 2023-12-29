@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,4 +43,7 @@ public class LimitedEditionService extends BeerService {
     public void updateLEBeer(LimitedEdition leBeer) {
         limitedEditionRepository.save(leBeer);
     }
+
+    @Transactional
+    public List<String> findLEBeer(String originalBeer){ return limitedEditionRepository.findLEByBeer(originalBeer); }
 }

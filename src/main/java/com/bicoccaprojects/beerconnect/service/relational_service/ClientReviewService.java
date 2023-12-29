@@ -3,10 +3,12 @@ package com.bicoccaprojects.beerconnect.service.relational_service;
 import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import com.bicoccaprojects.beerconnect.repository.relational_repository.ClientReviewRepository;
+import com.bicoccaprojects.beerconnect.service.LimitedEditionService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,4 +41,7 @@ public class ClientReviewService {
 
     @Transactional
     public void updateReview(ClientReview clientReview) {clientReviewRepository.save(clientReview);}
+
+    @Transactional
+    public List<String> clientList(String country, int rating){ return clientReviewRepository.findClientByReview(country, rating);}
 }

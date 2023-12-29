@@ -2,13 +2,18 @@ package com.bicoccaprojects.beerconnect;
 
 
 import com.bicoccaprojects.beerconnect.entity.Client;
+import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.ClientService;
+import com.bicoccaprojects.beerconnect.service.LimitedEditionService;
+import com.bicoccaprojects.beerconnect.service.PubService;
+import com.bicoccaprojects.beerconnect.service.relational_service.ClientReviewService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -21,6 +26,22 @@ public class BeerconnectApplication {
 	}
 
 	@Bean
+	CommandLineRunner commandLineRunner(ClientReviewService clientReviewService,
+										PubService pubService,
+										LimitedEditionService limitedEditionService){
+		return args -> {
+			List<String> listUser = clientReviewService.clientList("Germany", 4);
+			System.out.println(listUser);
+
+			List<String> listBeer = pubService.findBeerByPub(1L);
+			System.out.println(listBeer);
+
+			List<String> listLE = limitedEditionService.findLEBeer("Beer1");
+			System.out.println(listLE);
+		};
+	}
+
+	/*@Bean
 	CommandLineRunner commandLineRunner(ClientService clientService) {
 		return args -> {
 			Optional<Client> customer = clientService.getClient(1L);
@@ -39,5 +60,5 @@ public class BeerconnectApplication {
 				System.out.println("errore");
 			}
 		};
-	}
+	}*/
 }
