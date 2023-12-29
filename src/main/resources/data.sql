@@ -19,3 +19,5 @@ INSERT INTO client (id_client, name_client, email, date_birth, address, preferen
                                                                               (1,'Client1', 'client1@example.com', 1990, 'Address1', 'Preference1'),
                                                                               (2,'Client2', 'client2@example.com', 1985, 'Address2', 'Preference2');
 
+INSERT INTO client_review (id_review, id_beer, id_client, review, rating) VALUES
+                                                                              (1, 2, 2, 'Birra molto buona', 4);
