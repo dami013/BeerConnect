@@ -1,8 +1,6 @@
 package com.bicoccaprojects.beerconnect;
 
 
-import com.bicoccaprojects.beerconnect.entity.Client;
-import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.ClientService;
 import com.bicoccaprojects.beerconnect.service.LimitedEditionService;
 import com.bicoccaprojects.beerconnect.service.PubService;
@@ -14,7 +12,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @SpringBootApplication
@@ -28,7 +25,8 @@ public class BeerconnectApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(ClientReviewService clientReviewService,
 										PubService pubService,
-										LimitedEditionService limitedEditionService){
+										LimitedEditionService limitedEditionService,
+										ClientService clientService){
 		return args -> {
 			List<String> listUser = clientReviewService.clientList("Germany", 4);
 			System.out.println(listUser);
@@ -38,6 +36,16 @@ public class BeerconnectApplication {
 
 			List<String> listLE = limitedEditionService.findLEBeer("Beer1");
 			System.out.println(listLE);
+
+			List<String> listFollowers = clientService.getFollowersPreferences(1L);
+			System.out.println("1L è seguito da: " + listFollowers);
+
+			List<String> listFollowed = clientService.getFollowedPreferences(1L);
+			if(listFollowed.isEmpty()){
+				System.out.println("1L non è seguito da nessuno");
+			}else {
+				System.out.println("1L segue: " + listFollowed);
+			}
 		};
 	}
 

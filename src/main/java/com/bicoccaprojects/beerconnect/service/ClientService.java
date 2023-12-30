@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -85,6 +86,12 @@ public class ClientService {
         clientRepository.save(client);
         clientRepository.save(followed);
     }
+
+    @Transactional
+    public List<String> getFollowersPreferences(Long id){ return clientRepository.findPreferencesOfFollowersOfId(id);}
+
+    @Transactional
+    public List<String> getFollowedPreferences(Long id){ return clientRepository.findPreferencesOfFollowedById(id);}
 
 }
 
