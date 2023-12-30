@@ -4,13 +4,13 @@ import com.bicoccaprojects.beerconnect.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import java.lang.Long;
 import java.util.List;
 import java.util.Optional;
 
-public interface ClientRepository extends JpaRepository<Client, java.lang.Long> {
+public interface ClientRepository extends JpaRepository<Client, Long> {
     @Override
-    Optional<Client> findById(java.lang.Long id);
+    Optional<Client> findById(Long id);
     @Query("SELECT c FROM Client c LEFT JOIN FETCH c.followedByClient WHERE c.idClient = :id")
     Optional<Client> findByIdWithFollowing(@Param("id") Long id);
 

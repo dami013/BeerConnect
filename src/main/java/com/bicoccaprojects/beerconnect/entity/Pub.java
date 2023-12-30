@@ -14,13 +14,13 @@ public class Pub {
     @Column(name = "id_pub", updatable = false)
     private Long idPub;
 
-    @Column(name = "name_pub", nullable = false, columnDefinition = "TEXT") // nullable = false -> not null, "TEXT"-> varchar
+    @Column(name = "name_pub", nullable = false) // nullable = false -> not null, "TEXT"-> varchar
     private String namePub;
 
-    @Column(name = "country", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "year_of_foundation", nullable = false, columnDefinition = "INTEGER")
+    @Column(name = "year_of_foundation", nullable = false)
     private Integer yearOfFoundation;
 
     public Pub(String name, String address, Integer yearOfFoundation) {

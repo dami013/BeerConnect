@@ -26,31 +26,31 @@ public class Beer {
     @Column(name = "id_beer", updatable = false)
     private Long idBeer;
 
-    @Column(name = "name_beer", nullable = false, columnDefinition = "TEXT", unique = true)
+    @Column(name = "name_beer", nullable = false, unique = true)
     private String nameBeer;
 
-    @Column(name = "type", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "aroma", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "aroma", nullable = false)
     private String aroma;
 
-    @Column(name = "alcohol", nullable = false, columnDefinition = "FLOAT")
+    @Column(name = "alcohol", nullable = false)
     private Double alcohol;
 
-    @Column(name = "color", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "color", nullable = false)
     private String color;
 
-    @Column(name = "country", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "ingredients", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "ingredients", nullable = false)
     private String ingredients;
 
-    @Column(name = "price", nullable = false, columnDefinition = "FLOAT")
+    @Column(name = "price", nullable = false)
     private Float price;
 
-    @Column(name = "quantity_in_stock", nullable = false, columnDefinition = "INTEGER")
+    @Column(name = "quantity_in_stock", nullable = false)
     private Integer quantityInStock;
 
     // Aggiungi una colonna discriminatoria per identificare il tipo di birra

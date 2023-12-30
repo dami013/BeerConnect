@@ -19,19 +19,19 @@ public class Client {
     @Column(name = "id_client", updatable = false)
     private Long idClient;
 
-    @Column(name = "name_client", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "name_client", nullable = false)
     private String nameClient;
 
-    @Column(name = "email", nullable = false, columnDefinition = "TEXT", unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "date_birth", nullable = false, columnDefinition = "INTEGER")
+    @Column(name = "date_birth", nullable = false)
     private Integer dateBirth;
 
-    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "preferences", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "preferences", nullable = false)
     private String preferences;
 
     @OneToMany(mappedBy = "idClient")

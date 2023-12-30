@@ -27,10 +27,10 @@ public class ClientReview {
     @JoinColumn(name = "id_beer")
     private Beer idBeer;
 
-    @Column(name = "review", columnDefinition = "TEXT")
+    @Column(name = "review")
     private String review;
 
-    @Column(name = "rating", nullable = false, columnDefinition = "INTEGER")
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
     @PrePersist
