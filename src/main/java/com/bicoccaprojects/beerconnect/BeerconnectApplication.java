@@ -1,6 +1,7 @@
 package com.bicoccaprojects.beerconnect;
 
 
+import com.bicoccaprojects.beerconnect.entity.Client;
 import com.bicoccaprojects.beerconnect.service.ClientService;
 import com.bicoccaprojects.beerconnect.service.LimitedEditionService;
 import com.bicoccaprojects.beerconnect.service.PubService;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootApplication
@@ -46,6 +48,23 @@ public class BeerconnectApplication {
 			}else {
 				System.out.println("1L segue: " + listFollowed);
 			}
+
+			Optional<Client> customer = clientService.getClient(1L);
+			Optional<Client> customerFriend = clientService.getClient(2L);
+
+			if (customer.isPresent() && customerFriend.isPresent()) {
+				Client client = customer.get();
+				Client friend = customerFriend.get();
+
+				// Aggiungi la relazione di follow
+				clientService.unfollowClient(client, friend);
+
+				// Stampa tutti i seguiti del cliente
+				clientService.printFollowedByClient(client);
+			} else {
+				System.out.println("errore");
+			}
+
 		};
 	}
 
