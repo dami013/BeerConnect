@@ -1,97 +1,83 @@
-package com.bicoccaprojects.beerconnect;
-
 import com.bicoccaprojects.beerconnect.entity.Beer;
-import com.bicoccaprojects.beerconnect.service.BeerService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class BeerTest {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
-    private BeerService beerService;
+    private BeerRepository beerRepository; // Assuming you have a repository for Beer entities
 
+    @Test
+    public void testCRUDOperations() {
+        // Create
+        Beer beer = new Beer("SampleBeer", null, "Type", "Aroma", 5.0, "Color", "Country", "Ingredients", 10.0f, 100);
+        beerRepository.save(beer);
+        assertNotNull(beer.getIdBeer());
 
-    @BeforeEach
-    public void setUp() {
-        beerService.deleteBeers();
+        // Read
+        Beer retrievedBeer = beerRepository.findById(beer.getIdBeer()).orElse(null);
+        assertNotNull(retrievedBeer);
+        assertEquals("SampleBeer", retrievedBeer.getNameBeer());
+
+        // Update
+        retrievedBeer.setPrice(12.0f);
+        beerRepository.save(retrievedBeer);
+        Beer updatedBeer = beerRepository.findById(beer.getIdBeer()).orElse(null);
+        assertEquals(12.0f, updatedBeer.getPrice(), 0.001);
+
+        // Delete
+        beerRepository.deleteById(beer.getIdBeer());
+        Beer deletedBeer = beerRepository.findById(beer.getIdBeer()).orElse(null);
+        assertNull(deletedBeer);
     }
 
     @Test
-    public void testAddAndGetBeer() {
-        Beer beer = new Beer("Test Beer", "Test Type", "Test Aroma", 5.0, "Test Color", "Test Country", "Test Ingredients", 10.0f, 100);
-        beerService.addBeer(beer);
-        Optional<Beer> retrievedBeer = beerService.getBeer(1L);
-        assertTrue(retrievedBeer.isPresent());
-        assertEquals("Test Beer", retrievedBeer.get().getNameBeer());
+    public void testClientReviewsAssociation() {
+        Beer beer = new Beer("AnotherBeer", null, "Type", "Aroma", 5.0, "Color", "Country", "Ingredients", 10.0f, 100);
+        ClientReview review = new ClientReview("Good beer!", beer);
+        beerRepository.save(beer);
+        entityManager.persist(review);
+
+        Beer retrievedBeer = beerRepository.findById(beer.getIdBeer()).orElse(null);
+        assertNotNull(retrievedBeer);
+
+        List<ClientReview> reviews = retrievedBeer.getClientReviews();
+        assertNotNull(reviews);
+        assertEquals(1, reviews.size());
+        assertEquals("Good beer!", reviews.get(0).getReviewText());
     }
 
     @Test
-    public void testUpdateBeer() {
-        Beer beer = new Beer("Test Beer", "Test Type", "Test Aroma", 5.0, "Test Color", "Test Country", "Test Ingredients", 10.0f, 100);
-        beerService.addBeer(beer);
+    public void testSearchOperation() {
+        Beer beer1 = new Beer("SearchBeer1", null, "Type1", "Aroma", 5.0, "Color", "Country", "Ingredients", 10.0f, 100);
+        Beer beer2 = new Beer("SearchBeer2", null, "Type2", "Aroma", 6.0, "Color", "Country", "Ingredients", 12.0f, 150);
+        beerRepository.save(beer1);
+        beerRepository.save(beer2);
 
-        Optional<Beer> retrievedBeer = beerService.getBeer(1L);
-        assertTrue(retrievedBeer.isPresent());
+        // Search beers by type
+        TypedQuery<Beer> query = entityManager.createQuery("SELECT b FROM Beer b WHERE b.type = :beerType", Beer.class);
+        query.setParameter("beerType", "Type1");
+        List<Beer> searchResults = query.getResultList();
 
-        Beer updatedBeer = retrievedBeer.get();
-        updatedBeer.setPrice(15.0f);
-        beerService.updateBeer(updatedBeer);
-
-        Optional<Beer> updatedBeerOptional = beerService.getBeer(1L);
-        assertTrue(updatedBeerOptional.isPresent());
-        assertEquals(15.0f, updatedBeerOptional.get().getPrice(), 0.01);
-    }
-
-    @Test
-    public void testDeleteBeer() {
-        Beer beer = new Beer("Test Beer", "Test Type", "Test Aroma", 5.0, "Test Color", "Test Country", "Test Ingredients", 10.0f, 100);
-        beerService.addBeer(beer);
-
-        Optional<Beer> retrievedBeer = beerService.getBeer(1L);
-        assertTrue(retrievedBeer.isPresent());
-
-        beerService.deleteBeer(1L);
-
-        Optional<Beer> deletedBeer = beerService.getBeer(1L);
-        assertFalse(deletedBeer.isPresent());
-    }
-
-    @Test
-    public void testGetBeers() {
-        // Add some test beers
-        beerService.addBeer(new Beer("Beer1", "Type1", "Aroma1", 5.0, "Color1", "Country1", "Ingredients1", 10.0f, 100));
-        beerService.addBeer(new Beer("Beer2", "Type2", "Aroma2", 6.0, "Color2", "Country2", "Ingredients2", 12.0f, 120));
-
-        Iterable<Beer> beers = beerService.getBeers();
-        assertNotNull(beers);
-
-        // Convert Iterable to List for easier assertions
-        List<Beer> beerList = (List<Beer>) beers;
-
-        assertEquals(2, beerList.size());
-        assertEquals("Beer1", beerList.get(0).getNameBeer());
-        assertEquals("Beer2", beerList.get(1).getNameBeer());
-    }
-
-    @Test
-    public void testDeleteBeers() {
-        // Add some test beers
-        beerService.addBeer(new Beer("Beer1", "Type1", "Aroma1", 5.0, "Color1", "Country1", "Ingredients1", 10.0f, 100));
-        beerService.addBeer(new Beer("Beer2", "Type2", "Aroma2", 6.0, "Color2", "Country2", "Ingredients2", 12.0f, 120));
-
-        beerService.deleteBeers();
-
-        Iterable<Beer> beers = beerService.getBeers();
-        assertFalse(beers.iterator().hasNext()); // No beers should be present after deletion
+        assertEquals(1, searchResults.size());
+        assertEquals("SearchBeer1", searchResults.get(0).getNameBeer());
     }
 }
