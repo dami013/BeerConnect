@@ -13,11 +13,11 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Client")
 @Table(name = "client", uniqueConstraints = {
-                @UniqueConstraint(name = "client_email_unique", columnNames = "email")})
+                @UniqueConstraint(name = "client_email_unique", columnNames = "email")}) // email must be unique for each Client
 public class Client {
     @Id
     @SequenceGenerator(name="client_sequence", sequenceName = "client_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence") // generate an ID that starts from 1 and increments by 1 for each new entity
+    @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence")
     @Column(name = "id_client", updatable = false)
     private Long idClient;
 
@@ -28,7 +28,7 @@ public class Client {
     private String email;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "date_birth", nullable = true)
+    @Column(name = "date_birth", nullable = false)
     private LocalDate dateBirth;
 
 
@@ -38,6 +38,7 @@ public class Client {
     @Column(name = "preferences", nullable = false)
     private String preferences;
 
+    // Method that validates the date of birth by checking whether the client is > 18 years old
     @PrePersist
     @PreUpdate
     private void validateBirthDate() {
@@ -51,10 +52,12 @@ public class Client {
         }
     }
 
+    // foreign key for client_review table
     @OneToMany(mappedBy = "idClient", cascade = CascadeType.REMOVE)
     private List<ClientReview> clientReviews;
 
-    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY) // prima era FetchType.EAGER
+    // self-loop relationship between clients
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "client_to_client",
             joinColumns = @JoinColumn(name = "client_id"),
@@ -62,14 +65,10 @@ public class Client {
             uniqueConstraints = {
                     @UniqueConstraint(columnNames = {"client_id", "id_client_followed"})
             })
+    private Set<Client> clientFollowers = new HashSet<Client>(); // altri utenti che seguono il Client soggetto
 
-    // altri utenti che seguono il Client soggetto
-    private Set<Client> clientFollowers = new HashSet<Client>();
-
-    // utenti seguiti dal client soggetto
     @ManyToMany(mappedBy = "clientFollowers", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private Set<Client> followedByClient = new HashSet<Client>();
-
+    private Set<Client> followedByClient = new HashSet<Client>(); // utenti seguiti dal client soggetto
 
     public Client(String name, String email, LocalDate date_birth, String address, String preferences) {
         this.nameClient = name;
@@ -79,6 +78,7 @@ public class Client {
         this.preferences = preferences;
     }
 
+    // constructors
     public Client(Long idClient) {
         this.idClient = idClient;
     }
@@ -86,6 +86,8 @@ public class Client {
     public Client() {
 
     }
+
+    // setter and getter
 
     public Long getIdClient() {
         return idClient;

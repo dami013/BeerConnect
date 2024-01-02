@@ -8,12 +8,14 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 @Entity
 @DiscriminatorValue("limited")
 @PrimaryKeyJoinColumn(name = "id_beer") // Indicates the foreign key relationship
-public class LimitedEdition extends Beer{
+public class LimitedEdition extends Beer{ // class that extend Beer, a LimitedEditon beer is a special beer crafted from a regular beer
     @Column(name = "original_beer")
     private String originalBeer;
 
     @Column(name = "production_year")
     private Integer productionYear;
+
+    // constructors
 
     public LimitedEdition(String nameBeer, Pub idPub, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, String originalBeer, Integer productionYear) {
         super(nameBeer, idPub, type, aroma, alcohol, color, country, ingredients, price, quantityInStock);
@@ -23,6 +25,8 @@ public class LimitedEdition extends Beer{
 
     public LimitedEdition() {
     }
+
+    // getter and setter
 
     public String getOriginalBeer() {
         return originalBeer;

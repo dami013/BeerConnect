@@ -9,7 +9,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name = "client_review",
         uniqueConstraints = @UniqueConstraint(columnNames = {"id_client", "id_beer"}))
-public class ClientReview {
+public class ClientReview { // this intermediate entity add 2 fields to the relationship between Client and Beer
     @Id
     @SequenceGenerator(name="review_sequence", sequenceName = "review_sequence", allocationSize = 1)
     @GeneratedValue(strategy = SEQUENCE, generator = "review_sequence")
@@ -18,7 +18,6 @@ public class ClientReview {
 
     // despite using @ManyToOne tag, this is a @ManyToMany relationship
     // this intermediate entity allow the ManyToMany relationship
-
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client idClient;
@@ -33,6 +32,7 @@ public class ClientReview {
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
+    // Method that validates whether the rating is between 1 and 5
     @PrePersist
     @PreUpdate
     private void validateRating() {
@@ -40,6 +40,8 @@ public class ClientReview {
             throw new IllegalStateException("Il rating deve essere compreso tra 1 e 5.");
         }
     }
+
+    // constructors
 
     public ClientReview(Client idClient, Beer idBeer, Integer rating, String review) {
         this.idClient = idClient;
@@ -50,6 +52,8 @@ public class ClientReview {
 
     public ClientReview() {
     }
+
+    // getter and setter
 
     public Long getIdReview() {
         return idReview;

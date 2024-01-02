@@ -13,7 +13,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Table(
         name = "beer",
         uniqueConstraints = {
-                @UniqueConstraint(name = "beer_name_unique", columnNames = "name_beer")
+                @UniqueConstraint(name = "beer_name_unique", columnNames = "name_beer") // name_beer must be unique for each Beer
         }
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -53,20 +53,23 @@ public class Beer {
     @Column(name = "quantity_in_stock", nullable = false)
     private Integer quantityInStock;
 
-    // Aggiungi una colonna discriminatoria per identificare il tipo di birra
+    // Add a discriminatory column to identify if the beer is normal or limited edition
     @Column(name = "beer_type", insertable = false, updatable = false)
     private String beerType;
 
-    // un birrificio può produrre tante birre ma una birra è prodotta da un solo birrificio
-    // quando si crea una birra va assegnata a un birrificio
+    // Many-to-one relationship between Pub and Beer entity,
+    // each pub can make N beers but each beer can only be produced by one pub
     @ManyToOne
-    @JoinColumn(name = "id_pub") // id del pub
+    @JoinColumn(name = "id_pub")
     private Pub pub;
 
+    // Many-to-Many relationship between Beer and Client,
+    // Each beer can be reviewed by N customers and each customer can review N beers.
+    // Here the OneToMany tag is used because there is an intermediate entity that contains 2 other attributes for this relationship
     @OneToMany(mappedBy = "idBeer")
     private List<ClientReview> clientReviews;
 
-
+    // constructors
     public Beer(String nameBeer, Pub idPub, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
         this.nameBeer = nameBeer;
         this.pub = idPub;
@@ -87,6 +90,8 @@ public class Beer {
     public Beer() {
 
     }
+
+    // getter and setter
 
     public Long getIdBeer() {
         return idBeer;
