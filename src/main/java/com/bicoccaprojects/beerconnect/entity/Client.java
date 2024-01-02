@@ -2,7 +2,9 @@ package com.bicoccaprojects.beerconnect.entity;
 
 import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,8 +27,10 @@ public class Client {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "date_birth", nullable = false)
-    private Integer dateBirth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date_birth", nullable = true)
+    private LocalDate dateBirth;
+
 
     @Column(name = "address", nullable = false)
     private String address;
@@ -34,10 +38,23 @@ public class Client {
     @Column(name = "preferences", nullable = false)
     private String preferences;
 
-    @OneToMany(mappedBy = "idClient")
+    @PrePersist
+    @PreUpdate
+    private void validateBirthDate() {
+        if (dateBirth != null) {
+            LocalDate now = LocalDate.now();
+            LocalDate eighteenYearsAgo = now.minusYears(18);
+
+            if (dateBirth.isAfter(eighteenYearsAgo)) {
+                throw new IllegalStateException("You must be of legal age.");
+            }
+        }
+    }
+
+    @OneToMany(mappedBy = "idClient", cascade = CascadeType.REMOVE)
     private List<ClientReview> clientReviews;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY) // prima era FetchType.EAGER
     @JoinTable(
             name = "client_to_client",
             joinColumns = @JoinColumn(name = "client_id"),
@@ -47,14 +64,14 @@ public class Client {
             })
 
     // altri utenti che seguono il Client soggetto
-    private Set<Client> clientFollowers = new HashSet<Client>(); // lazy initialization
+    private Set<Client> clientFollowers = new HashSet<Client>();
 
     // utenti seguiti dal client soggetto
-    @ManyToMany(mappedBy = "clientFollowers")
-    private Set<Client> followedByClient = new HashSet<Client>(); // lazy initialization
+    @ManyToMany(mappedBy = "clientFollowers", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Set<Client> followedByClient = new HashSet<Client>();
 
 
-    public Client(String name, String email, Integer date_birth, String address, String preferences) {
+    public Client(String name, String email, LocalDate date_birth, String address, String preferences) {
         this.nameClient = name;
         this.email = email;
         this.dateBirth = date_birth;
@@ -94,11 +111,11 @@ public class Client {
         this.email = email;
     }
 
-    public Integer getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(Integer date_birth) {
+    public void setDateBirth(LocalDate date_birth) {
         this.dateBirth = date_birth;
     }
 

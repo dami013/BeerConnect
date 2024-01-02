@@ -35,7 +35,7 @@ public class Pub {
 
     public Pub() {}
 
-    @OneToMany(mappedBy = "pub")
+    @OneToMany(mappedBy = "pub", cascade = CascadeType.REMOVE)
     private List<Beer> beers;
 
 
