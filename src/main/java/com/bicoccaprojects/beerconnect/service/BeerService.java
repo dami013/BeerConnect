@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,4 +44,10 @@ public class BeerService {
     public void updateBeer(Beer beer) {
         beerRepository.save(beer);
     }
+
+    @Transactional
+    public List<String> searchBeerByType(String type){ return beerRepository.searchBeerByType(type);}
+
+    @Transactional
+    public List<String> searchBeerByName(String name){ return beerRepository.searchBeerByName(name);}
 }
