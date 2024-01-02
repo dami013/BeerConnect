@@ -33,18 +33,18 @@ INSERT INTO beer (id_beer,name_beer, type, aroma, alcohol, color, country, ingre
 
 -- Inserisci alcuni dati per la tabella Client
 INSERT INTO client (id_client, name_client, email, date_birth, address, preferences) VALUES
-    (1,'Damian Ficher', 'damian.ficher@example.com', 2000, '222 Station Road', 'IPA'),
-    (2,'Claude Roche', 'claude.roche@example.com', 1940, '1 Oak Avenue', 'Pale Ale'),
-    (3, 'John Doe', 'john.doe@example.com', 1982, '123 Main Street', 'IPA'),
-    (4, 'Jane Smith', 'jane.smith@example.com', 1995, '456 Oak Avenue', 'Stout'),
-    (5, 'Alice Johnson', 'alice.johnson@example.com', 1988, '789 Pine Lane', 'Porter'),
-    (6, 'Bob Miller', 'bob.miller@example.com', 1976, '101 Cedar Road', 'Wheat Beer'),
-    (7, 'Emily Brown', 'emily.brown@example.com', 1991, '202 Elm Street', 'Pale Ale'),
-    (8, 'David Taylor', 'david.taylor@example.com', 1980, '303 Birch Boulevard', 'Porter'),
-    (9, 'Sophia Anderson', 'sophia.anderson@example.com', 1993, '404 Maple Court', 'Amber Ale'),
-    (10, 'Michael Wilson', 'michael.wilson@example.com', 1979, '505 Willow Drive', 'Amber Ale'),
-    (11, 'Olivia White', 'olivia.white@example.com', 1986, '606 Cherry Lane', 'Saison'),
-    (12, 'Daniel Hall', 'daniel.hall@example.com', 1998, '707 Pineapple Avenue', 'Pilsner');
+    (1,'Damian Ficher', 'damian.ficher@example.com', '2000-05-13', '222 Station Road', 'IPA'),
+    (2,'Claude Roche', 'claude.roche@example.com', '1940-02-02', '1 Oak Avenue', 'Pale Ale'),
+    (3, 'John Doe', 'john.doe@example.com', '1982-12-05', '123 Main Street', 'IPA'),
+    (4, 'Jane Smith', 'jane.smith@example.com', '1995-01-28', '456 Oak Avenue', 'Stout'),
+    (5, 'Alice Johnson', 'alice.johnson@example.com', '1988-02-16', '789 Pine Lane', 'Porter'),
+    (6, 'Bob Miller', 'bob.miller@example.com', '1976-10-17', '101 Cedar Road', 'Wheat Beer'),
+    (7, 'Emily Brown', 'emily.brown@example.com', '1991-06-06', '202 Elm Street', 'Pale Ale'),
+    (8, 'David Taylor', 'david.taylor@example.com', '1980-07-20', '303 Birch Boulevard', 'Porter'),
+    (9, 'Sophia Anderson', 'sophia.anderson@example.com', '1993-12-22', '404 Maple Court', 'Amber Ale'),
+    (10, 'Michael Wilson', 'michael.wilson@example.com', '1979-09-19', '505 Willow Drive', 'Amber Ale'),
+    (11, 'Olivia White', 'olivia.white@example.com', '1986-11-30', '606 Cherry Lane', 'Saison'),
+    (12, 'Daniel Hall', 'daniel.hall@example.com', '1998-05-11', '707 Pineapple Avenue', 'Pilsner');
 
 INSERT INTO client_review (id_review, id_beer, id_client, review, rating) VALUES
     (1, 2, 2, 'Very good taste', 4),
