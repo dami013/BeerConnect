@@ -1,6 +1,9 @@
 package com.bicoccaprojects.beerconnect.service;
 
 import com.bicoccaprojects.beerconnect.entity.Client;
+import com.bicoccaprojects.beerconnect.exception.client.ClientNotFoundException;
+import com.bicoccaprojects.beerconnect.exception.client.FollowNotFound;
+import com.bicoccaprojects.beerconnect.exception.client.NoClientsFoundException;
 import com.bicoccaprojects.beerconnect.repository.ClientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,64 +18,89 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    @Transactional
-    public Iterable<Client> getClients() {
-        return  clientRepository.findAll();
+    public Iterable<Client> getAllClients() {
+
+        Iterable<Client> client = clientRepository.findAll();
+        if(client.iterator().hasNext()){
+            throw new NoClientsFoundException("There are 0 client in the DB");
+        }
+        return client;
     }
 
-    @Transactional
-    public Optional<Client> getClient(Long id) {
-        return clientRepository.findById(id);
+    public Client getClient(Long id) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        if(optionalClient.isPresent()) {
+            return optionalClient.get();
+        }else {
+            throw new ClientNotFoundException(id);
+        }
     }
 
     @Transactional
     public void deleteClient(Long id) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+
+        if(clientOptional.isEmpty()){
+            throw new ClientNotFoundException(id);
+        }
         clientRepository.deleteById(id);
     }
 
     @Transactional
     public void deleteClients() {
+        Iterable<Client> clients = clientRepository.findAll();
+        if(!clients.iterator().hasNext()){
+            throw new NoClientsFoundException("There are 0 client in the DB");
+        }
         clientRepository.deleteAll();
     }
 
     @Transactional
-    public void addClient(Client client) {
-        clientRepository.save(client);
+    public void addClient(Client client) throws Exception {
+        Long id = client.getIdClient();
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if(clientOptional.isEmpty()){
+            clientRepository.save(client);
+        }else {
+            throw new Exception("There is already a client in the DB with ID "+(client.getIdClient()).toString());
+        }
     }
 
     @Transactional
     public void updateClient(Client client) {
-        clientRepository.save(client);
+        Long id = client.getIdClient();
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if(clientOptional.isPresent()) {
+            clientRepository.save(client);
+        }else {
+            throw new ClientNotFoundException(id);
+        }
     }
 
     @Transactional
     public void followedByClient(Client soggetto, Client followed) {
-        // Carica le liste all'interno della stessa transazione
         soggetto = clientRepository.findById(soggetto.getIdClient()).orElse(null);
         followed = clientRepository.findById(followed.getIdClient()).orElse(null);
 
         if (soggetto != null && followed != null) {
-            // Aggiungi la relazione di follow
             soggetto.getFollowedByClient().add(followed); // followed è un Client che viene seguito dall'client soggetto
             followed.getClientFollowers().add(soggetto); // ai follower di questo client viene aggiunto 'soggetto'
 
             clientRepository.save(soggetto);
             clientRepository.save(followed);
         } else {
-            System.out.println("errore");
+            throw new ClientNotFoundException(soggetto.getIdClient());
         }
     }
 
-    @Transactional
     public void printFollowedByClient(Client client) {
         client = clientRepository.findById(client.getIdClient()).orElse(null);
 
         if (client != null) {
             Set<Client> followedByClient = client.getFollowedByClient();
-            System.out.println("Client " + client.getIdClient() + " follows: ");
 
             if(followedByClient.isEmpty()){
-                System.out.println("Nobody");
+                throw new NoClientsFoundException("There are 0 client followed by client "+(client.getIdClient()).toString());
             }else {
                 for (Client followed : followedByClient) {
                     System.out.println("  - " + followed.getNameClient());
@@ -85,28 +113,49 @@ public class ClientService {
 
     @Transactional
     public void unfollowClient(Client soggetto, Client followed) {
-        // Carica le liste all'interno della stessa transazione
         soggetto = clientRepository.findById(soggetto.getIdClient()).orElse(null);
         followed = clientRepository.findById(followed.getIdClient()).orElse(null);
 
         if (soggetto != null && followed != null) {
-            // Aggiungi la relazione di follow
-            soggetto.getFollowedByClient().remove(followed); // followed è un Client che viene seguito dall'client soggetto
-            followed.getClientFollowers().remove(soggetto); // ai follower di questo client viene aggiunto 'soggetto'
+            soggetto.getFollowedByClient().remove(followed); // followed is a Client who get followed by client soggetto
+            followed.getClientFollowers().remove(soggetto); // to the follower of this client get add 'soggetto'
 
             clientRepository.save(soggetto);
             clientRepository.save(followed);
         } else {
-            System.out.println("errore");
+            throw new ClientNotFoundException(soggetto.getIdClient());
         }
     }
 
-    @Transactional
-    public List<String> getFollowersPreferences(Long id){ return clientRepository.findPreferencesOfFollowersOfId(id);}
+    public List<String> getFollowersPreferences(Long id){
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if(clientOptional.isPresent()){
+            Client client = clientOptional.get();
+            List<String> followerList = clientRepository.findPreferencesOfFollowersOfId(id);
+            if(!followerList.isEmpty()){
+                return followerList;
+            }else {
+                throw new FollowNotFound("No follower found for client "+(client.getIdClient()).toString());
+            }
+        }else {
+            throw new ClientNotFoundException(id);
+        }
+    }
 
-    @Transactional
-    public List<String> getFollowedPreferences(Long id){ return clientRepository.findPreferencesOfFollowedById(id);}
-
+    public List<String> getFollowedPreferences(Long id){
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if(clientOptional.isPresent()){
+            Client client = clientOptional.get();
+            List<String> followedList = clientRepository.findPreferencesOfFollowedById(id);
+            if(!followedList.isEmpty()){
+                return followedList;
+            }else {
+                throw new FollowNotFound("No client followed by client "+(client.getIdClient()).toString());
+            }
+        }else{
+            throw new ClientNotFoundException(id);
+        }
+    }
 }
 
 

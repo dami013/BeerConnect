@@ -6,6 +6,6 @@ public class PubNotFoundException extends RuntimeException{
         super(message);
     }
     public PubNotFoundException(Long id){
-        super("There is no pub with "+id.toString()+" id");
+        super("There is no pub with "+id.toString()+" as id");
     }
 }

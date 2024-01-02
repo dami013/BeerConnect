@@ -72,7 +72,7 @@ public class ClientTest {
         clientService.addClient(new Client("Client1", "client1@example.com", 19900101, "Address1", "Preferences1"));
         clientService.addClient(new Client("Client2", "client2@example.com", 19851203, "Address2", "Preferences2"));
 
-        Iterable<Client> clients = clientService.getClients();
+        Iterable<Client> clients = clientService.getAllClients();
         assertNotNull(clients);
 
         // Convert Iterable to List for easier assertions
@@ -91,7 +91,7 @@ public class ClientTest {
 
         clientService.deleteClients();
 
-        Iterable<Client> clients = clientService.getClients();
+        Iterable<Client> clients = clientService.getAllClients();
         assertFalse(clients.iterator().hasNext()); // No clients should be present after deletion
     }
 }
