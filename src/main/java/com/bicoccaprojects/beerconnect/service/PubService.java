@@ -79,7 +79,7 @@ public class PubService {
         if(!pubList.isEmpty()){
             return pubList;
         }else {
-            throw new PubNotFoundException("There are no pub with this name")
+            throw new PubNotFoundException("There are no pub with this name");
         }
     }
 }
