@@ -30,13 +30,13 @@ public class BeerconnectApplication {
 										LimitedEditionService limitedEditionService,
 										ClientService clientService){
 		return args -> {
-			List<String> listUser = clientReviewService.clientList("Germany", 4);
+			List<String> listUser = clientReviewService.findReviewsByBeerCountryAndRating("Germany", 4);
 			System.out.println(listUser);
 
 			List<String> listBeer = pubService.findBeerByPub(1L);
 			System.out.println(listBeer);
 
-			List<String> listLE = limitedEditionService.findLEBeer("Beer1");
+			List<String> listLE = limitedEditionService.findLEByOriginalBeer("Beer1");
 			System.out.println(listLE);
 
 			List<String> listFollowers = clientService.getFollowersPreferences(1L);

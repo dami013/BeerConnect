@@ -27,13 +27,8 @@ public class ClientService {
         return client;
     }
 
-    public Client getClient(Long id) {
-        Optional<Client> optionalClient = clientRepository.findById(id);
-        if(optionalClient.isPresent()) {
-            return optionalClient.get();
-        }else {
-            throw new ClientNotFoundException(id);
-        }
+    public Optional<Client> getClient(Long id) {
+        return clientRepository.findById(id);
     }
 
     @Transactional

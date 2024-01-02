@@ -12,4 +12,7 @@ public interface LimitedEditionRepository extends JpaRepository<LimitedEdition, 
             "FROM beer "+
             "WHERE original_beer = :original", nativeQuery = true)
     List<String> findLEByBeer(@Param("original") String original);
+
+    @Query(value = "SELECT * FROM beer WHERE name_beer =:name", nativeQuery = true)
+    List<String> searchBeerByName(@Param("name") String name);
 }

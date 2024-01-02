@@ -65,7 +65,7 @@ public class BeerService {
                 throw new Exception("There is already a beer with "+beer.getNameBeer()+" as name");
             }
         }else {
-            throw new Exception("There is already a beer in the DB with ID "+(beer.getIdBeer()).toString());
+            throw new Exception("There is already a beer in the DB with ID "+id);
         }
     }
 
