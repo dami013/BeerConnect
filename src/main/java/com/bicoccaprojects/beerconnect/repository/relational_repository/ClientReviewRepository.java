@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ClientReviewRepository extends JpaRepository<ClientReview, Long> {
+
+    // query that return the client name, the review and the beer price of the beer reviewed
+    // for each review that involves a beer from a specific country with rating
     @Query(value = "SELECT c.name_client, cr.review, b.price " +
             "FROM client_review cr " +
             "JOIN beer b ON b.id_beer = cr.id_beer " +
