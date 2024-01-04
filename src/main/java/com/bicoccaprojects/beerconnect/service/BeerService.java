@@ -1,6 +1,7 @@
 package com.bicoccaprojects.beerconnect.service;
 
 import com.bicoccaprojects.beerconnect.entity.Beer;
+import com.bicoccaprojects.beerconnect.exception.beer.BeerAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
 import com.bicoccaprojects.beerconnect.exception.beer.NoBeersFoundException;
 import com.bicoccaprojects.beerconnect.repository.BeerRepository;
@@ -55,21 +56,24 @@ public class BeerService {
     }
 
     @Transactional
-    public boolean addBeer(Beer beer) throws Exception {
+    public boolean addBeer(Beer beer) throws BeerAlreadyExistsException {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
-        if(beerOptional.isEmpty()){
+
+        if (beerOptional.isEmpty()) {
             List<String> beerList = beerRepository.searchBeerByName(beer.getNameBeer());
-            if(beerList.isEmpty()){
+
+            if (beerList.isEmpty()) {
                 beerRepository.save(beer);
                 return true;
-            }else {
-                throw new Exception("There is already a beer with "+beer.getNameBeer()+" as name");
+            } else {
+                throw new BeerAlreadyExistsException("There is already a beer with " + beer.getNameBeer() + " as name");
             }
-        }else {
-            throw new Exception("There is already a beer in the DB with ID "+id);
+        } else {
+            throw new BeerAlreadyExistsException("There is already a beer in the DB with ID " + id);
         }
     }
+
 
     @Transactional
     public boolean updateBeer(Beer beer) {
