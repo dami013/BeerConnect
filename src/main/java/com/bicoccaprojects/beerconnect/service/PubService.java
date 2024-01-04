@@ -2,6 +2,7 @@ package com.bicoccaprojects.beerconnect.service;
 
 import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.exception.pub.NoPubsFoundException;
+import com.bicoccaprojects.beerconnect.exception.pub.PubAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.pub.PubNotFoundException;
 import com.bicoccaprojects.beerconnect.repository.PubRepository;
 import jakarta.transaction.Transactional;
@@ -34,13 +35,14 @@ public class PubService {
     }
 
     @Transactional
-    public void deletePub(Long id) {
+    public boolean deletePub(Long id) {
         Optional<Pub> pubOptional = pubRepository.findById(id);
 
         if(pubOptional.isEmpty()){
             throw new PubNotFoundException(id);
         }
         pubRepository.deleteById(id);
+        return true;
     }
 
     @Transactional
@@ -53,13 +55,13 @@ public class PubService {
     }
 
     @Transactional
-    public void addPub(Pub pub) throws Exception {
+    public void addPub(Pub pub) {
         Long id = pub.getIdPub();
         Optional<Pub> pubOptional = pubRepository.findById(id);
         if(pubOptional.isEmpty()){
             pubRepository.save(pub);
         }else {
-            throw new Exception("There is alredy a pub in the DB with ID "+(pub.getIdPub()).toString());
+            throw new PubAlreadyExistsException("There is alredy a pub in the DB with ID "+(pub.getIdPub()).toString());
         }
     }
 

@@ -9,7 +9,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity(name="Pub")
 public class Pub {
     @Id
-    @SequenceGenerator(name="pub_sequence", sequenceName = "pub_sequence", allocationSize = 1)
+    @SequenceGenerator(name="pub_sequence", sequenceName = "pub_sequence", allocationSize = 1,initialValue = 10)
     @GeneratedValue(strategy = SEQUENCE, generator = "pub_sequence")
     @Column(name = "id_pub", updatable = false)
     private Long idPub;
@@ -31,6 +31,12 @@ public class Pub {
     // constructors
 
     public Pub(String name, String address, Integer yearOfFoundation) {
+        this.namePub = name;
+        this.country = address;
+        this.yearOfFoundation = yearOfFoundation;
+    }
+    public Pub(Long idPub,String name, String address, Integer yearOfFoundation) {
+        this.idPub = idPub;
         this.namePub = name;
         this.country = address;
         this.yearOfFoundation = yearOfFoundation;

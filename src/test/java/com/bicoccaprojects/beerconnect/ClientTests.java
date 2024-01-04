@@ -25,7 +25,7 @@ public class ClientTests {
 
     private static final Long VALID_CLIENT_ID = 1L;
     private static final Long NON_EXISTENT_CLIENT_ID = 999L;
-    private static final Long CLIENT_ID_TO_DELETE = 2L;
+    private static final Long CLIENT_ID_TO_DELETE = 6L;
     private static final Long CLIENT_ID_TO_UPDATE = 3L;
 
     @BeforeEach
@@ -37,6 +37,7 @@ public class ClientTests {
     @AfterEach
     void tearDown() {
         System.out.println("Dati client eliminati");
+        clientService.deleteClients();
     }
 
     @Test
@@ -59,6 +60,7 @@ public class ClientTests {
 
     @Test
     void deleteClientById() {
+        System.out.println(clientService.getAllClients());
         assertTrue(clientService.deleteClient(CLIENT_ID_TO_DELETE));
     }
 

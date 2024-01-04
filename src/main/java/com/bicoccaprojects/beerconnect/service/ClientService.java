@@ -23,11 +23,11 @@ public class ClientService {
 
     public Iterable<Client> getAllClients() {
 
-        Iterable<Client> client = clientRepository.findAll();
-        if(client.iterator().hasNext()){
+        Iterable<Client> clients = clientRepository.findAll();
+        if(!clients.iterator().hasNext()){
             throw new NoClientsFoundException("There are 0 client in the DB");
         }
-        return client;
+        return clients;
     }
 
     public Client getClient(Long id) {
@@ -40,15 +40,14 @@ public class ClientService {
     }
     @Transactional
     public boolean deleteClient(Long id) {
-        Optional<Client> clientOptional = clientRepository.findById(id);
+        Optional<Client> beerOptional = clientRepository.findById(id);
 
-        if(clientOptional.isEmpty()){
+        if (beerOptional.isEmpty()) {
             throw new ClientNotFoundException(id);
         }
         clientRepository.deleteById(id);
         return true;
     }
-
     @Transactional
     public void deleteClients() {
         Iterable<Client> clients = clientRepository.findAll();
