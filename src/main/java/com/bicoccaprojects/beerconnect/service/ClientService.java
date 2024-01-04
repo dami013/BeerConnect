@@ -1,6 +1,8 @@
 package com.bicoccaprojects.beerconnect.service;
 
+import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.Client;
+import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
 import com.bicoccaprojects.beerconnect.exception.client.ClientAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.client.ClientNotFoundException;
 import com.bicoccaprojects.beerconnect.exception.client.FollowNotFound;
@@ -28,18 +30,23 @@ public class ClientService {
         return client;
     }
 
-    public Optional<Client> getClient(Long id) {
-        return clientRepository.findById(id);
+    public Client getClient(Long id) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        if (optionalClient.isPresent()){
+            return optionalClient.get();
+        } else {
+            throw new ClientNotFoundException(id);
+        }
     }
-
     @Transactional
-    public void deleteClient(Long id) {
+    public boolean deleteClient(Long id) {
         Optional<Client> clientOptional = clientRepository.findById(id);
 
         if(clientOptional.isEmpty()){
             throw new ClientNotFoundException(id);
         }
         clientRepository.deleteById(id);
+        return true;
     }
 
     @Transactional

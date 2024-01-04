@@ -35,6 +35,7 @@ public class BeerTests {
     @Sql("/data.sql")
     void setUp() {
         System.out.println("Dati aggiunti");
+        System.out.println(beerService.getAllBeers());
     }
     @AfterEach
     void tearDown() {
@@ -66,11 +67,6 @@ public class BeerTests {
        assertTrue(beerService.deleteBeer(BEER_ID_TO_DELETE));
     }
 
-//    @Test
-//    public void testDeletete() {
-//        beerService.deleteBeers();
-//        assertThrows(NoBeersFoundException.class, () -> beerService.deleteBeers());
-//    }
     @Test
     void addDuplicateBeer() {
         Beer existingBeer = beerService.getBeer(BEER_ID_TO_UPDATE);
@@ -95,6 +91,27 @@ public class BeerTests {
         assertEquals("ciao", addedBeer.getNameBeer(), "Name should match");
         assertEquals("green", addedBeer.getType(), "Type should match");
         // Add more assertions for other properties
+    }
+
+    @Test
+    void updateBeer() {
+        // Given
+        Beer existingBeer = beerService.getBeer(BEER_ID_TO_UPDATE);
+        assertNotNull(existingBeer, "Existing beer should not be null");
+
+        // When
+        existingBeer.setNameBeer("Updated Name");
+        existingBeer.setType("Updated Type");
+        // Aggiungi altre modifiche necessarie
+
+        beerService.updateBeer(existingBeer);
+
+        // Then
+        Beer updatedBeer = beerService.getBeer(BEER_ID_TO_UPDATE);
+        assertNotNull(updatedBeer, "Updated beer should not be null");
+        assertEquals("Updated Name", updatedBeer.getNameBeer(), "Name should be updated");
+        assertEquals("Updated Type", updatedBeer.getType(), "Type should be updated");
+        // Aggiungi altre asserzioni per le proprietà aggiornate
     }
 
     @ParameterizedTest

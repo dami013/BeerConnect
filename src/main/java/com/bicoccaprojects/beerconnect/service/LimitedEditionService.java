@@ -1,7 +1,9 @@
 package com.bicoccaprojects.beerconnect.service;
 
 import com.bicoccaprojects.beerconnect.entity.LimitedEdition;
+import com.bicoccaprojects.beerconnect.exception.beer.BeerAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
+import com.bicoccaprojects.beerconnect.exception.beer.LimitedEditionNotFoundException;
 import com.bicoccaprojects.beerconnect.exception.beer.NoBeersFoundException;
 import com.bicoccaprojects.beerconnect.repository.LimitedEditionRepository;
 import jakarta.transaction.Transactional;
@@ -17,10 +19,10 @@ public class LimitedEditionService extends BeerService {
     @Autowired
     private LimitedEditionRepository limitedEditionRepository;
 
-    public Iterable<LimitedEdition> getAllLEBeers() throws Exception {
+    public Iterable<LimitedEdition> getAllLEBeers() {
         Iterable<LimitedEdition> beers = limitedEditionRepository.findAll();
         if (!beers.iterator().hasNext()) {
-            throw new Exception("There are no Limited edition beers in the DB");
+            throw new LimitedEditionNotFoundException("There are no Limited edition beers in the DB");
         }
         return beers;
     }
@@ -54,7 +56,7 @@ public class LimitedEditionService extends BeerService {
     }
 
     @Transactional
-    public boolean addLEBeer(LimitedEdition leBeer) throws Exception {
+    public boolean addLEBeer(LimitedEdition leBeer){
         Long id = leBeer.getIdBeer();
         Optional<LimitedEdition> beerOptional = limitedEditionRepository.findById(id);
         if(beerOptional.isEmpty()){
@@ -63,10 +65,10 @@ public class LimitedEditionService extends BeerService {
                 limitedEditionRepository.save(leBeer);
                 return true;
             }else {
-                throw new Exception("There is already a beer with "+leBeer.getNameBeer()+" as name");
+                throw new BeerAlreadyExistsException("There is already a beer with " + leBeer.getNameBeer() + " as name");
             }
-        }else {
-            throw new Exception("There is already a beer in the DB with ID "+(leBeer.getIdBeer()).toString());
+        } else {
+            throw new BeerAlreadyExistsException("There is already a beer in the DB with ID " + id);
         }
     }
 
