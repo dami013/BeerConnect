@@ -35,12 +35,13 @@ public class LimitedEditionService extends BeerService {
     }
 
     @Transactional
-    public void deleteLEBeer(Long id) {
+    public boolean deleteLEBeer(Long id) {
         Optional<LimitedEdition> beerOptional = limitedEditionRepository.findById(id);
         if (beerOptional.isEmpty()) {
             throw new BeerNotFoundException(id);
         }
         limitedEditionRepository.deleteById(id);
+        return true;
     }
 
     @Transactional
@@ -53,13 +54,14 @@ public class LimitedEditionService extends BeerService {
     }
 
     @Transactional
-    public void addLEBeer(LimitedEdition leBeer) throws Exception {
+    public boolean addLEBeer(LimitedEdition leBeer) throws Exception {
         Long id = leBeer.getIdBeer();
         Optional<LimitedEdition> beerOptional = limitedEditionRepository.findById(id);
         if(beerOptional.isEmpty()){
             List<String> beerList = limitedEditionRepository.searchBeerByName(leBeer.getNameBeer());
             if(beerList.isEmpty()){
                 limitedEditionRepository.save(leBeer);
+                return true;
             }else {
                 throw new Exception("There is already a beer with "+leBeer.getNameBeer()+" as name");
             }
@@ -69,11 +71,12 @@ public class LimitedEditionService extends BeerService {
     }
 
     @Transactional
-    public void updateLEBeer(LimitedEdition leBeer) {
+    public boolean updateLEBeer(LimitedEdition leBeer) {
         Long id = leBeer.getIdBeer();
         Optional<LimitedEdition> beerOptional = limitedEditionRepository.findById(id);
         if(beerOptional.isPresent()){
             limitedEditionRepository.save(leBeer);
+            return true;
         }else {
             throw new BeerNotFoundException(id);
         }
