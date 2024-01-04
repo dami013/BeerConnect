@@ -23,6 +23,12 @@ public class LimitedEdition extends Beer{ // class that extend Beer, a LimitedEd
         this.productionYear = productionYear;
     }
 
+    public LimitedEdition(Long idBeer, String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, Pub pub, String originalBeer, Integer productionYear) {
+        super(idBeer, nameBeer, type, aroma, alcohol, color, country, ingredients, price, quantityInStock, pub);
+        this.originalBeer = originalBeer;
+        this.productionYear = productionYear;
+    }
+
     public LimitedEdition() {
     }
 

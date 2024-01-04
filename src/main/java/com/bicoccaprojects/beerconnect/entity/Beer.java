@@ -83,6 +83,20 @@ public class Beer {
         this.quantityInStock = quantityInStock;
     }
 
+    public Beer(Long idBeer, String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, Pub pub) {
+        this.idBeer = idBeer;
+        this.nameBeer = nameBeer;
+        this.type = type;
+        this.aroma = aroma;
+        this.alcohol = alcohol;
+        this.color = color;
+        this.country = country;
+        this.ingredients = ingredients;
+        this.price = price;
+        this.quantityInStock = quantityInStock;
+        this.pub = pub;
+    }
+
     public Beer(Long idBeer) {
         this.idBeer = idBeer;
     }
@@ -171,6 +185,22 @@ public class Beer {
 
     public void setQuantityInStock(Integer quantityInStock) {
         this.quantityInStock = quantityInStock;
+    }
+
+    public String getBeerType() {
+        return beerType;
+    }
+
+    public void setBeerType(String beerType) {
+        this.beerType = beerType;
+    }
+
+    public Pub getPub() {
+        return pub;
+    }
+
+    public void setPub(Pub pub) {
+        this.pub = pub;
     }
 
     @Override
