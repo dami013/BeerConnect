@@ -3,6 +3,7 @@ package com.bicoccaprojects.beerconnect.service;
 import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.Client;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
+import com.bicoccaprojects.beerconnect.exception.beer.NoBeersFoundException;
 import com.bicoccaprojects.beerconnect.exception.client.ClientAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.client.ClientNotFoundException;
 import com.bicoccaprojects.beerconnect.exception.client.FollowNotFound;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ClientService {
@@ -40,9 +42,9 @@ public class ClientService {
     }
     @Transactional
     public boolean deleteClient(Long id) {
-        Optional<Client> beerOptional = clientRepository.findById(id);
+        Optional<Client> clientOptional = clientRepository.findById(id);
 
-        if (beerOptional.isEmpty()) {
+        if (clientOptional.isEmpty()) {
             throw new ClientNotFoundException(id);
         }
         clientRepository.deleteById(id);
@@ -51,9 +53,11 @@ public class ClientService {
     @Transactional
     public void deleteClients() {
         Iterable<Client> clients = clientRepository.findAll();
-        if(!clients.iterator().hasNext()){
-            throw new NoClientsFoundException("There are 0 client in the DB");
+
+        if (StreamSupport.stream(clients.spliterator(), false).noneMatch(beer -> true)) {
+            throw new NoClientsFoundException("No clients founded");
         }
+
         clientRepository.deleteAll();
     }
 

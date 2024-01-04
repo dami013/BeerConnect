@@ -36,8 +36,8 @@ public class ClientTests {
 
     @AfterEach
     void tearDown() {
-        System.out.println("Dati client eliminati");
         clientService.deleteClients();
+        System.out.println("Dati client eliminati");
     }
 
     @Test
@@ -60,7 +60,6 @@ public class ClientTests {
 
     @Test
     void deleteClientById() {
-        System.out.println(clientService.getAllClients());
         assertTrue(clientService.deleteClient(CLIENT_ID_TO_DELETE));
     }
 
