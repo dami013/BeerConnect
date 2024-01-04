@@ -3,6 +3,7 @@ package com.bicoccaprojects.beerconnect;
 
 import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.Client;
+import com.bicoccaprojects.beerconnect.entity.LimitedEdition;
 import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.ClientService;
@@ -73,6 +74,7 @@ public class BeerconnectApplication {
 								String nameBeer = scanner.nextLine();
 
 								System.out.println("| Insert the id of the related pub:           |");
+								System.out.println("| (check the list of the available pub)       |");
 								Long idPub = scanner.nextLong();
 
 								System.out.println("| Insert the beer type:                       |");
@@ -102,7 +104,11 @@ public class BeerconnectApplication {
 								Pub pub = new Pub(idPub);
 
 								Beer beer = new Beer(nameBeer, pub, type, aroma, alcohol, color, country, ingredients, price, quantity);
-								beerService.addBeer(beer);
+								if(beerService.addBeer(beer)){
+									System.out.println(" ---        Beer added successfully         ---");
+								}
+								System.out.println("***********************************************");
+
 								break;
 
 							case 2:
@@ -120,17 +126,106 @@ public class BeerconnectApplication {
 								searchBeer = scanner.nextInt();
 								switch (searchBeer){
 									case 1:
+										Iterable<Beer> beers = beerService.getAllBeers();
+										for(Beer b : beers){
+											System.out.println(b.toString());
+										}
+										System.out.println("***********************************************");
 										break;
+
+									case 2:
+										System.out.println("| Insert the ID of the desired beer         |");
+										Long idBeer = scanner.nextLong();
+										Beer beerSearched = beerService.getBeer(idBeer);
+										System.out.println(beerSearched.toString());
+										System.out.println("***********************************************");
+										break;
+
+									case 3:
+										System.out.println("| Insert the type of the desired beer       |");
+										String beerType = scanner.nextLine();
+										List<String> resultType = beerService.searchBeerByType(beerType);
+										System.out.println(resultType.toString());
+										System.out.println("***********************************************");
+										break;
+
+									case 4:
+										System.out.println("| Insert the name of the desired beer       |");
+										String name = scanner.nextLine();
+										List<String> resultName = beerService.searchBeerByName(name);
+										System.out.println(resultName.toString());
+										System.out.println("***********************************************");
+										break;
+
+									case 0:
+										break;
+
+									default:
+										System.out.println("Invalid choice. Please try again.");
 								}
 								break;
 
 							case 3:
+								System.out.println("***********************************************");
+								System.out.println("| Insert id beer that must be update          |");
+								Long idBeer = scanner.nextLong();
+
+								Beer beerUpdate = beerService.getBeer(idBeer);
+								Pub pubBeer = beerUpdate.getPub();
+
+								System.out.println("| enter the new beer data                     |");
+								System.out.println("| (can be the same as those already present)  |");
+
+								System.out.println("| Insert the beer name:                       |");
+								String newName = scanner.next();
+
+								System.out.println("| Insert the beer type:                       |");
+								String newType = scanner.next();
+
+								System.out.println("| Insert the beer aroma:                      |");
+								String newAroma = scanner.next();
+
+								System.out.println("| Insert the beer alcohol content:            |");
+								double newAlcohol = scanner.nextDouble();
+
+								System.out.println("| Insert the beer color:                      |");
+								String newColor = scanner.next();
+
+								System.out.println("| Insert the beer country:                    |");
+								String newCountry = scanner.next();
+
+								System.out.println("| Insert the beer ingredients:                |");
+								String newIngredients = scanner.next();
+
+								System.out.println("| Insert the beer price:                      |");
+								float newPrice = scanner.nextFloat();
+
+								System.out.println("| Insert the beer quantity:                   |");
+								int newQuantity = scanner.nextInt();
+
+								Beer updateBeer = new Beer(idBeer, newName, newType, newAroma, newAlcohol, newColor, newCountry, newIngredients, newPrice, newQuantity, pubBeer);
+								if(beerService.updateBeer(updateBeer)){
+									System.out.println(" ---       Beer updated successfully        ---");
+								}
+								System.out.println("***********************************************");
 								break;
 
 							case 4:
+								System.out.println("***********************************************");
+								System.out.println("| Insert id beer that must be delete          |");
+								Long idDeleteBeer = scanner.nextLong();
+
+								if(beerService.deleteBeer(idDeleteBeer)){
+									System.out.println(" ---       Beer deleted successfully        ---");
+								}
+								System.out.println("***********************************************");
 								break;
 
 							case 0:
+								break;
+
+							default:
+								System.out.println("Invalid choice. Please try again.");
 						}while(beerChoice!= 0);
 						break;
 
@@ -150,18 +245,172 @@ public class BeerconnectApplication {
 
 						switch (leChoice){
 							case 1:
+								System.out.println("***********************************************");
+								System.out.println("| Insert the limited edition beer name:       |");
+								String nameBeer = scanner.nextLine();
+
+								System.out.println("| Insert the original beer name:              |");
+								String original = scanner.nextLine();
+
+								System.out.println("| Insert the id of the related pub:           |");
+								System.out.println("| (check the list of the available pub)       |");
+								Long pub = scanner.nextLong();
+
+
+								System.out.println("| Insert the production year:                 |");
+								Integer year = scanner.nextInt();
+
+								System.out.println("| Insert the beer alcohol content:            |");
+								double alcohol = scanner.nextDouble();
+
+								System.out.println("| Insert the beer color:                      |");
+								String color = scanner.next();
+
+								System.out.println("| Insert the beer type:                       |");
+								String type = scanner.next();
+
+								System.out.println("| Insert the beer aroma:                      |");
+								String aroma = scanner.next();
+
+								System.out.println("| Insert the beer country:                    |");
+								String country = scanner.next();
+
+								System.out.println("| Insert the beer ingredients:                |");
+								String ingredients = scanner.next();
+
+								System.out.println("| Insert the beer price:                      |");
+								float price = scanner.nextFloat();
+
+								System.out.println("| Insert the beer quantity:                   |");
+								int quantity = scanner.nextInt();
+
+								Pub pubRelated = new Pub(pub);
+
+								LimitedEdition limitedBeer = new LimitedEdition(nameBeer, pubRelated, type, aroma, alcohol, color, country, ingredients, price, quantity, original, year);
+								if(limitedEditionService.addLEBeer(limitedBeer)){
+									System.out.println("| --- Limited Edition added successfully  --- |");
+								}
+
+								System.out.println("***********************************************");
 								break;
 
 							case 2:
+								System.out.println("***********************************************");
+								System.out.println("|   Here's the options to search a LE Beer    |");
+								System.out.println("| - press 1 to search all the LE Beer         |");
+								System.out.println("| - press 2 to search a LE Beer by ID         |");
+								System.out.println("| - press 3 to search a LE Beer by original   |");
+								System.out.println("| - press 4 to search a LE Beer by name       |");
+								System.out.println("| - press 0 to exit                           |");
+								System.out.println("***********************************************");
+
+								int searchLEBeer = scanner.nextInt();
+								switch (searchLEBeer){
+									case 1:
+										Iterable<LimitedEdition> beers = limitedEditionService.getAllLEBeers();
+										for(LimitedEdition b : beers){
+											System.out.println(b.toString());
+										}
+										System.out.println("***********************************************");
+										break;
+
+									case 2:
+										System.out.println("| Insert the ID of the desired LE beer        |");
+										Long idBeer = scanner.nextLong();
+										LimitedEdition beerSearched = limitedEditionService.getLEBeer(idBeer);
+										System.out.println(beerSearched.toString());
+										System.out.println("***********************************************");
+										break;
+
+									case 3:
+										System.out.println("| Insert the original beer of the desired LE beer |");
+										String originalBeer = scanner.nextLine();
+										List<String> originalBeers = limitedEditionService.findLEByOriginalBeer(originalBeer);
+										System.out.println(originalBeers.toString());
+										System.out.println("***********************************************");
+										break;
+
+									case 4:
+										System.out.println("| Insert the name of the desired LE beer     |");
+										String name = scanner.nextLine();
+										List<String> resultName = limitedEditionService.searchLEByName(name);
+										System.out.println(resultName.toString());
+										System.out.println("***********************************************");
+										break;
+
+									case 0:
+										break;
+
+									default:
+										System.out.println("Invalid choice. Please try again.");
+								}
 								break;
 
 							case 3:
+								System.out.println("***********************************************");
+								System.out.println("| Insert id of LE beer that must be update     |");
+								Long idBeer = scanner.nextLong();
+
+								LimitedEdition beerUpdate = limitedEditionService.getLEBeer(idBeer);
+								original = beerUpdate.getOriginalBeer();
+								Pub pubBeer = beerUpdate.getPub();
+
+								System.out.println("| enter the new beer data                     |");
+								System.out.println("| (can be the same as those already present)  |");
+
+								System.out.println("| Insert the beer name:                       |");
+								String newName = scanner.next();
+
+								System.out.println("| Insert the beer type:                       |");
+								String newType = scanner.next();
+
+								System.out.println("| Insert the beer aroma:                      |");
+								String newAroma = scanner.next();
+
+								System.out.println("| Insert the beer alcohol content:            |");
+								double newAlcohol = scanner.nextDouble();
+
+								System.out.println("| Insert the beer color:                      |");
+								String newColor = scanner.next();
+
+								System.out.println("| Insert the beer country:                    |");
+								String newCountry = scanner.next();
+
+								System.out.println("| Insert the beer ingredients:                |");
+								String newIngredients = scanner.next();
+
+								System.out.println("| Insert the beer price:                      |");
+								float newPrice = scanner.nextFloat();
+
+								System.out.println("| Insert the beer quantity:                   |");
+								int newQuantity = scanner.nextInt();
+
+								System.out.println("| Insert production year:                     |");
+								int newYear = scanner.nextInt();
+
+								LimitedEdition update = new LimitedEdition(idBeer, newName, newType, newAroma, newAlcohol, newColor, newCountry, newIngredients, newPrice, newQuantity, pubBeer, original, newYear);
+								if(limitedEditionService.updateLEBeer(update)){
+									System.out.println("| --- Limited Edition updated successfully --- |");
+								}
+								System.out.println("***********************************************");
 								break;
 
 							case 4:
+								System.out.println("***********************************************");
+								System.out.println("| Insert id LE beer that must be delete        |");
+								Long idDeleteBeer = scanner.nextLong();
+
+								if(limitedEditionService.deleteLEBeer(idDeleteBeer)){
+									System.out.println("| --- Limited Edition deleted successfully --- |");
+								}
+								System.out.println("***********************************************");
 								break;
 
 							case 0:
+								break;
+
+							default:
+								System.out.println("Invalid choice. Please try again.");
 						}while(leChoice!= 0);
 						break;
 
@@ -193,6 +442,11 @@ public class BeerconnectApplication {
 								break;
 
 							case 0:
+								break;
+
+							default:
+								System.out.println("Invalid choice. Please try again.");
+
 						}while(pubChoice!= 0);
 						break;
 
@@ -224,6 +478,11 @@ public class BeerconnectApplication {
 								break;
 
 							case 0:
+								break;
+
+							default:
+								System.out.println("Invalid choice. Please try again.");
+
 						}while(clientChoice!= 0);
 						break;
 
