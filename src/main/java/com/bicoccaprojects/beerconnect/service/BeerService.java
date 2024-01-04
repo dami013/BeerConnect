@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 public class BeerService {
@@ -49,14 +50,16 @@ public class BeerService {
     @Transactional
     public void deleteBeers() {
         Iterable<Beer> beers = beerRepository.findAll();
-        if (!beers.iterator().hasNext()) {
+
+        if (StreamSupport.stream(beers.spliterator(), false).noneMatch(beer -> true)) {
             throw new NoBeersFoundException();
         }
+
         beerRepository.deleteAll();
     }
 
     @Transactional
-    public boolean addBeer(Beer beer) throws BeerAlreadyExistsException {
+    public boolean addBeer(Beer beer) {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
 

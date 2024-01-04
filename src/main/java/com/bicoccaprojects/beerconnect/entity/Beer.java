@@ -21,10 +21,11 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @DiscriminatorValue("normal")
 public class Beer {
     @Id
-    @SequenceGenerator(name="beer_sequence", sequenceName = "beer_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE, generator = "beer_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
+    @SequenceGenerator(name = "beer_sequence", sequenceName = "beer_sequence", allocationSize = 1, initialValue = 16)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "beer_sequence")
     @Column(name = "id_beer", updatable = false)
     private Long idBeer;
+
 
     @Column(name = "name_beer", nullable = false, unique = true)
     private String nameBeer;
@@ -66,7 +67,7 @@ public class Beer {
     // Many-to-Many relationship between Beer and Client,
     // Each beer can be reviewed by N customers and each customer can review N beers.
     // Here the OneToMany tag is used because there is an intermediate entity that contains 2 other attributes for this relationship
-    @OneToMany(mappedBy = "idBeer")
+    @OneToMany(mappedBy = "idBeer", cascade = CascadeType.REMOVE)
     private List<ClientReview> clientReviews;
 
     // constructors

@@ -1,6 +1,7 @@
 package com.bicoccaprojects.beerconnect.service;
 
 import com.bicoccaprojects.beerconnect.entity.Client;
+import com.bicoccaprojects.beerconnect.exception.client.ClientAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.client.ClientNotFoundException;
 import com.bicoccaprojects.beerconnect.exception.client.FollowNotFound;
 import com.bicoccaprojects.beerconnect.exception.client.NoClientsFoundException;
@@ -51,15 +52,16 @@ public class ClientService {
     }
 
     @Transactional
-    public void addClient(Client client) throws Exception {
+    public void addClient(Client client) {
         Long id = client.getIdClient();
         Optional<Client> clientOptional = clientRepository.findById(id);
         if(clientOptional.isEmpty()){
             clientRepository.save(client);
-        }else {
-            throw new Exception("There is already a client in the DB with ID "+(client.getIdClient()).toString());
+        } else {
+            throw new ClientAlreadyExistsException("Client with ID " + id + " already exists in the database.");
         }
     }
+
 
     @Transactional
     public void updateClient(Client client) {

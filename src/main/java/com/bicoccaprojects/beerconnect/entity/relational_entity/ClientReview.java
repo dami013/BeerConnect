@@ -19,12 +19,13 @@ public class ClientReview { // this intermediate entity add 2 fields to the rela
     // despite using @ManyToOne tag, this is a @ManyToMany relationship
     // this intermediate entity allow the ManyToMany relationship
     @ManyToOne
-    @JoinColumn(name = "id_client")
+    @JoinColumn(name = "id_client", nullable = false)
     private Client idClient;
 
     @ManyToOne
-    @JoinColumn(name = "id_beer")
+    @JoinColumn(name = "id_beer", nullable = false)
     private Beer idBeer;
+
 
     @Column(name = "review")
     private String review;

@@ -16,7 +16,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
                 @UniqueConstraint(name = "client_email_unique", columnNames = "email")}) // email must be unique for each Client
 public class Client {
     @Id
-    @SequenceGenerator(name="client_sequence", sequenceName = "client_sequence", allocationSize = 1)
+    @SequenceGenerator(name = "client_sequence", sequenceName = "client_sequence", allocationSize = 1,initialValue = 13)
     @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence")
     @Column(name = "id_client", updatable = false)
     private Long idClient;
@@ -71,6 +71,14 @@ public class Client {
     private Set<Client> followedByClient = new HashSet<Client>(); // utenti seguiti dal client soggetto
 
     public Client(String name, String email, LocalDate date_birth, String address, String preferences) {
+        this.nameClient = name;
+        this.email = email;
+        this.dateBirth = date_birth;
+        this.address = address;
+        this.preferences = preferences;
+    }
+    public Client(Long idClient, String name, String email, LocalDate date_birth, String address, String preferences) {
+        this.idClient = idClient;
         this.nameClient = name;
         this.email = email;
         this.dateBirth = date_birth;
