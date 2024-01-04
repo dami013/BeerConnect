@@ -5,9 +5,9 @@ https://gitlab.com/bicoccaprojects/2023_assignment3_beerconnect
 
 ## Partecipanti
 
-- Ficara Damiano - 919386
+- **Ficara Damiano - 919386**
 
-- Ricci Claudio - 918956
+- **Ricci Claudio - 918956**
 
 ## Descrizione dell'applicazione
 
@@ -29,8 +29,20 @@ L'applicazione è strutturata attorno a diverse entità, ciascuna progettata per
 
 - Limited Edition: entità derivata da Beer, rappresenta un edizione limitata di un'altra birra, oltre ai campi dell'entità madre ha in aggiunta il nome della birra originale e l'anno di produzione.
 
-Oltre ai campi precedentemente descritti, ogni entità è caratterizzata da un campo identificativo (ID) che consente di riconoscere univocamente le varie istanze di ogni entità.
+Inoltre, ogni entità è caratterizzata da un campo identificativo (ID) che consente di riconoscere univocamente le varie istanze di ogni entità.
 
+### Gestione dell'ereditarietà
+
+La gestione delle entità Limited Edition richiede un approccio di mapping particolare, poiché i concetti di gerarchia presenti nella programmazione orientata agli oggetti non si traducono direttamente nei database. L'approccio scelto per affrontare questa sfida è il modello "Single Table", che prevede l'utilizzo di una singola tabella per gestire le entità Beer e Limited Edition, distinguendole attraverso l'uso di colonne specifiche.\
+La tabella unica, denominata `beer` è progettata per incorporare tutti gli attributi comuni delle entità Beer e Limited Edition. La struttura della tabella comprende:
+
+- Colonne per tutti gli attributi di Beer, che sono utilizzati anche da Limited Edition;
+
+- Colonne aggiuntive specifiche di Limited Edition, che contengono valori NULL nelle righe corrispondenti a istanze di Beer;
+
+- Una colonna `beer_type` di tipo stringa, che indica il tipo di oggetto rappresentato (Beer o Limited Edition). All'interno di questa colonna, per ogni istanza è contenuto il valore _normal_/_limited_ che indica se l'istanza appartiene alla classe Beer o Limited Edition.
+
+Questo approccio "Single Table" è stato scelto perchè consente una gestione efficiente delle relazioni tra le entità Beer e Limited Edition, preservando al contempo la coerenza e la completezza dei dati nel contesto di un'unica tabella.
 
 ### Relazioni
 
@@ -52,4 +64,9 @@ La gestione avanzata di questa relazione richiede la creazione di un'entità int
   <img src="ER.png" alt="Image" width="700"/>
 </div>
 
-Questo contesto consente agli utenti di esplorare una vasta gamma di birre prodotte dai birrifici, assaporare le birre, condividere opinioni attraverso recensioni e conoscere altri appassionati di birra all'interno di una comunità. L'aggiunta dell'entità "Edizione Limitata" consente di gestire particolari versioni speciali e limitate di birre.
+### Operazioni CRUD per ogni entità
+
+###  search operation
+that involves a minimum of two entities and extracts entities making a selection according to a constraint defined on non-key attributes
+
+### TEST?
