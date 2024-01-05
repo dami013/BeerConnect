@@ -4,8 +4,6 @@ import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.Client;
 import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import com.bicoccaprojects.beerconnect.exception.clientreviews.ClientReviewNotFoundException;
-import com.bicoccaprojects.beerconnect.exception.clientreviews.NoClientReviewsFoundException;
-import com.bicoccaprojects.beerconnect.repository.relational_repository.ClientReviewRepository;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.ClientService;
 import jakarta.transaction.Transactional;
@@ -115,7 +113,10 @@ public class ClientReviewTests {
 
     @Test
     void findReviewsByBeerCountryAndRating() {
-        List<String> reviewList = clientReviewService.findReviewsByBeerCountryAndRating("Italy", 4);
+        List<String> reviewList = clientReviewService.findReviewsByBeerCountryAndRating("Japan", 4);
+        System.out.println(reviewList);
+        assertEquals("Fantastic Saison with a delightful herbal touch.", reviewList.get(0));
+
         assertNotNull(reviewList);
         assertFalse(reviewList.isEmpty());
     }
