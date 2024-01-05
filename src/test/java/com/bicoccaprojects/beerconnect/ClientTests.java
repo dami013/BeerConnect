@@ -13,6 +13,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -108,5 +110,67 @@ public class ClientTests {
         assertEquals("Updated Name", updatedClient.getNameClient(), "Name should be updated");
         assertEquals("updated.email@example.com", updatedClient.getEmail(), "Email should be updated");
         // Add other assertions for updated properties
+    }
+    @Test
+    void followedByClient() {
+        Client subject = clientService.getClient(1L);
+        Client followed = clientService.getClient(2L);
+
+        assertDoesNotThrow(() -> clientService.followedByClient(subject, followed));
+
+        Set<Client> followers = subject.getFollowedByClient();
+        System.out.println(followers);
+        assertTrue(followers.contains(followed));
+
+        System.out.println("----------------------");
+
+        Set<Client> followedClients = followed.getClientFollowers();
+        assertTrue(followedClients.contains(subject));
+        System.out.println(followedClients);
+    }
+
+
+
+    @Test
+    void unfollowClient() {
+        Client subject = clientService.getClient(1L);
+        Client followed = clientService.getClient(2L);
+        Set<Client> followers = subject.getFollowedByClient();
+        System.out.println(followers);
+        assertDoesNotThrow(() -> clientService.unfollowClient(subject, followed));
+
+        Set<Client> de = subject.getFollowedByClient();
+        System.out.println(de);
+        assertFalse(followers.contains(followed));
+
+        System.out.println("----------------------");
+
+        Set<Client> followedClients = followed.getClientFollowers();
+        assertFalse(followedClients.contains(subject));
+        System.out.println(followedClients);
+    }
+
+    @Test
+    void getFollowersPreferences() {
+        Long clientId = 1L;
+
+        assertDoesNotThrow(() -> {
+            List<String> followerList = clientService.getFollowersPreferences(clientId);
+            System.out.println(followerList);
+            assertNotNull(followerList);
+            assertFalse(followerList.isEmpty());
+        });
+    }
+
+    @Test
+    void getFollowedPreferences() {
+        Long clientId = 1L;
+
+        assertDoesNotThrow(() -> {
+            List<String> followedList = clientService.getFollowedPreferences(clientId);
+            assertNotNull(followedList);
+            System.out.println(followedList);
+            assertFalse(followedList.isEmpty());
+        });
     }
 }

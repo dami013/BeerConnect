@@ -95,23 +95,23 @@ public class ClientService {
         }
     }
 
-    public void printFollowedByClient(Client client) {
-        client = clientRepository.findById(client.getIdClient()).orElse(null);
-
-        if (client != null) {
-            Set<Client> followedByClient = client.getFollowedByClient();
-
-            if(followedByClient.isEmpty()){
-                throw new NoClientsFoundException("There are 0 client followed by client "+(client.getIdClient()).toString());
-            }else {
-                for (Client followed : followedByClient) {
-                    System.out.println("  - " + followed.getNameClient());
-                }
-            }
-        } else {
-            System.out.println("Client not found");
-        }
-    }
+//    public void printFollowedByClient(Client client) {
+//        client = clientRepository.findById(client.getIdClient()).orElse(null);
+//
+//        if (client != null) {
+//            Set<Client> followedByClient = client.getFollowedByClient();
+//
+//            if(followedByClient.isEmpty()){
+//                throw new NoClientsFoundException("There are 0 client followed by client "+(client.getIdClient()).toString());
+//            }else {
+//                for (Client followed : followedByClient) {
+//                    System.out.println("  - " + followed.getNameClient());
+//                }
+//            }
+//        } else {
+//            System.out.println("Client not found");
+//        }
+//    }
 
     @Transactional
     public void unfollowClient(Client soggetto, Client followed) {

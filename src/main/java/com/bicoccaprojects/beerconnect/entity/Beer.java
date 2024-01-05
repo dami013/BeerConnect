@@ -71,9 +71,8 @@ public class Beer {
     private List<ClientReview> clientReviews;
 
     // constructors
-    public Beer(String nameBeer, Pub idPub, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
+    public Beer(String nameBeer,String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock,Pub idPub) {
         this.nameBeer = nameBeer;
-        this.pub = idPub;
         this.type = type;
         this.aroma = aroma;
         this.alcohol = alcohol;
@@ -82,6 +81,7 @@ public class Beer {
         this.ingredients = ingredients;
         this.price = price;
         this.quantityInStock = quantityInStock;
+        this.pub = idPub;
     }
 
     public Beer(Long idBeer, String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, Pub pub) {
