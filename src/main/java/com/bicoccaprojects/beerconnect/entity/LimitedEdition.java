@@ -17,8 +17,9 @@ public class LimitedEdition extends Beer{ // class that extend Beer, a LimitedEd
 
     // constructors
 
-    public LimitedEdition(String nameBeer, Pub idPub, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, String originalBeer, Integer productionYear) {
-        super(nameBeer, idPub, type, aroma, alcohol, color, country, ingredients, price, quantityInStock);
+    public LimitedEdition(String nameBeer,String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price,
+                          Integer quantityInStock, String originalBeer, Integer productionYear,Pub idPub) {
+        super(nameBeer, type, aroma, alcohol, color, country, ingredients, price, quantityInStock,idPub);
         this.originalBeer = originalBeer;
         this.productionYear = productionYear;
     }
