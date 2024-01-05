@@ -15,6 +15,12 @@ L'applicazione vuole proporre un sistema di amministrazione per un network di am
 
 L'obiettivo principale è fornire agli amanti delle birre un applicativo, capace di gestire in modo efficace tutte le attività legate alla loro passione. Grazie all'utilizzo di JPA nel nostro backend Java, garantiamo un'elevata efficienza nell'amministrazione del network, consentendo agli utenti di creare, leggere, aggiornare e eliminare facilmente le informazioni rilevanti.
 
+### Diagramma ER
+
+<div align="center">
+  <img src="ER.png" alt="Image" width="700"/>
+</div>
+
 ## Struttura progetto
 
 ### Entità
@@ -57,12 +63,6 @@ Lo scopo di questa relazione è permettere ai vari Client di andare a leggere le
 - _Recensione_ tra Client e Beer (many-to-many): ogni Client può scrivere _N_ recensioni su _N_ birre e ogni birra può ricevere _N_ recensioni da _N_ Client diversi.\
 Questa relazione viene gestita da una tabella chiamata `client_review` che oltre a contenere le chiavi esterne della birra recensita e del Client che recensice, contiene due ulteriori campi, `rating` e `review`. Dove, il primo campo è un valore tra 1 e 5 che rappresenta un voto dato alla birra e il secondo contiene la descrizione verbale della recensione.\
 La gestione avanzata di questa relazione richiede la creazione di un'entità intermedia ClientReview e l'uso di annotazioni JPA @OneToMany da entrambi i lati, garantendo così una gestione efficiente e completa delle recensioni birrarie. Nonostante questo la relazione rimane di tipo many-to-many.
-
-### Diagramma ER
-
-<div align="center">
-  <img src="ER.png" alt="Image" width="700"/>
-</div>
 
 ### Operazioni CRUD per ogni entità
 
