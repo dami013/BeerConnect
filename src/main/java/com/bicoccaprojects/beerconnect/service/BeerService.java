@@ -59,7 +59,7 @@ public class BeerService {
     }
 
     @Transactional
-    public void addBeer(Beer beer) {
+    public boolean addBeer(Beer beer) {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
 
@@ -72,16 +72,17 @@ public class BeerService {
         if (!beerList.isEmpty()) {
             throw new BeerAlreadyExistsException("There is already a beer with " + beer.getNameBeer() + " as name");
         }
-
         beerRepository.save(beer);
+        return true;
     }
 
     @Transactional
-    public void updateBeer(Beer beer) {
+    public boolean updateBeer(Beer beer) {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
         if(beerOptional.isPresent()){
             beerRepository.save(beer);
+            return true;
         }else {
             throw new BeerNotFoundException(id);
         }
