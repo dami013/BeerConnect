@@ -11,7 +11,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
         uniqueConstraints = @UniqueConstraint(columnNames = {"id_client", "id_beer"}))
 public class ClientReview { // this intermediate entity add 2 fields to the relationship between Client and Beer
     @Id
-    @SequenceGenerator(name="review_sequence", sequenceName = "review_sequence", allocationSize = 1)
+    @SequenceGenerator(name="review_sequence", sequenceName = "review_sequence", allocationSize = 1,initialValue = 12)
     @GeneratedValue(strategy = SEQUENCE, generator = "review_sequence")
     @Column(name = "id_review", updatable = false)
     private Long idReview;
@@ -33,6 +33,7 @@ public class ClientReview { // this intermediate entity add 2 fields to the rela
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
+
     // Method that validates whether the rating is between 1 and 5
     @PrePersist
     @PreUpdate
@@ -45,6 +46,13 @@ public class ClientReview { // this intermediate entity add 2 fields to the rela
     // constructors
 
     public ClientReview(Client idClient, Beer idBeer, Integer rating, String review) {
+        this.idClient = idClient;
+        this.idBeer = idBeer;
+        this.rating = rating;
+        this.review = review;
+    }
+    public ClientReview(Long idReview,Client idClient, Beer idBeer, Integer rating, String review) {
+        this.idReview = idReview;
         this.idClient = idClient;
         this.idBeer = idBeer;
         this.rating = rating;

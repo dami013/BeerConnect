@@ -18,7 +18,7 @@ public class ClientReviewService {
 
     public Iterable<ClientReview> getAllReviews() {
         Iterable<ClientReview> clientReviews = clientReviewRepository.findAll();
-        if(clientReviews.iterator().hasNext()){
+        if(!clientReviews.iterator().hasNext()){
             throw new NoClientReviewsFoundException();
         }
         return clientReviews;
@@ -34,12 +34,14 @@ public class ClientReviewService {
     }
 
     @Transactional
-    public void deleteReview(Long id) {
+    public boolean deleteReview(Long id) {
         Optional<ClientReview> clientReviewOptional = clientReviewRepository.findById(id);
         if(clientReviewOptional.isEmpty()){
             throw new ClientReviewNotFoundException(id);
+
         }
         clientReviewRepository.deleteById(id);
+        return true;
     }
 
     @Transactional
