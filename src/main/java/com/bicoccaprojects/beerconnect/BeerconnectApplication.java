@@ -29,7 +29,7 @@ public class BeerconnectApplication {
 		SpringApplication.run(BeerconnectApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner commandLineRunner(ClientReviewService clientReviewService,
 										PubService pubService,
 										LimitedEditionService limitedEditionService,
@@ -71,7 +71,7 @@ public class BeerconnectApplication {
 							case 1:
 								Pub pub = new Pub(1L);
 
-								Beer beer = new Beer("Bicocca", pub, "IPA", "Citrusy", 5.0, "yellow", "italy", "Barley, Hops, Grapefruit Peel", 5.5f, 200);
+								Beer beer = new Beer("Bicocca", "IPA", "Citrusy", 5.0, "yellow", "italy", "Barley, Hops, Grapefruit Peel", 5.5f, 200, pub);
 								if(beerService.addBeer(beer)){
 									System.out.println(" ---        Beer added successfully         ---");
 								}
@@ -185,7 +185,7 @@ public class BeerconnectApplication {
 							case 1:
 								Pub pub = new Pub(1L);
 
-								Beer beer = new Beer("Bicocca", pub, "IPA", "Citrusy", 5.0, "yellow", "italy", "Barley, Hops, Grapefruit Peel", 5.5f, 200);
+								Beer beer = new Beer("Bicocca", "IPA", "Citrusy", 5.0, "yellow", "italy", "Barley, Hops, Grapefruit Peel", 5.5f, 200, pub);
 								LimitedEdition limitedBeer = new LimitedEdition("Xmas Bicocca", "IPA", "Cinnamon", 5.0, "yellow", "italy", "Barley, Hops, Grapefruit Peel, Cinnamon", 6.0f, 200, pub, "Bicocca", 2023);
 								if(limitedEditionService.addLEBeer(limitedBeer)){
 									System.out.println("| --- Limited Edition added successfully  --- |");
@@ -361,7 +361,7 @@ public class BeerconnectApplication {
 			}while (choice != 0);
 			scanner.close();
 
-			/*
+			*//*
 			List<String> listUser = clientReviewService.findReviewsByBeerCountryAndRating("Germany", 4);
 			System.out.println(listUser);
 
@@ -396,10 +396,10 @@ public class BeerconnectApplication {
 			} else {
 				System.out.println("errore");
 			}
-			 */
+			 *//*
 
 		};
-	}
+	}*/
 
 	/*@Bean
 	CommandLineRunner commandLineRunner(ClientService clientService) {
