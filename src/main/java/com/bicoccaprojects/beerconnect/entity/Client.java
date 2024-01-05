@@ -60,8 +60,8 @@ public class Client {
     @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "client_to_client",
-            joinColumns = @JoinColumn(name = "client_id"),
-            inverseJoinColumns = @JoinColumn(name = "id_client_followed"),
+            joinColumns = @JoinColumn(name = "id_client_followed"),
+            inverseJoinColumns = @JoinColumn(name = "client_id"),
             uniqueConstraints = {
                     @UniqueConstraint(columnNames = {"client_id", "id_client_followed"})
             })

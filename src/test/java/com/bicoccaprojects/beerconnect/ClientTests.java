@@ -119,41 +119,57 @@ public class ClientTests {
     }
     @Test
     void followedByClient() {
-        Client subject = clientService.getClient(1L);
-        Client followed = clientService.getClient(2L);
+        Client subject = clientService.getClient(1L); // Client who follow
+        Client followed = clientService.getClient(2L); // Client who get followed
 
+        Set<Client> clientsFollowedBySubject = subject.getFollowedByClient(); // List of Client followed by Client 1
+        System.out.println("Client 1 follows: "+clientsFollowedBySubject);
+
+        Set<Client> followerOfFollowed = followed.getClientFollowers(); // List of Client who follow Client 2
+        System.out.println("Client 2 is followed by: "+followerOfFollowed);
+
+        assertFalse(clientsFollowedBySubject.contains(followed));
+        assertFalse(followerOfFollowed.contains(subject));
+
+        // follow operation
         assertDoesNotThrow(() -> clientService.followedByClient(subject, followed));
 
-        Set<Client> followers = subject.getFollowedByClient();
-        System.out.println(followers);
-        assertTrue(followers.contains(followed));
+        clientsFollowedBySubject = subject.getFollowedByClient();
+        System.out.println("Client 1 now follows: "+clientsFollowedBySubject);
 
-        System.out.println("----------------------");
+        followerOfFollowed = followed.getClientFollowers();
+        System.out.println("Client 2 now is followed by: "+followerOfFollowed);
 
-        Set<Client> followedClients = followed.getClientFollowers();
-        assertTrue(followedClients.contains(subject));
-        System.out.println(followedClients);
+        assertTrue(clientsFollowedBySubject.contains(followed));
+        assertTrue(followerOfFollowed.contains(subject));
     }
 
 
 
     @Test
     void unfollowClient() {
-        Client subject = clientService.getClient(1L);
-        Client followed = clientService.getClient(2L);
-        Set<Client> followers = subject.getFollowedByClient();
-        System.out.println(followers);
-        assertDoesNotThrow(() -> clientService.unfollowClient(subject, followed));
+        Client subject = clientService.getClient(2L); // Client who follow
+        Client followed = clientService.getClient(1L); // Client who get followed
+        Set<Client> listFollowedSubject = subject.getFollowedByClient(); // followed by Client 1
+        System.out.println("Client followed by Client 2: "+listFollowedSubject);
+
+        Set<Client> listFollowerOtherClient = followed.getClientFollowers(); // follower Client 2, contains Client 1
+        System.out.println("Client 1 is followed by: "+listFollowerOtherClient);
+
+        assertTrue(listFollowerOtherClient.contains(subject)); // list of follower of Client 2 must contain Client 1
+        assertTrue(listFollowedSubject.contains(followed)); // list of client followed by Client 1 must contain Client 2
+
+        assertDoesNotThrow(() -> clientService.unfollowClient(subject, followed)); // unfollow operation
+
+        assertFalse(listFollowerOtherClient.contains(subject)); // now list of follower of Client 2 must not contain Client 1
+        assertFalse(listFollowedSubject.contains(followed)); // now list of followed by Client 1 must not contain Client 2
 
         Set<Client> de = subject.getFollowedByClient();
-        System.out.println(de);
-        assertFalse(followers.contains(followed));
+        System.out.println("Client followed by Client 2: "+de);
 
         System.out.println("----------------------");
 
-        Set<Client> followedClients = followed.getClientFollowers();
-        assertFalse(followedClients.contains(subject));
-        System.out.println(followedClients);
+        System.out.println("Client 1 is followed by: "+listFollowerOtherClient);
     }
 
     @Test

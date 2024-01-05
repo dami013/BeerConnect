@@ -85,6 +85,14 @@ public class ClientService {
         followed = clientRepository.findById(followed.getIdClient()).orElse(null);
 
         if (soggetto != null && followed != null) {
+            if(soggetto.getFollowedByClient().contains(followed)){
+                System.out.println("******************************************");
+                System.out.println("Segue già l'altro client");
+            }
+            if(followed.getClientFollowers().contains(soggetto)){
+                System.out.println("Già seguito da soggetto");
+            }
+
             soggetto.getFollowedByClient().add(followed); // followed è un Client che viene seguito dall'client soggetto
             followed.getClientFollowers().add(soggetto); // ai follower di questo client viene aggiunto 'soggetto'
 
