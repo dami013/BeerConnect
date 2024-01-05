@@ -37,6 +37,8 @@ L'applicazione è strutturata attorno a diverse entità, ciascuna progettata per
 
 Inoltre, ogni entità è caratterizzata da un campo identificativo (ID) che consente di riconoscere univocamente le varie istanze di ogni entità.
 
+In ognuna di queste classi sono stati definiti gli attributi dell'entità e le annotazioni che permettono di gestire la persistenza dei dati sul db tramite JPA.
+
 ### Gestione dell'ereditarietà
 
 La gestione delle entità Limited Edition richiede un approccio di mapping particolare, poiché i concetti di gerarchia presenti nella programmazione orientata agli oggetti non si traducono direttamente nei database. L'approccio scelto per affrontare questa sfida è il modello "Single Table", che prevede l'utilizzo di una singola tabella per gestire le entità Beer e Limited Edition, distinguendole attraverso l'uso di colonne specifiche.\
@@ -64,9 +66,22 @@ Lo scopo di questa relazione è permettere ai vari Client di andare a leggere le
 Questa relazione viene gestita da una tabella chiamata `client_review` che oltre a contenere le chiavi esterne della birra recensita e del Client che recensice, contiene due ulteriori campi, `rating` e `review`. Dove, il primo campo è un valore tra 1 e 5 che rappresenta un voto dato alla birra e il secondo contiene la descrizione verbale della recensione.\
 La gestione avanzata di questa relazione richiede la creazione di un'entità intermedia ClientReview e l'uso di annotazioni JPA @OneToMany da entrambi i lati, garantendo così una gestione efficiente e completa delle recensioni birrarie. Nonostante questo la relazione rimane di tipo many-to-many.
 
-### Operazioni CRUD per ogni entità
+### Implementazione
 
-###  search operation
-that involves a minimum of two entities and extracts entities making a selection according to a constraint defined on non-key attributes
+Per la gestione della persistenza, sono state introdotte interfacce all'interno del package repository, una per ogni entità, le quali estendono JpaRepository per sfruttare i metodi standard CRUD di JPA. Al fine di soddisfare i requisiti dell'assignment, sono state sviluppate query di ricerca specifiche coinvolgenti almeno due entità, le quali effettuano selezioni basate su attributi non chiave.
 
-### TEST?
+Per la gestione della business logic, sono state implementate classi service all'interno del package service, ognuna dedicata a un'entità del sistema. Queste classi consentono l'implementazione dei metodi estesi dalle interfacce repository e l'utilizzo di metodi per le operazioni CRUD. Tale struttura offre un livello di controllo aggiuntivo tra l'applicazione e il database.
+
+Le eccezioni sono gestite attraverso le classi apposite presenti nel package exception.
+
+## Come utilizzare l'applicazione
+
+L'applicazione si appoggia su un database PostgreSQL, pertanto è necessario creare un database di questo tipo con il nome desiderato. Successivamente, nel file `config.properties` (posizionato in "2023_assignment3_beerconnect\src\main\resources"), è necessario compilare i seguenti campi:
+
+- spring.datasource.username="username_postgres"
+
+- spring.datasource.password="password_postgres"
+
+- spring.datasource.url=jdbc:postgresql://localhost:5432/"nome_db_scelto"
+
+Assicurarsi di sostituire "username_postgres", "password_postgres", e "nome_db_scelto" con le credenziali appropriate e il nome scelto per il database.
