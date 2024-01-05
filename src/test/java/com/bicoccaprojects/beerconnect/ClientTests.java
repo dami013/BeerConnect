@@ -60,6 +60,7 @@ public class ClientTests {
 
     @Test
     void deleteClientById() {
+        System.out.println(clientService.getClient(CLIENT_ID_TO_DELETE));
         assertTrue(clientService.deleteClient(CLIENT_ID_TO_DELETE));
     }
 

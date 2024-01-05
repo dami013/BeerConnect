@@ -59,32 +59,29 @@ public class BeerService {
     }
 
     @Transactional
-    public boolean addBeer(Beer beer) {
+    public void addBeer(Beer beer) {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
 
-        if (beerOptional.isEmpty()) {
-            List<String> beerList = beerRepository.searchBeerByName(beer.getNameBeer());
-
-            if (beerList.isEmpty()) {
-                beerRepository.save(beer);
-                return true;
-            } else {
-                throw new BeerAlreadyExistsException("There is already a beer with " + beer.getNameBeer() + " as name");
-            }
-        } else {
+        if (beerOptional.isPresent()) {
             throw new BeerAlreadyExistsException("There is already a beer in the DB with ID " + id);
         }
+
+        List<String> beerList = beerRepository.searchBeerByName(beer.getNameBeer());
+
+        if (!beerList.isEmpty()) {
+            throw new BeerAlreadyExistsException("There is already a beer with " + beer.getNameBeer() + " as name");
+        }
+
+        beerRepository.save(beer);
     }
 
-
     @Transactional
-    public boolean updateBeer(Beer beer) {
+    public void updateBeer(Beer beer) {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
         if(beerOptional.isPresent()){
             beerRepository.save(beer);
-            return true;
         }else {
             throw new BeerNotFoundException(id);
         }
