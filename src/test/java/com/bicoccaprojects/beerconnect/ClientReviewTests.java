@@ -1,4 +1,4 @@
-package com.bicoccaprojects.beerconnect.service.relational_service;
+package com.bicoccaprojects.beerconnect;
 
 import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.Client;
@@ -6,6 +6,7 @@ import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import com.bicoccaprojects.beerconnect.exception.clientreviews.ClientReviewNotFoundException;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.ClientService;
+import com.bicoccaprojects.beerconnect.service.relational_service.ClientReviewService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
