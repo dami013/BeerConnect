@@ -30,6 +30,12 @@ public class ClientTests {
     private static final Long CLIENT_ID_TO_DELETE = 2L;
     private static final Long CLIENT_ID_TO_UPDATE = 3L;
 
+    private static final Long CLIENT_ID_TO_FOLLOW = 10L;
+
+    private static final Long CLIENT_ID_FOLLOWED = 12L;
+
+    private static final Long CLIENT_ID_FOLLOWING = 11L;
+
     @BeforeEach
     @Sql("/data.sql")
     void setUp() {
@@ -152,25 +158,37 @@ public class ClientTests {
 
     @Test
     void getFollowersPreferences() {
-        Long clientId = 1L;
+        Long clientId = CLIENT_ID_TO_FOLLOW;
 
         assertDoesNotThrow(() -> {
-            List<String> followerList = clientService.getFollowersPreferences(clientId);
-            System.out.println(followerList);
-            assertNotNull(followerList);
-            assertFalse(followerList.isEmpty());
+            List<String> preferencesFollower = clientService.getFollowersPreferences(clientId);
+            System.out.println(preferencesFollower);
+
+            Client clientFollower = clientService.getClient(CLIENT_ID_FOLLOWING);
+            String preferences = clientFollower.getPreferences();
+            System.out.println("Preferenze del follower di "+clientId+" è: "+preferences);
+            assertEquals(preferences, preferencesFollower.get(0));
+
+            assertNotNull(preferencesFollower);
+            assertFalse(preferencesFollower.isEmpty());
         });
     }
 
     @Test
     void getFollowedPreferences() {
-        Long clientId = 1L;
+        Long clientId = CLIENT_ID_TO_FOLLOW;
 
         assertDoesNotThrow(() -> {
-            List<String> followedList = clientService.getFollowedPreferences(clientId);
-            assertNotNull(followedList);
-            System.out.println(followedList);
-            assertFalse(followedList.isEmpty());
+            List<String> preferencesFollowed = clientService.getFollowedPreferences(clientId);
+            System.out.println(preferencesFollowed);
+
+            Client clientFollowed = clientService.getClient(CLIENT_ID_FOLLOWED);
+            String preferences = clientFollowed.getPreferences();
+            System.out.println("Preferenze di quello seguito da "+clientId+" è "+preferences);
+            assertEquals(preferences, preferencesFollowed.get(0));
+
+            assertNotNull(preferencesFollowed);
+            assertFalse(preferencesFollowed.isEmpty());
         });
     }
 }
