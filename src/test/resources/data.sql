@@ -50,7 +50,7 @@ INSERT INTO client (id_client, name_client, email, date_birth, address, preferen
 INSERT INTO client_review (id_review, id_beer, id_client, review, rating) VALUES
     (1, 2, 2, 'Very good taste', 4),
     (2, 2, 3, 'Excellent beer with a coffee twist! Loved it!', 5),
-    (3, 2, 4, 'This stout is rich and velvety. A must-try!', 4),
+    (3, 3, 4, 'This IPA is rich and velvety. A must-try!', 4),
     (4, 5, 3, 'The Smoked Porter Perfection has a refreshing citrus burst. Great choice!', 4.5),
     (5, 6, 3, 'This is golden perfection. Amazing!', 5),
     (6, 8, 5, 'Fantastic Saison with a delightful herbal touch.', 4.5),

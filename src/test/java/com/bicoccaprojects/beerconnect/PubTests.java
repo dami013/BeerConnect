@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -121,6 +122,14 @@ public class PubTests {
         assertNotNull(updatedPub, "Updated pub should not be null");
         assertEquals(existingPub.getNamePub(), updatedPub.getNamePub(), "Name should be updated");
         assertEquals(existingPub.getCountry(), updatedPub.getCountry(), "Location should be updated");
+    }
+
+    @Test
+    void searchPub(){
+        List<String> pubList = pubService.searchPubByCountryTypeRating("United Kingdom", "IPA", 4);
+        assertEquals("The Green Dragon", pubList.get(0));
+
+        assertThrows(PubNotFoundException.class,() -> pubService.searchPubByCountryTypeRating("France", "IPA", 4));
     }
 
 }

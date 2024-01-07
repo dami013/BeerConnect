@@ -75,12 +75,12 @@ public class PubService {
         }
     }
 
-    public List<String> findBeerByPub(Long idPub){
-        List<String> pubList = pubRepository.findBeerByPub(idPub);
-        if(!pubList.isEmpty()){
+    public List<String> searchPubByCountryTypeRating(String country, String type, Integer rating){
+        List<String> pubList = pubRepository.findPubByCountryAndBeerType(country, type, rating);
+        if (!pubList.isEmpty()){
             return pubList;
         }else {
-            throw new PubNotFoundException("There are no pub with this name");
+            throw new PubNotFoundException("There are no pub that satisfied this query");
         }
     }
 }
