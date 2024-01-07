@@ -4,7 +4,6 @@ import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
-import com.bicoccaprojects.beerconnect.repository.PubRepository;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.PubService;
 import org.junit.jupiter.api.AfterEach;
@@ -124,9 +123,8 @@ public class BeerTests {
 
         Beer updatedBeer = beerService.getBeer(BEER_ID_TO_UPDATE);
         assertNotNull(updatedBeer, "Updated beer should not be null");
-        assertEquals("Updated Name", updatedBeer.getNameBeer(), "Name should be updated");
-        assertEquals("Updated Type", updatedBeer.getType(), "Type should be updated");
-        // Add more assertions for other properties
+        assertEquals(existingBeer.getNameBeer(), updatedBeer.getNameBeer(), "Name should be updated");
+        assertEquals(existingBeer.getType(), updatedBeer.getType(), "Type should be updated");
     }
 
     @ParameterizedTest

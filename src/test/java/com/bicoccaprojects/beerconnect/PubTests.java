@@ -17,6 +17,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -65,7 +66,21 @@ public class PubTests {
 
     @Test
     void deletePubById() {
+        Iterable<Pub> allPub = pubService.getAllPubs(); // get all the Pub in the DB
+
+        // Check that PUB_ID_TO_DELETE is in allPub collection
+        assertTrue(StreamSupport.stream(allPub.spliterator(), false).anyMatch(
+                pub -> pub.getIdPub().equals(PUB_ID_TO_DELETE)
+        ), "Initial check failed: PUB_ID_TO_DELETE should be in the collection");
+
+        // delete Pub with id = PUB_ID_TO_DELETE
         assertTrue(pubService.deletePub(PUB_ID_TO_DELETE));
+        allPub = pubService.getAllPubs();
+
+        // Check that PUB_ID_TO_DELETE isn't in allPub collection
+        assertTrue(StreamSupport.stream(allPub.spliterator(), false).noneMatch(
+                pub -> pub.getIdPub().equals(PUB_ID_TO_DELETE)
+        ), "Deletion check failed: PUB_ID_TO_DELETE should not be in the collection after deletion");
     }
 
     @Test
@@ -89,9 +104,9 @@ public class PubTests {
         Pub addedPub = pubService.getPub(testPub.getIdPub());
 
         assertNotNull(addedPub, "Added pub should not be null");
-        assertEquals("Test Pub", addedPub.getNamePub(), "Name should match");
-        assertEquals("Germany", addedPub.getCountry(), "Location should match");
-        // Add more assertions for other properties
+        assertEquals(testPub.getNamePub(), addedPub.getNamePub(), "Name should match");
+        assertEquals(testPub.getCountry(), addedPub.getCountry(), "Location should match");
+        assertEquals(testPub.getIdPub(), addedPub.getIdPub(), "ID should match");
     }
 
     @Test
@@ -103,16 +118,14 @@ public class PubTests {
         // When
         existingPub.setNamePub("Updated Pub Name");
         existingPub.setCountry("Portugal");
-        // Add other necessary updates
 
         pubService.updatePub(existingPub);
 
         // Then
         Pub updatedPub = pubService.getPub(PUB_ID_TO_UPDATE);
         assertNotNull(updatedPub, "Updated pub should not be null");
-        assertEquals("Updated Pub Name", updatedPub.getNamePub(), "Name should be updated");
-        assertEquals("Portugal", updatedPub.getCountry(), "Location should be updated");
-        // Add other assertions for updated properties
+        assertEquals(existingPub.getNamePub(), updatedPub.getNamePub(), "Name should be updated");
+        assertEquals(existingPub.getCountry(), updatedPub.getCountry(), "Location should be updated");
     }
 
 }
