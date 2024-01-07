@@ -74,11 +74,13 @@ public class ClientTests {
         // unfollow all Client followed by clientToBeRemoved
         for (Client client : clientToBeRemoved.getFollowedByClient()) {
             clientService.unfollowClient(clientToBeRemoved, client);
+            assertFalse(clientToBeRemoved.getFollowedByClient().contains(client));
         }
 
         // unfollow clientToBeRemoved from all client followed who follows him
         for (Client client : clientToBeRemoved.getFollowedByClient()) {
             clientService.unfollowClient(client, clientToBeRemoved);
+            assertFalse(clientToBeRemoved.getClientFollowers().contains(client));
         }
 
         clientToBeRemoved.getClientFollowers().clear();
