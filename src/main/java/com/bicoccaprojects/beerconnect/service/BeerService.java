@@ -37,14 +37,13 @@ public class BeerService {
     }
 
     @Transactional
-    public boolean deleteBeer(Long id) {
+    public void deleteBeer(Long id) {
         Optional<Beer> beerOptional = beerRepository.findById(id);
 
         if (beerOptional.isEmpty()) {
             throw new BeerNotFoundException(id);
         }
         beerRepository.deleteById(id);
-        return true;
     }
 
     @Transactional
@@ -59,7 +58,7 @@ public class BeerService {
     }
 
     @Transactional
-    public boolean addBeer(Beer beer) {
+    public void addBeer(Beer beer) {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
 
@@ -73,7 +72,6 @@ public class BeerService {
             throw new BeerAlreadyExistsException("There is already a beer with " + beer.getNameBeer() + " as name");
         }
         beerRepository.save(beer);
-        return true;
     }
 
     @Transactional

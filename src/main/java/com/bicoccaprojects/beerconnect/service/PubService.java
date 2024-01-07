@@ -35,14 +35,13 @@ public class PubService {
     }
 
     @Transactional
-    public boolean deletePub(Long id) {
+    public void deletePub(Long id) {
         Optional<Pub> pubOptional = pubRepository.findById(id);
 
         if(pubOptional.isEmpty()){
             throw new PubNotFoundException(id);
         }
         pubRepository.deleteById(id);
-        return true;
     }
 
     @Transactional

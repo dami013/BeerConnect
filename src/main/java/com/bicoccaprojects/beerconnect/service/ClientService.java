@@ -38,15 +38,14 @@ public class ClientService {
         }
     }
     @Transactional
-    public boolean deleteClient(Long id) {
+    public void deleteClient(Long id) {
         Optional<Client> clientOptional = clientRepository.findById(id);
-
         if (clientOptional.isEmpty()) {
             throw new ClientNotFoundException(id);
         }
         clientRepository.deleteById(id);
-        return true;
     }
+
     @Transactional
     public void deleteClients() {
         Iterable<Client> clients = clientRepository.findAll();

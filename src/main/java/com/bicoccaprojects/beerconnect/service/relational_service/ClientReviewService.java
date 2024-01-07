@@ -34,14 +34,13 @@ public class ClientReviewService {
     }
 
     @Transactional
-    public boolean deleteReview(Long id) {
+    public void deleteReview(Long id) {
         Optional<ClientReview> clientReviewOptional = clientReviewRepository.findById(id);
         if(clientReviewOptional.isEmpty()){
             throw new ClientReviewNotFoundException(id);
 
         }
         clientReviewRepository.deleteById(id);
-        return true;
     }
 
     @Transactional
