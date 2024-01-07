@@ -106,8 +106,8 @@ public class BeerTests {
         Beer addedBeer = beerService.getBeer(testBeer.getIdBeer());
 
         assertNotNull(addedBeer, "Added beer should not be null");
-        assertEquals("beerTest", addedBeer.getNameBeer(), "Name should match");
-        assertEquals("Weiss", addedBeer.getType(), "Type should match");
+        assertEquals(testBeer.getNameBeer(), addedBeer.getNameBeer(), "Name should match");
+        assertEquals(testBeer.getType(), addedBeer.getType(), "Type should match");
         assertEquals(pub.getIdPub(), addedBeer.getPub().getIdPub(), "ID Pub should match");
         assertEquals(2.99f, addedBeer.getPrice(), "Price should match");
     }
