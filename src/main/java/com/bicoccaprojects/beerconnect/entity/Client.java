@@ -16,7 +16,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
                 @UniqueConstraint(name = "client_email_unique", columnNames = "email")}) // email must be unique for each Client
 public class Client {
     @Id
-    @SequenceGenerator(name = "client_sequence", sequenceName = "client_sequence", allocationSize = 1,initialValue = 13)
+    @SequenceGenerator(name = "client_sequence", sequenceName = "client_sequence", allocationSize = 1,initialValue = 14)
     @GeneratedValue(strategy = SEQUENCE, generator = "client_sequence")
     @Column(name = "id_client", updatable = false)
     private Long idClient;
@@ -57,7 +57,7 @@ public class Client {
     private List<ClientReview> clientReviews;
 
     // self-loop relationship between clients
-    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "client_to_client",
             joinColumns = @JoinColumn(name = "id_client_followed"),
@@ -67,7 +67,7 @@ public class Client {
             })
     private Set<Client> clientFollowers = new HashSet<Client>(); // altri utenti che seguono il Client soggetto
 
-    @ManyToMany(mappedBy = "clientFollowers", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "clientFollowers", fetch = FetchType.LAZY)
     private Set<Client> followedByClient = new HashSet<Client>(); // utenti seguiti dal client soggetto
 
     public Client(String name, String email, LocalDate date_birth, String address, String preferences) {
