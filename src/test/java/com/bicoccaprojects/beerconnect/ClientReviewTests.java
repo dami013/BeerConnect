@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,7 +70,21 @@ public class ClientReviewTests {
 
     @Test
     void deleteReviewById() {
-        assertTrue(clientReviewService.deleteReview(REVIEW_ID_TO_DELETE));
+        Iterable<ClientReview> allReview = clientReviewService.getAllReviews(); // get all the Review in the DB
+
+        // Check that REVIEW_ID_TO_DELETE is in allReview collection
+        assertTrue(StreamSupport.stream(allReview.spliterator(), false).anyMatch(
+                review -> review.getIdReview().equals(REVIEW_ID_TO_DELETE)
+        ), "Initial check failed: REVIEW_ID_TO_DELETE should be in the collection");
+
+        // delete Review with id = REVIEW_ID_TO_DELETE
+        assertDoesNotThrow(() -> clientReviewService.deleteReview(REVIEW_ID_TO_DELETE), "Deletion failed for BEER_ID_TO_DELETE");
+        allReview = clientReviewService.getAllReviews();
+
+        // Check that REVIEW_ID_TO_DELETE isn't in allReview collection
+        assertTrue(StreamSupport.stream(allReview.spliterator(), false).noneMatch(
+                review -> review.getIdReview().equals(REVIEW_ID_TO_DELETE)
+        ), "Deletion check failed: REVIEW_ID_TO_DELETE should not be in the collection after deletion");
     }
 
     @Test
@@ -91,9 +106,10 @@ public class ClientReviewTests {
         ClientReview addedReview = clientReviewService.getReview(testReview.getIdReview());
 
         assertNotNull(addedReview, "Added review should not be null");
-        assertEquals("WOW", addedReview.getReview(), "Review comment should match");
-        assertEquals(5, addedReview.getRating(), "Reviewer name should match");
-        // Add more assertions for other properties
+        assertEquals(testReview.getIdClient(), addedReview.getIdClient(), "ID Client should match");
+        assertEquals(testReview.getIdBeer(), addedReview.getIdBeer(), "ID Beer should match");
+        assertEquals(testReview.getReview(), addedReview.getReview(), "Review comment should match");
+        assertEquals(testReview.getRating(), addedReview.getRating(), "Reviewer name should match");
     }
 
     @Test
@@ -108,17 +124,14 @@ public class ClientReviewTests {
 
         ClientReview updatedReview = clientReviewService.getReview(REVIEW_ID_TO_UPDATE);
         assertNotNull(updatedReview, "Updated review should not be null");
-        assertEquals("Updated Comment", updatedReview.getReview(), "Review comment should be updated");
-        assertEquals(4, updatedReview.getRating(), "Rating should be updated");
+        assertEquals(existingReview.getReview(), updatedReview.getReview(), "Review comment should be updated");
+        assertEquals(existingReview.getRating(), updatedReview.getRating(), "Rating should be updated");
     }
 
     @Test
     void findReviewsByBeerCountryAndRating() {
         List<String> reviewList = clientReviewService.findReviewsByBeerCountryAndRating("Japan", 4);
-        System.out.println(reviewList);
-        assertEquals("Fantastic Saison with a delightful herbal touch.", reviewList.get(0));
-
-        assertNotNull(reviewList);
         assertFalse(reviewList.isEmpty());
+        assertEquals("Fantastic Saison with a delightful herbal touch.", reviewList.get(0));
     }
 }

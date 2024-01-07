@@ -39,13 +39,13 @@ public class BeerTests {
     @BeforeEach
     @Sql("/data.sql")
     void setUp() {
-        System.out.println("Dati aggiunti");
+        System.out.println("Beers added");
         System.out.println(beerService.getAllBeers());
     }
 
     @AfterEach
     void tearDown() {
-        System.out.println("dati eliminati");
+        System.out.println("Beers deleted");
         beerService.deleteBeers();
     }
 
@@ -77,7 +77,7 @@ public class BeerTests {
         ), "Initial check failed: BEER_ID_TO_DELETE should be in the collection");
 
         // delete Beer with id = BEER_ID_TO_DELETE
-        assertTrue(beerService.deleteBeer(BEER_ID_TO_DELETE), "Deletion failed for BEER_ID_TO_DELETE");
+        assertDoesNotThrow(() -> beerService.deleteBeer(BEER_ID_TO_DELETE), "Deletion failed for BEER_ID_TO_DELETE");
         allBeer = beerService.getAllBeers();
 
         // Check that BEER_ID_TO_DELETE isn't in allBeer collection
@@ -98,7 +98,7 @@ public class BeerTests {
 
         Beer testBeer = new Beer(17L, "beerTest", "Weiss", "Sweet", 5.0d, "Yellow", "Germany", "Hops", 2.99f, 100, pub);
 
-        assertTrue(beerService.addBeer(testBeer), "Addition failed");
+        assertDoesNotThrow(() -> beerService.addBeer(testBeer), "Addition failed");
 
         assertNotNull(testBeer.getIdBeer(), "Beer ID should not be null after addition");
 
@@ -119,7 +119,7 @@ public class BeerTests {
         existingBeer.setNameBeer("Updated Name");
         existingBeer.setType("Updated Type");
 
-        beerService.updateBeer(existingBeer);
+        assertDoesNotThrow(() -> beerService.updateBeer(existingBeer));
 
         Beer updatedBeer = beerService.getBeer(BEER_ID_TO_UPDATE);
         assertNotNull(updatedBeer, "Updated beer should not be null");

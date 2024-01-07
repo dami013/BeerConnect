@@ -77,7 +77,7 @@ public class LimitedEditionTests {
         ), "Initial check failed: LE_BEER_ID_TO_DELETE should be in the collection");
 
         // delete Limited Edition Beer with id = LE_BEER_ID_TO_DELETE
-        assertTrue(limitedEditionService.deleteBeer(LE_BEER_ID_TO_DELETE), "Deletion failed for LE_BEER_ID_TO_DELETE");
+        assertDoesNotThrow(() -> limitedEditionService.deleteLEBeer(LE_BEER_ID_TO_DELETE), "Deletion failed for LE_BEER_ID_TO_DELETE");
         allLE = limitedEditionService.getAllLEBeers();
 
         // Check that LE_BEER_ID_TO_DELETE isn't in allLE collection
@@ -100,7 +100,7 @@ public class LimitedEditionTests {
         LimitedEdition testLE = new LimitedEdition(16L, "limitedEditionTest", "Weiss", "Sweet", 5.0d, "Yellow", "Germany", "Hops", 3.0f, 100, pub, "Slalom", 2024);
 
         // When
-        assertTrue(limitedEditionService.addLEBeer(testLE), "Addition failed");
+        assertDoesNotThrow(() -> limitedEditionService.addLEBeer(testLE), "Addition failed");
 
         // Then
         assertNotNull(testLE.getIdBeer(), "LE Beer ID should not be null after addition");
@@ -128,7 +128,7 @@ public class LimitedEditionTests {
         existingLEBeer.setType("Updated Limited Edition Type");
         existingLEBeer.setPub(pub);
 
-        limitedEditionService.updateLEBeer(existingLEBeer);
+        assertDoesNotThrow(() -> limitedEditionService.updateLEBeer(existingLEBeer));;
 
         // Then
         LimitedEdition updatedLEBeer = limitedEditionService.getLEBeer(LE_BEER_ID_TO_UPDATE);

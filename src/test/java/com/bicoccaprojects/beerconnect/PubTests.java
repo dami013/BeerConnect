@@ -74,7 +74,7 @@ public class PubTests {
         ), "Initial check failed: PUB_ID_TO_DELETE should be in the collection");
 
         // delete Pub with id = PUB_ID_TO_DELETE
-        assertTrue(pubService.deletePub(PUB_ID_TO_DELETE));
+        assertDoesNotThrow(() -> pubService.deletePub(PUB_ID_TO_DELETE));
         allPub = pubService.getAllPubs();
 
         // Check that PUB_ID_TO_DELETE isn't in allPub collection
@@ -95,7 +95,7 @@ public class PubTests {
         Pub testPub = new Pub(10L,"Test Pub","Germany",2002);
 
         // When
-        pubService.addPub(testPub);
+        assertDoesNotThrow(() -> pubService.addPub(testPub));
 
         // Then
         assertNotNull(testPub.getIdPub(), "Pub ID should not be null after addition");
