@@ -70,6 +70,8 @@ La gestione avanzata di questa relazione richiede la creazione di un'entità int
 
 Per la gestione della persistenza, sono state introdotte interfacce all'interno del package repository, una per ogni entità, le quali estendono JpaRepository per sfruttare i metodi standard CRUD di JPA. Al fine di soddisfare i requisiti dell'assignment, sono state sviluppate query di ricerca specifiche coinvolgenti almeno due entità, le quali effettuano selezioni basate su attributi non chiave.
 
+La funzione richiesta nelle specifiche del progetto, denominata `findClientByReview` e implementata nella classe `ClientReview`, consente di recuperare le informazioni relative ai clienti in base alle recensioni associate alle birre. In particolare, la funzione offre la possibilità di filtrare i risultati in base alla nazionalità della birra e al rating assegnato. 
+
 Per la gestione della business logic, sono state implementate classi service all'interno del package service, ognuna dedicata a un'entità del sistema. Queste classi consentono l'implementazione dei metodi estesi dalle interfacce repository e l'utilizzo di metodi per le operazioni CRUD. Tale struttura offre un livello di controllo aggiuntivo tra l'applicazione e il database.
 
 Le eccezioni sono gestite attraverso le classi apposite presenti nel package exception.
@@ -85,3 +87,21 @@ L'applicazione si appoggia su un database PostgreSQL, pertanto è necessario cre
 - spring.datasource.url=jdbc:postgresql://localhost:5432/"nome_db_scelto"
 
 Assicurarsi di sostituire "username_postgres", "password_postgres", e "nome_db_scelto" con le credenziali appropriate e il nome scelto per il database.
+
+## Testing
+
+Le annotazioni `@BeforeEach` e `@AfterEach` sono utilizzate per preparare e ripulire l'ambiente di test prima e dopo ciascuna singola prova. La funzione `setUp` si occupa dell'inizializzazione mediante l'utilizzo di uno script SQL, mentre `tearDown` gestisce le operazioni di pulizia. Questo approccio mira a isolare i test, garantendo che ciascuno parta da uno stato noto e coerenza, contribuendo così alla ripetibilità e all'affidabilità.
+
+All'interno del progetto `BeerConnect`, l'implementazione dei test si configura come una pratica essenziale per garantire la solidità e la correttezza delle operazioni eseguite sulle diverse entità del sistema. Un focus particolare è stato dedicato alle classi di test per le entità chiave, evidenziando le operazioni di gestione delle birre, degli utenti, delle birre in edizione limitata e dei pub.
+
+La classe `BeerTests` è progettata per convalidare le operazioni CRUD relative alle birre. I test comprendono la ricerca e il recupero delle birre, l'aggiornamento delle informazioni e l'eliminazione delle birre. La correttezza di queste operazioni è fondamentale per assicurare che le birre nel sistema siano facilmente accessibili e che le modifiche avvengano in modo coerente.
+
+Nei `ClientTests`, l'attenzione è stata riservata alla gestione degli utenti. I test abbracciano operazioni come l'aggiunta di nuovi utenti, la modifica delle informazioni e la gestione delle relazioni tra utenti, come il seguire e smettere di seguire altri utenti. Questi test sono cruciali per garantire che le funzionalità sociali di BeerConnect siano affidabili e che le informazioni degli utenti siano gestite correttamente.
+
+Per quanto riguarda le birre in edizione limitata, la classe `LimitedEditionTests` si occupa di testare la corretta gestione di queste birre speciali. I test coprono la ricerca, l'aggiornamento e l'eliminazione delle birre in edizione limitata, assicurando che anche queste birre siano trattate in modo accurato e conforme alle aspettative del sistema.
+
+Nei `PubTests` testano le operazioni relative ai pub all'interno di BeerConnect. Dai test di recupero e visualizzazione dei pub, all'aggiunta e modifica di informazioni, fino all'eliminazione di pub specifici, ogni aspetto viene attentamente valutato per garantire l'integrità dei dati relativi ai locali.
+
+Infine, la classe `ClientReviewTests` è dedicata alla verifica delle operazioni fondamentali legate alle recensioni dei clienti in BeerConnect. I test coprono aspetti chiave come l'aggiunta, la modifica e la gestione delle recensioni, garantendo l'affidabilità delle funzionalità sociali dell'applicazione. Attraverso scenari diversificati, dai test di base come l'ottenimento di recensioni per ID alla gestione di situazioni più complesse come recensioni duplicate e aggiornamenti, si assicura la corretta gestione delle informazioni dei clienti all'interno del sistema.
+
+
