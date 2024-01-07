@@ -1,9 +1,12 @@
 package com.bicoccaprojects.beerconnect;
 
 import com.bicoccaprojects.beerconnect.entity.Beer;
+import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
+import com.bicoccaprojects.beerconnect.repository.PubRepository;
 import com.bicoccaprojects.beerconnect.service.BeerService;
+import com.bicoccaprojects.beerconnect.service.PubService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +28,9 @@ public class BeerTests {
 
     @Autowired
     private BeerService beerService;
+
+    @Autowired
+    private PubService pubService;
 
     private static final Long VALID_BEER_ID = 1L;
     private static final Long NON_EXISTENT_BEER_ID = 999L;
@@ -63,7 +70,21 @@ public class BeerTests {
 
     @Test
     void deleteBeerById() {
-        assertTrue(beerService.deleteBeer(BEER_ID_TO_DELETE));
+        Iterable<Beer> allBeer = beerService.getAllBeers(); // get all the Beer in the DB
+
+        // Check that BEER_ID_TO_DELETE is in allBeer collection
+        assertTrue(StreamSupport.stream(allBeer.spliterator(), false).anyMatch(
+                beer -> beer.getIdBeer().equals(BEER_ID_TO_DELETE)
+        ), "Initial check failed: BEER_ID_TO_DELETE should be in the collection");
+
+        // delete Beer with id = BEER_ID_TO_DELETE
+        assertTrue(beerService.deleteBeer(BEER_ID_TO_DELETE), "Deletion failed for BEER_ID_TO_DELETE");
+        allBeer = beerService.getAllBeers();
+
+        // Check that BEER_ID_TO_DELETE isn't in allBeer collection
+        assertTrue(StreamSupport.stream(allBeer.spliterator(), false).noneMatch(
+                beer -> beer.getIdBeer().equals(BEER_ID_TO_DELETE)
+        ), "Deletion check failed: BEER_ID_TO_DELETE should not be in the collection after deletion");
     }
 
     @Test
@@ -74,18 +95,21 @@ public class BeerTests {
 
     @Test
     void addBeer() {
-        Beer testBeer = new Beer(17L, "ciao", "green", "black", 5.0d, "green", "italy", "milk", 2.99f, 100, null);
+        Pub pub = pubService.getPub(1L);
 
-        beerService.addBeer(testBeer);
+        Beer testBeer = new Beer(17L, "beerTest", "Weiss", "Sweet", 5.0d, "Yellow", "Germany", "Hops", 2.99f, 100, pub);
+
+        assertTrue(beerService.addBeer(testBeer), "Addition failed");
 
         assertNotNull(testBeer.getIdBeer(), "Beer ID should not be null after addition");
 
         Beer addedBeer = beerService.getBeer(testBeer.getIdBeer());
 
         assertNotNull(addedBeer, "Added beer should not be null");
-        assertEquals("ciao", addedBeer.getNameBeer(), "Name should match");
-        assertEquals("green", addedBeer.getType(), "Type should match");
-        // Add more assertions for other properties
+        assertEquals("beerTest", addedBeer.getNameBeer(), "Name should match");
+        assertEquals("Weiss", addedBeer.getType(), "Type should match");
+        assertEquals(pub.getIdPub(), addedBeer.getPub().getIdPub(), "ID Pub should match");
+        assertEquals(2.99f, addedBeer.getPrice(), "Price should match");
     }
 
     @Test
@@ -109,7 +133,6 @@ public class BeerTests {
     @ValueSource(strings = { "IPA", "Stout" })
     void searchBeerByType(String beerType) {
         List<String> beerList = beerService.searchBeerByType(beerType);
-        assertNotNull(beerList);
         assertFalse(beerList.isEmpty());
     }
 
@@ -117,7 +140,6 @@ public class BeerTests {
     @ValueSource(strings = { "Slalom", "Cherry Blossom Saison", "Porter" })
     void searchBeerByName(String beerName) {
         List<String> beerList = beerService.searchBeerByName(beerName);
-        assertNotNull(beerList);
         assertFalse(beerList.isEmpty());
     }
 }
