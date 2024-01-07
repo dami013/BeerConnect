@@ -44,7 +44,8 @@ INSERT INTO client (id_client, name_client, email, date_birth, address, preferen
     (9, 'Sophia Anderson', 'sophia.anderson@example.com', '1993-12-22', '404 Maple Court', 'Amber Ale'),
     (10, 'Michael Wilson', 'michael.wilson@example.com', '1979-09-19', '505 Willow Drive', 'Amber Ale'),
     (11, 'Olivia White', 'olivia.white@example.com', '1986-11-30', '606 Cherry Lane', 'Saison'),
-    (12, 'Daniel Hall', 'daniel.hall@example.com', '1998-05-11', '707 Pineapple Avenue', 'Pilsner');
+    (12, 'Daniel Hall', 'daniel.hall@example.com', '1998-05-11', '707 Pineapple Avenue', 'Pilsner'),
+    (13, 'Ruben Loftus', 'ruben.loftus@example.com', '1995-07-21', '444 Pineapple Avenue', 'Pale Ale');
 
 INSERT INTO client_review (id_review, id_beer, id_client, review, rating) VALUES
     (1, 2, 2, 'Very good taste', 4),
@@ -57,7 +58,8 @@ INSERT INTO client_review (id_review, id_beer, id_client, review, rating) VALUES
     (8, 8, 9, 'This Japanese Beer has a unique floral aroma. Enjoyed it!', 4),
     (9, 10, 5, 'Mango Tango Pale Ale is a tropical paradise in a glass.', 5),
     (10, 13, 12, 'Rare Amber Reserve is a beer lovers dream. Outstanding!', 4),
-    (11, 12, 12, 'The citrus is crisp and refreshing. Perfect for any occasion.', 4);
+    (11, 12, 12, 'The citrus is crisp and refreshing. Perfect for any occasion.', 4),
+    (12, 12, 13, 'Lovely beer, feels like home', 4.5);
 
 INSERT INTO client_to_client(client_id, id_client_followed) VALUES
     (2, 1),
@@ -79,4 +81,5 @@ INSERT INTO client_to_client(client_id, id_client_followed) VALUES
     (1, 4),
     (2, 6),
     (5, 8),
-    (10, 12);
+    (10, 12),
+    (12,13);
