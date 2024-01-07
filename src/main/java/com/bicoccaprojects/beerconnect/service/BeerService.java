@@ -77,12 +77,11 @@ public class BeerService {
     }
 
     @Transactional
-    public boolean updateBeer(Beer beer) {
+    public void updateBeer(Beer beer) {
         Long id = beer.getIdBeer();
         Optional<Beer> beerOptional = beerRepository.findById(id);
         if(beerOptional.isPresent()){
             beerRepository.save(beer);
-            return true;
         }else {
             throw new BeerNotFoundException(id);
         }
