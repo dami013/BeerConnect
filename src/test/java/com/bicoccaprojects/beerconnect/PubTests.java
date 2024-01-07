@@ -3,20 +3,15 @@ package com.bicoccaprojects.beerconnect;
 import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.exception.pub.PubAlreadyExistsException;
 import com.bicoccaprojects.beerconnect.exception.pub.PubNotFoundException;
-import com.bicoccaprojects.beerconnect.exception.pub.NoPubsFoundException;
 import com.bicoccaprojects.beerconnect.service.PubService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
