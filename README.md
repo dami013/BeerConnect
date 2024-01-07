@@ -76,6 +76,13 @@ Per la gestione della business logic, sono state implementate classi service all
 
 Le eccezioni sono gestite attraverso le classi apposite presenti nel package exception.
 
+### Operazione di Search
+In conformità con i requisiti, è stata implementata un'operazione di ricerca che coinvolge almeno due entità ed estrae entità eseguendo una selezione basata su parametri non chiave.
+
+L'implementazione di questa operazione di ricerca è stata incorporata nella classe `Pub`. Essa utilizza una query strutturata per recuperare tutti i nomi dei pub di una determinata nazione (campo di `Pub`), i quali producono birre di un tipo specifico (campo dell'entità `Beer`) e hanno ricevuto recensioni con un rating superiore o uguale a un valore specifico (campo di `ClientReview`).
+
+La query è possibile trovarla nell'interfaccia `PubRepository` e per verificare l'efficacia di questa operazione, è possibile eseguire test nell'apposita classe di test denominata `PubTests`.
+
 ## Come utilizzare l'applicazione
 
 L'applicazione si appoggia su un database PostgreSQL, pertanto è necessario creare un database di questo tipo con il nome desiderato. Successivamente, nel file `config.properties` (posizionato in "2023_assignment3_beerconnect\src\main\resources"), è necessario compilare i seguenti campi:
@@ -102,5 +109,4 @@ Per quanto riguarda le birre in edizione limitata, la classe `LimitedEditionTest
 
 Nei `PubTests` testano le operazioni relative ai pub all'interno di BeerConnect. Dai test di recupero e visualizzazione dei pub, all'aggiunta e modifica di informazioni, fino all'eliminazione di pub specifici, ogni aspetto viene attentamente valutato per garantire l'integrità dei dati relativi ai locali.
 
-Infine, la classe `ClientReviewTests` è dedicata alla verifica delle operazioni fondamentali legate alle recensioni dei clienti in BeerConnect. I test coprono aspetti chiave come l'aggiunta, la modifica e la gestione delle recensioni, garantendo l'affidabilità delle funzionalità sociali dell'applicazione. Attraverso scenari diversificati, dai test di base come l'ottenimento di recensioni per ID alla gestione di situazioni più complesse come recensioni duplicate e aggiornamenti, si assicura la corretta gestione delle informazioni dei clienti all'interno del sistema.\
-In particolare in questa classe di test viene testato il metodo `findReviewsByBeerCountryAndRating` della classe `ClientServiceReview` che si occupa di gestire una query che restituisce tutte le recensioni associate a una birra prodotta in un certo paese e recensita con un voto maggiore o uguale a un certo valore. Questa query di ricerca risponde alla richiesta di implementare un'operazione di ricerca che involva almento due entità (in questo caso le entità coinvolte sono `ClientReview` con il parametro "rating", `Beer` con il parametro "country" e `Client`) e che estragga le entità facendo una selezione in base a un vincolo definito su attributi non chiave ("rating" e "country" non sono attributi chiave).
+Infine, la classe `ClientReviewTests` è dedicata alla verifica delle operazioni fondamentali legate alle recensioni dei clienti in BeerConnect. I test coprono aspetti chiave come l'aggiunta, la modifica e la gestione delle recensioni, garantendo l'affidabilità delle funzionalità sociali dell'applicazione. Attraverso scenari diversificati, dai test di base come l'ottenimento di recensioni per ID alla gestione di situazioni più complesse come recensioni duplicate e aggiornamenti, si assicura la corretta gestione delle informazioni dei clienti all'interno del sistema.
