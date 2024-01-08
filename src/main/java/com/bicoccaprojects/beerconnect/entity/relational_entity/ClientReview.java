@@ -20,7 +20,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
         uniqueConstraints = @UniqueConstraint(columnNames = {"id_client", "id_beer"}))
 public class ClientReview { // this intermediate entity add 2 fields to the relationship between Client and Beer
     @Id
-    @SequenceGenerator(name="review_sequence", sequenceName = "review_sequence", allocationSize = 1,initialValue = 12)
+    @SequenceGenerator(name="review_sequence", sequenceName = "review_sequence", allocationSize = 1,initialValue = 13)
     @GeneratedValue(strategy = SEQUENCE, generator = "review_sequence")
     @Column(name = "id_review", updatable = false)
     private Long idReview;

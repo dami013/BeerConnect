@@ -93,7 +93,7 @@ public class ClientReviewTests {
     void addReview() {
         Client client = clientService.getClient(1L);
         Beer beer = beerService.getBeer(1L);
-        ClientReview testReview = new ClientReview(17L, client, beer, 5, "WOW");
+        ClientReview testReview = new ClientReview(13L, client, beer, 5, "WOW");
 
         assertDoesNotThrow(() -> clientReviewService.addReview(testReview));
 
