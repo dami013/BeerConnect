@@ -6,38 +6,55 @@ import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-// di default viene dato il nome della classe ma è buona pratica specificare
-// utile nel caso in cui nome della classe è molto lungo ma nome entità è diverso
-@Entity(name="Pub") // serve a mappare questa tabella nel DB
+/**
+ * La classe Pub è un'entità JPA mappata sulla tabella "pub" nel database, che gestisce attributi come
+ * nome del pub, paese, e anno di fondazione. La classe implementa una relazione one-to-many con la
+ * classe Beer, poiché ogni pub può produrre diverse birre, ma ogni birra è prodotta da un solo pub.
+ */
+
+@Entity(name="Pub")
 public class Pub {
     @Id
-    @SequenceGenerator(name="pub_sequence", sequenceName = "pub_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE, generator = "pub_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
+    @SequenceGenerator(name="pub_sequence", sequenceName = "pub_sequence", allocationSize = 1,initialValue = 10)
+    @GeneratedValue(strategy = SEQUENCE, generator = "pub_sequence")
     @Column(name = "id_pub", updatable = false)
     private Long idPub;
 
-    @Column(name = "name_pub", nullable = false, columnDefinition = "TEXT") // nullable = false -> not null, "TEXT"-> varchar
+    @Column(name = "name_pub", nullable = false)
     private String namePub;
 
-    @Column(name = "country", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "year_of_foundation", nullable = false, columnDefinition = "INTEGER")
+    @Column(name = "year_of_foundation", nullable = false)
     private Integer yearOfFoundation;
+
+    // Many-to-one relationship between Pub and Beer entity,
+    // each pub can make N beers but each beer can only be produced by one pub
+    @OneToMany(mappedBy = "pub", cascade = CascadeType.REMOVE)
+    private List<Beer> beers;
+
+    // constructors
 
     public Pub(String name, String address, Integer yearOfFoundation) {
         this.namePub = name;
         this.country = address;
         this.yearOfFoundation = yearOfFoundation;
     }
-
-    public Pub() {
-
+    public Pub(Long idPub,String name, String address, Integer yearOfFoundation) {
+        this.idPub = idPub;
+        this.namePub = name;
+        this.country = address;
+        this.yearOfFoundation = yearOfFoundation;
     }
 
-    @OneToMany(mappedBy = "pub")
-    private List<Beer> beers;
+    public Pub(Long idPub) {
+        this.idPub = idPub;
+    }
 
+    public Pub() {}
+
+    // getter and setter
 
     public Long getIdPub() {
         return idPub;

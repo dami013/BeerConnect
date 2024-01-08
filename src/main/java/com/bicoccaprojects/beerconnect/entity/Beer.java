@@ -1,18 +1,25 @@
 package com.bicoccaprojects.beerconnect.entity;
 
 
+import com.bicoccaprojects.beerconnect.entity.relational_entity.ClientReview;
 import jakarta.persistence.*;
 
 import java.util.List;
 
-import static jakarta.persistence.GenerationType.SEQUENCE;
 
+/**
+ * La classe Beer è un'entità JPA mappata sulla tabella "beer" nel database, gestendo attributi come
+ * nome, tipo, aroma, alcol, colore, paese, ingredienti, prezzo e quantità in magazzino. Include anche
+ * relazioni con le entità Pub e le recensioni dei clienti. La strategia di ereditarietà è impostata su
+ * SINGLE_TABLE, con discriminante "beer_type". La classe fornisce costruttori per creare oggetti Beer,
+ * insieme a getter e setter per accedere e modificare i valori degli attributi.
+ */
 
-@Entity(name = "Beer") // rappresenta entita' nel db
+@Entity(name = "Beer")
 @Table(
         name = "beer",
         uniqueConstraints = {
-                @UniqueConstraint(name = "beer_name_unique", columnNames = "name_beer")
+                @UniqueConstraint(name = "beer_name_unique", columnNames = "name_beer") // name_beer must be unique for each Beer
         }
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -20,52 +27,57 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @DiscriminatorValue("normal")
 public class Beer {
     @Id
-    @SequenceGenerator(name="beer_sequence", sequenceName = "beer_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE, generator = "beer_sequence") // per avere ID che parte da 1 e incrementa di 1 per ogni entità nella tabella
+    @SequenceGenerator(name = "beer_sequence", sequenceName = "beer_sequence", allocationSize = 1, initialValue = 16)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "beer_sequence")
     @Column(name = "id_beer", updatable = false)
     private Long idBeer;
 
-    @Column(name = "name_beer", nullable = false, columnDefinition = "TEXT", unique = true)
+
+    @Column(name = "name_beer", nullable = false, unique = true)
     private String nameBeer;
 
-    @Column(name = "type", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "aroma", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "aroma", nullable = false)
     private String aroma;
 
-    @Column(name = "alcohol", nullable = false, columnDefinition = "FLOAT")
+    @Column(name = "alcohol", nullable = false)
     private Double alcohol;
 
-    @Column(name = "color", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "color", nullable = false)
     private String color;
 
-    @Column(name = "country", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "ingredients", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "ingredients", nullable = false)
     private String ingredients;
 
-    @Column(name = "price", nullable = false, columnDefinition = "FLOAT")
+    @Column(name = "price", nullable = false)
     private Float price;
 
-    @Column(name = "quantity_in_stock", nullable = false, columnDefinition = "INTEGER")
+    @Column(name = "quantity_in_stock", nullable = false)
     private Integer quantityInStock;
 
-    // Aggiungi una colonna discriminatoria per identificare il tipo di birra
+    // Add a discriminatory column to identify if the beer is normal or limited edition
     @Column(name = "beer_type", insertable = false, updatable = false)
     private String beerType;
 
-    // un birrificio può produrre tante birre ma una birra è prodotta da un solo birrificio
-    // quando si crea una birra va assegnata a un birrificio
+    // Many-to-one relationship between Pub and Beer entity,
+    // each pub can make N beers but each beer can only be produced by one pub
     @ManyToOne
-    @JoinColumn(name = "id_pub") // id del pub
+    @JoinColumn(name = "id_pub")
     private Pub pub;
 
-    @ManyToMany(mappedBy = "beers")
-    private List<Client> clients;
+    // Many-to-Many relationship between Beer and Client,
+    // Each beer can be reviewed by N customers and each customer can review N beers.
+    // Here the OneToMany tag is used because there is an intermediate entity that contains 2 other attributes for this relationship
+    @OneToMany(mappedBy = "idBeer", cascade = CascadeType.REMOVE)
+    private List<ClientReview> clientReviews;
 
-    public Beer(String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock) {
+    // constructors
+    public Beer(String nameBeer,String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock,Pub idPub) {
         this.nameBeer = nameBeer;
         this.type = type;
         this.aroma = aroma;
@@ -75,12 +87,32 @@ public class Beer {
         this.ingredients = ingredients;
         this.price = price;
         this.quantityInStock = quantityInStock;
-        // this.pub = pub;
+        this.pub = idPub;
+    }
+
+    public Beer(Long idBeer, String nameBeer, String type, String aroma, Double alcohol, String color, String country, String ingredients, Float price, Integer quantityInStock, Pub pub) {
+        this.idBeer = idBeer;
+        this.nameBeer = nameBeer;
+        this.type = type;
+        this.aroma = aroma;
+        this.alcohol = alcohol;
+        this.color = color;
+        this.country = country;
+        this.ingredients = ingredients;
+        this.price = price;
+        this.quantityInStock = quantityInStock;
+        this.pub = pub;
+    }
+
+    public Beer(Long idBeer) {
+        this.idBeer = idBeer;
     }
 
     public Beer() {
 
     }
+
+    // getter and setter
 
     public Long getIdBeer() {
         return idBeer;
@@ -160,6 +192,22 @@ public class Beer {
 
     public void setQuantityInStock(Integer quantityInStock) {
         this.quantityInStock = quantityInStock;
+    }
+
+    public String getBeerType() {
+        return beerType;
+    }
+
+    public void setBeerType(String beerType) {
+        this.beerType = beerType;
+    }
+
+    public Pub getPub() {
+        return pub;
+    }
+
+    public void setPub(Pub pub) {
+        this.pub = pub;
     }
 
     @Override
