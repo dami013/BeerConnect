@@ -7,6 +7,16 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * L'interfaccia LimitedEditionRepository estende JpaRepository per gestire le operazioni CRUD sull'entità LimitedEdition.
+ * Introduce due query personalizzate utilizzando l'annotazione @Query. Il metodo findLEByBeer consente di cercare
+ * edizioni limitate basate sul nome della birra originale, restituendo una lista di stringhe contenenti tutte le
+ * colonne della tabella beer corrispondenti al nome specificato. Il metodo searchBeerByName consente di cercare
+ * birre limitate per nome, restituendo una lista di stringhe contenenti tutte le colonne della tabella beer
+ * corrispondenti al nome specificato.
+ */
+
+
 public interface LimitedEditionRepository extends JpaRepository<LimitedEdition, Long> {
     @Query(value = "SELECT * "+
             "FROM beer "+

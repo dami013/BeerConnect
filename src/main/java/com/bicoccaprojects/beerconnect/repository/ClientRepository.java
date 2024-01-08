@@ -8,6 +8,16 @@ import java.lang.Long;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * L'interfaccia ClientRepository estende JpaRepository per gestire le operazioni CRUD sull'entità Client.
+ * Implementa metodi personalizzati come findByIdWithFollowing e findByIdWithFollowers per recuperare un
+ * cliente inclusivo delle relazioni di seguaci e seguaci. Inoltre, fornisce query native per ottenere le
+ * preferenze dei follower e dei seguiti di un cliente specificato dal suo ID. Il metodo findPreferencesOfFollowersOfId
+ * restituisce una lista di preferenze dei clienti che seguono il cliente con ID specificato, mentre
+ * findPreferencesOfFollowedById restituisce una lista di preferenze dei clienti seguiti dal cliente con ID
+ * specificato.
+ */
+
 public interface ClientRepository extends JpaRepository<Client, Long> {
     @Override
     Optional<Client> findById(Long id);

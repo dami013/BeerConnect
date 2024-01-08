@@ -31,14 +31,10 @@ public class PubTests {
 
     @BeforeEach
     @Sql("/data.sql")
-    void setUp() {
-        System.out.println("Pub data added");
-        System.out.println(pubService.getAllPubs());
-    }
+    void setUp() {}
 
     @AfterEach
     void tearDown() {
-        System.out.println("Pub data deleted");
         pubService.deletePubs();
     }
 

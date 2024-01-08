@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -21,12 +20,7 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     public Iterable<Client> getAllClients() {
-
-        Iterable<Client> clients = clientRepository.findAll();
-        //if(!clients.iterator().hasNext()){
-        //    throw new NoClientsFoundException("There are 0 client in the DB");
-        //}
-        return clients;
+        return clientRepository.findAll();
     }
 
     public Client getClient(Long id) {
@@ -50,7 +44,7 @@ public class ClientService {
     public void deleteClients() {
         Iterable<Client> clients = clientRepository.findAll();
         if(!clients.iterator().hasNext()){
-            throw new NoClientsFoundException("No clients founded");
+            throw new NoClientsFoundException();
         }
         clientRepository.deleteAll();
     }
@@ -84,14 +78,6 @@ public class ClientService {
         followed = clientRepository.findById(followed.getIdClient()).orElse(null);
 
         if (soggetto != null && followed != null) {
-            if(soggetto.getFollowedByClient().contains(followed)){
-                System.out.println("******************************************");
-                System.out.println("Segue già l'altro client");
-            }
-            if(followed.getClientFollowers().contains(soggetto)){
-                System.out.println("Già seguito da soggetto");
-            }
-
             soggetto.getFollowedByClient().add(followed); // followed è un Client che viene seguito dall'client soggetto
             followed.getClientFollowers().add(soggetto); // ai follower di questo client viene aggiunto 'soggetto'
 
@@ -101,24 +87,6 @@ public class ClientService {
             throw new ClientNotFoundException(soggetto.getIdClient());
         }
     }
-
-//    public void printFollowedByClient(Client client) {
-//        client = clientRepository.findById(client.getIdClient()).orElse(null);
-//
-//        if (client != null) {
-//            Set<Client> followedByClient = client.getFollowedByClient();
-//
-//            if(followedByClient.isEmpty()){
-//                throw new NoClientsFoundException("There are 0 client followed by client "+(client.getIdClient()).toString());
-//            }else {
-//                for (Client followed : followedByClient) {
-//                    System.out.println("  - " + followed.getNameClient());
-//                }
-//            }
-//        } else {
-//            System.out.println("Client not found");
-//        }
-//    }
 
     @Transactional
     public void unfollowClient(Client soggetto, Client followed) {

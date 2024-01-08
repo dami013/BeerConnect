@@ -39,14 +39,10 @@ public class ClientReviewTests {
 
     @BeforeEach
     @Sql("/data.sql")
-    void setUp() {
-        System.out.println("Client reviews added");
-        System.out.println(clientReviewService.getAllReviews());
-    }
+    void setUp() {}
 
     @AfterEach
     void tearDown() {
-        System.out.println("Client reviews deleted");
         clientReviewService.deleteReviews();
     }
 

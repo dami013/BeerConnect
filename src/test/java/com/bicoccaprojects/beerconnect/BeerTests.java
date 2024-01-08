@@ -38,14 +38,10 @@ public class BeerTests {
 
     @BeforeEach
     @Sql("/data.sql")
-    void setUp() {
-        System.out.println("Beers added");
-        System.out.println(beerService.getAllBeers());
-    }
+    void setUp() {}
 
     @AfterEach
     void tearDown() {
-        System.out.println("Beers deleted");
         beerService.deleteBeers();
     }
 

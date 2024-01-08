@@ -39,14 +39,11 @@ public class ClientTests {
 
     @BeforeEach
     @Sql("/data.sql")
-    void setUp() {
-        System.out.println("Dati client aggiunti");
-    }
+    void setUp() {}
 
     @AfterEach
     void tearDown() {
         clientService.deleteClients();
-        System.out.println("Dati client eliminati");
     }
 
     @Test
@@ -86,7 +83,6 @@ public class ClientTests {
         clientToBeRemoved.getClientFollowers().clear();
 
         Iterable<Client> allClient = clientService.getAllClients();
-        System.out.println(allClient);
 
         assertTrue(StreamSupport.stream(allClient.spliterator(), false).anyMatch(
                 client -> client.getIdClient().equals(CLIENT_ID_TO_DELETE)
@@ -95,7 +91,6 @@ public class ClientTests {
         assertDoesNotThrow(() -> clientService.deleteClient(CLIENT_ID_TO_DELETE));
 
         allClient = clientService.getAllClients();
-        System.out.println(allClient);
 
         assertTrue(StreamSupport.stream(allClient.spliterator(), false).noneMatch(
                 client -> client.getIdClient().equals(CLIENT_ID_TO_DELETE)
@@ -110,16 +105,11 @@ public class ClientTests {
 
     @Test
     void addClient() {
-        // Given
-        Client testClient = new Client(17L, "Claudio Doe", "claudio.doe@example.com", LocalDate.of(2001, 1, 1), "123 Problem St", "Beer Enthusiast");
-
-        // When
+        Client testClient = new Client(17L, "Test Client", "test.cliemt@example.com", LocalDate.of(2001, 1, 1), "123 Beer St", "Beer Enthusiast");
         assertDoesNotThrow(() -> clientService.addClient(testClient));
 
-        // Then
         assertNotNull(testClient.getIdClient(), "Client ID should not be null after addition");
 
-        // Retrieve the added client from the service
         Client addedClient = clientService.getClient(testClient.getIdClient());
         assertNotNull(addedClient, "Added client should not be null");
         assertEquals(testClient.getNameClient(), addedClient.getNameClient(), "Name should match");
@@ -128,22 +118,18 @@ public class ClientTests {
 
     @Test
     void updateClient() {
-        // Given
         Client existingClient = clientService.getClient(CLIENT_ID_TO_UPDATE);
         assertNotNull(existingClient, "Existing client should not be null");
 
-        // When
         existingClient.setNameClient("Updated Name");
         existingClient.setEmail("updated.email@example.com");
 
         assertDoesNotThrow(() -> clientService.updateClient(existingClient));
 
-        // Then
         Client updatedClient = clientService.getClient(CLIENT_ID_TO_UPDATE);
         assertNotNull(updatedClient, "Updated client should not be null");
         assertEquals(existingClient.getNameClient(), updatedClient.getNameClient(), "Name should be updated");
         assertEquals(existingClient.getEmail(), updatedClient.getEmail(), "Email should be updated");
-        // Add other assertions for updated properties
     }
     @Test
     void followedByClient() {
@@ -151,22 +137,17 @@ public class ClientTests {
         Client followed = clientService.getClient(2L); // Client who get followed
 
         Set<Client> clientsFollowedBySubject = subject.getFollowedByClient(); // List of Client followed by Client 1
-        // System.out.println("Client 1 follows: "+clientsFollowedBySubject);
 
         Set<Client> followerOfFollowed = followed.getClientFollowers(); // List of Client who follow Client 2
-        // System.out.println("Client 2 is followed by: "+followerOfFollowed);
 
         assertFalse(clientsFollowedBySubject.contains(followed));
         assertFalse(followerOfFollowed.contains(subject));
 
-        // follow operation
         assertDoesNotThrow(() -> clientService.followedByClient(subject, followed));
 
         clientsFollowedBySubject = subject.getFollowedByClient();
-        // System.out.println("Client 1 now follows: "+clientsFollowedBySubject);
 
         followerOfFollowed = followed.getClientFollowers();
-        // System.out.println("Client 2 now is followed by: "+followerOfFollowed);
 
         assertTrue(clientsFollowedBySubject.contains(followed));
         assertTrue(followerOfFollowed.contains(subject));
@@ -179,10 +160,8 @@ public class ClientTests {
         Client subject = clientService.getClient(2L); // Client who follow
         Client followed = clientService.getClient(1L); // Client who get followed
         Set<Client> listFollowedSubject = subject.getFollowedByClient(); // followed by Client 1
-        // System.out.println("Client followed by Client 2: "+listFollowedSubject);
 
         Set<Client> listFollowerOtherClient = followed.getClientFollowers(); // follower Client 2, contains Client 1
-        // System.out.println("Client 1 is followed by: "+listFollowerOtherClient);
 
         assertTrue(listFollowerOtherClient.contains(subject)); // list of follower of Client 2 must contain Client 1
         assertTrue(listFollowedSubject.contains(followed)); // list of client followed by Client 1 must contain Client 2
@@ -191,36 +170,24 @@ public class ClientTests {
 
         assertFalse(listFollowerOtherClient.contains(subject)); // now list of follower of Client 2 must not contain Client 1
         assertFalse(listFollowedSubject.contains(followed)); // now list of followed by Client 1 must not contain Client 2
-
-        // Set<Client> de = subject.getFollowedByClient();
-        // System.out.println("Client followed by Client 2: "+de);
-        // System.out.println("Client 1 is followed by: "+listFollowerOtherClient);
     }
 
     @Test
     void getFollowersPreferences() {
-        Long clientId = CLIENT_ID_TO_FOLLOW;
 
-        List<String> preferencesFollower = clientService.getFollowersPreferences(clientId);
-        // System.out.println(preferencesFollower);
+        List<String> preferencesFollower = clientService.getFollowersPreferences(CLIENT_ID_TO_FOLLOW);
 
         Client clientFollower = clientService.getClient(CLIENT_ID_FOLLOWING);
         String preferences = clientFollower.getPreferences();
-        // System.out.println("Preferenze del follower di "+clientId+" è: "+preferences);
         assertFalse(preferencesFollower.isEmpty());
         assertEquals(preferences, preferencesFollower.get(0));
     }
 
     @Test
     void getFollowedPreferences() {
-        Long clientId = CLIENT_ID_TO_FOLLOW;
-
-        List<String> preferencesFollowed = clientService.getFollowedPreferences(clientId);
-        //System.out.println(preferencesFollowed);
-
+        List<String> preferencesFollowed = clientService.getFollowedPreferences(CLIENT_ID_TO_FOLLOW);
         Client clientFollowed = clientService.getClient(CLIENT_ID_FOLLOWED);
         String preferences = clientFollowed.getPreferences();
-        //System.out.println("Preferenze di quello seguito da "+clientId+" è "+preferences);
         assertFalse(preferencesFollowed.isEmpty());
         assertEquals(preferences, preferencesFollowed.get(0));
     }

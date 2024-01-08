@@ -6,8 +6,14 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import static jakarta.persistence.GenerationType.SEQUENCE;
 
+/**
+ * La classe Beer è un'entità JPA mappata sulla tabella "beer" nel database, gestendo attributi come
+ * nome, tipo, aroma, alcol, colore, paese, ingredienti, prezzo e quantità in magazzino. Include anche
+ * relazioni con le entità Pub e le recensioni dei clienti. La strategia di ereditarietà è impostata su
+ * SINGLE_TABLE, con discriminante "beer_type". La classe fornisce costruttori per creare oggetti Beer,
+ * insieme a getter e setter per accedere e modificare i valori degli attributi.
+ */
 
 @Entity(name = "Beer")
 @Table(

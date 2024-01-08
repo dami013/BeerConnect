@@ -3,14 +3,11 @@ package com.bicoccaprojects.beerconnect;
 import com.bicoccaprojects.beerconnect.entity.LimitedEdition;
 import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
-import com.bicoccaprojects.beerconnect.exception.beer.NoBeersFoundException;
 import com.bicoccaprojects.beerconnect.service.LimitedEditionService;
 import com.bicoccaprojects.beerconnect.service.PubService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.IterableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
@@ -38,14 +35,10 @@ public class LimitedEditionTests {
 
     @BeforeEach
     @Sql("/data.sql")
-    void setUp() {
-        System.out.println("Data added");
-        System.out.println(limitedEditionService.getAllLEBeers());
-    }
+    void setUp() {}
 
     @AfterEach
     void tearDown() {
-        System.out.println("Data deleted");
         limitedEditionService.deleteLEBeers();
     }
 
@@ -128,7 +121,7 @@ public class LimitedEditionTests {
         existingLEBeer.setType("Updated Limited Edition Type");
         existingLEBeer.setPub(pub);
 
-        assertDoesNotThrow(() -> limitedEditionService.updateLEBeer(existingLEBeer));;
+        assertDoesNotThrow(() -> limitedEditionService.updateLEBeer(existingLEBeer));
 
         // Then
         LimitedEdition updatedLEBeer = limitedEditionService.getLEBeer(LE_BEER_ID_TO_UPDATE);

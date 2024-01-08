@@ -6,6 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+/**
+ * L'interfaccia PubRepository estende JpaRepository per interagire con il database e fornire operazioni di
+ * accesso ai dati dell'entità Pub. La query personalizzata findPubByCountryAndBeerType permette di cercare i pub
+ * in base al paese, al tipo di birra e alla valutazione delle recensioni delle birre servite in quei pub.
+ */
+
 
 public interface PubRepository extends JpaRepository<Pub, Long> {
 

@@ -5,6 +5,12 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
+/**
+ * La classe LimitedEdition estende la classe Beer e rappresenta una birra in edizione limitata con attributi
+ * aggiuntivi come il nome della birra originale e l'anno di produzione. È mappata sulla stessa tabella del
+ * database con discriminante "limited" e chiave primaria condivisa.
+ */
+
 @Entity
 @DiscriminatorValue("limited")
 @PrimaryKeyJoinColumn(name = "id_beer") // Indicates the foreign key relationship
