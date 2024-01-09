@@ -20,7 +20,11 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     public Iterable<Client> getAllClients() {
-        return clientRepository.findAll();
+        Iterable<Client> clients = clientRepository.findAll();
+        if(!clients.iterator().hasNext()){
+            throw new NoClientsFoundException();
+        }
+        return clients;
     }
 
     public Client getClient(Long id) {
