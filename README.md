@@ -95,6 +95,10 @@ L'applicazione si appoggia su un database PostgreSQL, pertanto è necessario cre
 
 Assicurarsi di sostituire "username_postgres", "password_postgres", e "nome_db_scelto" con le credenziali appropriate e il nome scelto per il database.
 
+# Strategie
+
+Si è scelto di abilitare la generazione automatica del linguaggio di definizione dei dati (DDL) consentendo a Spring JPA di gestire autonomamente la creazione dello schema del database. Hibernate è configurato per creare il DDL ad ogni avvio dell'applicazione, assicurando che lo schema del database sia sempre allineato con l'applicazione. La visualizzazione delle query SQL generate da Hibernate è abilitata nella console di log, facilitando lo sviluppo e il debugging. L'inizializzazione del datasource è ritardata fino al completamento delle configurazioni di Hibernate, garantendo un ordine corretto delle operazioni. Lo script SQL di inizializzazione del database viene eseguito automaticamente ad ogni avvio dell'applicazione per mantenere uno stato consistente del database. 
+
 ## Testing
 
 All'interno del progetto BeerConnect, l'implementazione dei test si configura come una pratica essenziale per garantire la solidità e la correttezza delle operazioni eseguite sulle diverse entità del sistema. Un focus particolare è stato dedicato alle classi di test per le entità chiave, evidenziando le operazioni di gestione delle birre, degli utenti, delle birre in edizione limitata e dei pub.
