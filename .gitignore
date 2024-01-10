@@ -9,3 +9,4 @@
 # IntelliJ IDEA
 .idea/
 /target/
+/config.properties
