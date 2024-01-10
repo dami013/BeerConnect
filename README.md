@@ -85,7 +85,7 @@ La query è possibile trovarla nell'interfaccia `PubRepository` e per verificare
 
 ## Come utilizzare l'applicazione
 
-L'applicazione si appoggia su un database PostgreSQL, pertanto è necessario creare un database di questo tipo con il nome desiderato. Successivamente, nel file `config.properties` (posizionato in "2023_assignment3_beerconnect\src\main\resources"), è necessario compilare i seguenti campi:
+L'applicazione si appoggia su un database PostgreSQL, pertanto è necessario creare un database di questo tipo con il nome desiderato. Successivamente, definire il file `config.properties` (che deve essere posizionato in "2023_assignment3_beerconnect\src\main\resources"), e compilare i seguenti campi:
 
 - spring.datasource.username="username_postgres"
 
