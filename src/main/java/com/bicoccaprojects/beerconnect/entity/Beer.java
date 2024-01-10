@@ -8,12 +8,13 @@ import java.util.List;
 
 
 /**
- * La classe Beer è un'entità JPA mappata sulla tabella "beer" nel database, gestendo attributi come
- * nome, tipo, aroma, alcol, colore, paese, ingredienti, prezzo e quantità in magazzino. Include anche
- * relazioni con le entità Pub e le recensioni dei clienti. La strategia di ereditarietà è impostata su
- * SINGLE_TABLE, con discriminante "beer_type". La classe fornisce costruttori per creare oggetti Beer,
- * insieme a getter e setter per accedere e modificare i valori degli attributi.
+ * The Beer class is a JPA entity mapped to the "beer" table in the database, managing attributes such as
+ * name, type, aroma, alcohol content, color, country, ingredients, price, and quantity in stock. It also
+ * includes relationships with the Pub entities and customer reviews. The inheritance strategy is set to
+ * SINGLE_TABLE, with a discriminator column "beer_type". The class provides constructors to create Beer objects,
+ * along with getters and setters to access and modify attribute values.
  */
+
 
 @Entity(name = "Beer")
 @Table(

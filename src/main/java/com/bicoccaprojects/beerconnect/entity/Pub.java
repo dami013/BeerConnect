@@ -7,10 +7,11 @@ import java.util.List;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 /**
- * La classe Pub è un'entità JPA mappata sulla tabella "pub" nel database, che gestisce attributi come
- * nome del pub, paese, e anno di fondazione. La classe implementa una relazione one-to-many con la
- * classe Beer, poiché ogni pub può produrre diverse birre, ma ogni birra è prodotta da un solo pub.
+ * The Pub class is a JPA entity mapped to the "pub" table in the database, managing attributes such as
+ * pub name, country, and year of foundation. The class implements a one-to-many relationship with the
+ * Beer class, as each pub can produce multiple beers, but each beer is produced by only one pub.
  */
+
 
 @Entity(name="Pub")
 public class Pub {

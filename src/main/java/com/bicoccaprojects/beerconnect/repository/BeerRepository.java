@@ -8,25 +8,28 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
- * L'interfaccia BeerRepository estende JpaRepository per gestire le operazioni CRUD sull'entità Beer.
- * Introduce due query personalizzate utilizzando l'annotazione @Query.
+ * The BeerRepository interface extends JpaRepository to handle CRUD operations on the Beer entity.
+ * It introduces two custom queries using the @Query annotation.
  */
+
 
 public interface BeerRepository extends JpaRepository<Beer, Long> {
     /**
-     * Il metodo searchBeerByType consente di cercare birre per tipo,
-     * restituendo una lista di stringhe contenenti id, nome e prezzo delle birre
-     * corrispondenti al tipo specificato.
+     * The searchBeerByType method allows searching for beers by type,
+     * returning a list of strings containing the id, name, and price of beers
+     * corresponding to the specified type.
      */
+
     @Query(value = "SELECT id_beer, name_beer, price " +
             "FROM beer WHERE type =:type", nativeQuery = true)
     List<String> searchBeerByType(@Param("type") String type);
 
     /**
-     * Il metodo searchBeerByName consente di cercare birre per nome,
-     * restituendo una lista di stringhe contenenti tutte le colonne della tabella beer corrispondenti al nome
-     * specificato.
+     * The searchBeerByName method allows searching for beers by name,
+     * returning a list of strings containing all columns of the beer table
+     * corresponding to the specified name.
      */
+
     @Query(value = "SELECT * FROM beer WHERE name_beer =:name", nativeQuery = true)
     List<String> searchBeerByName(@Param("name") String name);
 }

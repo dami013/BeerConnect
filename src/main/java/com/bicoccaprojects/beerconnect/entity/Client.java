@@ -12,13 +12,11 @@ import java.util.Set;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 /**
- * La classe Client è un'entità JPA mappata sulla tabella "client" nel database, gestendo attributi come
- * nome, email, data di nascita, indirizzo e preferenze. Include anche vincoli di unicità per l'email
- * e una regola di validazione che richiede che il cliente sia maggiorenne.
- *
- * La classe gestisce relazioni tra clienti, implementando una relazione di self-loop per seguire altri
- * clienti. Inoltre, fornisce metodi
- * per ottenere e impostare i clienti seguiti e quelli che seguono il cliente corrente.
+ * The Client class is a JPA entity mapped to the "client" table in the database, managing attributes such as
+ * name, email, date of birth, address, and preferences. It includes uniqueness constraints for email
+ * and a validation rule requiring the client to be of legal age.
+ * The class handles relationships between clients, implementing a self-loop relationship to track other
+ * clients. Additionally, it provides methods to retrieve and set the clients being followed and those following the current client.
  */
 
 @Entity(name = "Client")

@@ -7,13 +7,14 @@ import jakarta.persistence.*;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 /**
- * La classe ClientReview è un'entità JPA mappata sulla tabella "client_review" nel database. Questa entità
- * rappresenta una relazione intermedia tra le entità Client e Beer, aggiungendo due campi (review e rating)
- * alla relazione tra un cliente e una birra. La tabella ha un vincolo di unicità basato sugli id di cliente e
- * birra, evitando recensioni duplicate per la stessa coppia cliente-birra.
- * La classe contiene annotazioni JPA che definiscono le relazioni many-to-one con le entità Client e Beer.
- * Implementa anche una regola di validazione per assicurarsi che il rating sia compreso tra 1 e 5.
+ * The ClientReview class is a JPA entity mapped to the "client_review" table in the database. This entity represents an
+ * intermediate relationship between the Client and Beer entities, adding two fields (review and rating) to the relationship
+ * between a client and a beer. The table has a uniqueness constraint based on the client and beer IDs, preventing duplicate
+ * reviews for the same client-beer pair.
+ * The class contains JPA annotations that define many-to-one relationships with the Client and Beer entities. It also
+ * implements a validation rule to ensure that the rating is between 1 and 5.
  */
+
 
 @Entity
 @Table(name = "client_review",
