@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>beers.html</title>
+</head>
+<body>
+<h1>Beer List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Aroma</th>
+        <th>Alcohol Content</th>
+        <th>Color</th>
+        <th>Country</th>
+        <th>Ingredients</th>
+        <th>Price</th>
+        <th>Quantity in Stock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over the list of beers -->
+    <tr th:each="beer : ${birre}">
+        <td th:text="${beer.idBeer}"></td>
+        <td th:text="${beer.nameBeer}"></td>
+        <td th:text="${beer.type}"></td>
+        <td th:text="${beer.aroma}"></td>
+        <td th:text="${beer.alcohol}"></td>
+        <td th:text="${beer.color}"></td>
+        <td th:text="${beer.country}"></td>
+        <td th:text="${beer.ingredients}"></td>
+        <td th:text="${beer.price}"></td>
+        <td th:text="${beer.quantityInStock}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
