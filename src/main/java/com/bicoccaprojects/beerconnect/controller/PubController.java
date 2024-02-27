@@ -18,46 +18,38 @@ public class PubController {
     @Autowired
     private PubService pubService;
 
-    @PostMapping("/pub")
-    public ResponseEntity<String> addPub(@RequestBody Pub pub) {
-        pubService.addPub(pub);
-        return new ResponseEntity<>("Pub added successfully", HttpStatus.CREATED);
-    }
-
     @GetMapping("/pubs/{id_pub}")
-    public ResponseEntity<Pub> getPubById(@PathVariable("id_pub") long id) {
-        Optional<Pub> pubData = pubService.getPub(id);
-
-        return pubData.map(pub -> new ResponseEntity<>(pub, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public Pub getPubById(@PathVariable("id_pub") long id) {
+        return pubService.getPub(id);
     }
 
     @GetMapping("/pubs")
-    public Iterable<Pub> getAllPubs() {
-        return pubService.getPubs();
+    public Iterable<Pub> getAllPub(){
+        return pubService.getAllPubs();
     }
 
-    @PutMapping("/updatepub")
-    public ResponseEntity<String> updatePubById(@RequestBody Pub inPub) {
-        Optional<Pub> pub = pubService.getPub(inPub.getIdPub());
-
-        if (pub.isPresent()) {
-            Pub updatePub = pub.get();
-            updatePub.setNamePub(inPub.getNamePub());
-            pubService.updatePub(updatePub);
-            return new ResponseEntity<>("Pub updated successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Pub not found", HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/pub")
+    public List<String> searchPubByParams(String country, String type, Integer rating){
+        return pubService.searchPubByCountryTypeRating(country, type, rating);
     }
 
     @DeleteMapping("/deletepub/{id_pub}")
-    public ResponseEntity<String> deletePubById(@PathVariable(value = "id_pub") Long id) {
-        if (pubService.getPub(id).isPresent()) {
-            pubService.deletePub(id);
-            return new ResponseEntity<>("Pub deleted successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Pub not found", HttpStatus.NOT_FOUND);
-        }
+    public void deletePubById(@PathVariable(value = "id_pub") Long id) {
+        pubService.deletePub(id);
+    }
+
+    @DeleteMapping("/deletepub")
+    public void deleteAllPub(){
+        pubService.deletePubs();
+    }
+
+    @PostMapping("/pub")
+    public void addPub(@RequestBody Pub pub) {
+        pubService.addPub(pub);
+    }
+
+    @PutMapping("/updatepub")
+    public void updatePubById(@RequestBody Pub inPub) {
+        pubService.updatePub(inPub);
     }
 }
