@@ -1,14 +1,5 @@
 # 2023_assignment3_BEerConnect
 
-## Link Repo GitLab
-https://gitlab.com/bicoccaprojects/2023_assignment3_beerconnect
-
-## Partecipanti
-
-- **Ficara Damiano - 919386**
-
-- **Ricci Claudio - 918956**
-
 ## Descrizione dell'applicazione
 
 L'applicazione vuole proporre un sistema di amministrazione per un network di amanti delle birre. L'applicazione è un backend Java basato su JPA che implementa le operazioni CRUD (Create, Read, Update, Delete) per tutte le entità del sistema.
