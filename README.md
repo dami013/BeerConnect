@@ -1,5 +1,7 @@
 # 2023_assignment3_BEerConnect
 
+prova prova prova
+
 ## Descrizione dell'applicazione
 
 L'applicazione vuole proporre un sistema di amministrazione per un network di amanti delle birre. L'applicazione è un backend Java basato su JPA che implementa le operazioni CRUD (Create, Read, Update, Delete) per tutte le entità del sistema.
