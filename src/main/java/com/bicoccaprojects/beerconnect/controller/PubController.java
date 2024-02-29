@@ -5,10 +5,13 @@ import com.bicoccaprojects.beerconnect.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -18,6 +21,12 @@ public class PubController {
 
     @Autowired
     private PubService pubService;
+
+    @GetMapping("/aaa")
+    public String getProva(Model model){
+        model.addAttribute("nomeAttributo", "ciao questa scritta dovrebbe apparire a schermo");
+        return "pub"; // name of the template (html file) that must be returned
+    }
 
     @GetMapping("/pubs/{id_pub}")
     public Pub getPubById(@PathVariable("id_pub") long id) {
