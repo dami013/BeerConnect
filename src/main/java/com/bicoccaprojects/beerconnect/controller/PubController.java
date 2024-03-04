@@ -1,7 +1,7 @@
 package com.bicoccaprojects.beerconnect.controller;
 
-import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.entity.Beer;
+import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,6 @@ public class PubController {
 
     @Autowired
     private PubService pubService;
-
-    @Autowired
-    private BeerService beerService;
 
     @GetMapping(value = "/publist")
     public ModelAndView getAllPubs() {
@@ -37,5 +34,20 @@ public class PubController {
         model.setViewName("pub");
         System.out.println("Percorso della view: " + model.getViewName());
         return model;
+    }
+
+    @GetMapping("/add_pub")
+    public ModelAndView addPub() {
+        ModelAndView modelAndView = new ModelAndView();
+        Pub pub = new Pub();
+        modelAndView.addObject("pub", pub);
+        modelAndView.setViewName("add_pub");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/save_pub")
+    public String saveBeer(@ModelAttribute Pub pub) {
+        pubService.addPub(pub);
+        return "redirect:/publist";
     }
 }

@@ -1,8 +1,6 @@
 package com.bicoccaprojects.beerconnect.controller;
 
 import com.bicoccaprojects.beerconnect.entity.Beer;
-import com.bicoccaprojects.beerconnect.exception.beer.BeerAlreadyExistsException;
-import com.bicoccaprojects.beerconnect.exception.beer.BeerNotFoundException;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +16,7 @@ public class BeerController {
     @Autowired
     private BeerService beerService;
 
-    @GetMapping(value = "/lista")
+    @GetMapping(value = "/beerlist")
     public ModelAndView  getAllBeers() {
         ModelAndView model = new ModelAndView();
         Iterable<Beer> beers = beerService.getAllBeers();
@@ -39,7 +37,7 @@ public class BeerController {
     @PostMapping(value = "/save_beer")
     public String saveBeer(@ModelAttribute Beer beer) {
         beerService.addBeer(beer);
-        return "redirect:/lista";
+        return "redirect:/beerlist";
     }
 
 
