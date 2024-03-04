@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Beer</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Your custom styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px 0px #000000;
+        }
+
+        label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Add Beer</h1>
+
+            <form th:action="@{/save_beer}" th:object="${beer}" method="post">
+                <div class="form-group">
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" th:field="*{idBeer}" class="form-control" placeholder="Enter id beer" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" th:field="*{nameBeer}" class="form-control" placeholder="Enter beer name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <input type="text" id="type" th:field="*{type}" class="form-control" placeholder="Enter beer type" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="aroma">Aroma:</label>
+                    <input type="text" id="aroma" th:field="*{aroma}" class="form-control" placeholder="Enter beer aroma" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alcohol">Alcohol Content:</label>
+                    <input type="text" id="alcohol" th:field="*{alcohol}" class="form-control" placeholder="Enter alcohol content" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" th:field="*{color}" class="form-control" placeholder="Enter beer color" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" th:field="*{country}" class="form-control" placeholder="Enter country" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ingredients">Ingredients:</label>
+                    <input type="text" id="ingredients" th:field="*{ingredients}" class="form-control" placeholder="Enter ingredients" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="text" id="price" th:field="*{price}" class="form-control" placeholder="Enter beer price" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity in Stock:</label>
+                    <input type="text" id="quantity" th:field="*{quantityInStock}" class="form-control" placeholder="Enter quantity in stock" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Beer</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
