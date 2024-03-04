@@ -21,7 +21,7 @@ public class BeerController {
         ModelAndView model = new ModelAndView();
         Iterable<Beer> beers = beerService.getAllBeers();
         model.addObject("beers", beers);
-        model.setViewName("beers");
+        model.setViewName("beer_views/beers");
         System.out.println("Percorso della view: " + model.getViewName());
         return model;
     }
@@ -31,7 +31,7 @@ public class BeerController {
         ModelAndView modelAndView = new ModelAndView();
         Beer beer = new Beer();
         modelAndView.addObject("beer", beer);
-        modelAndView.setViewName("add_beer");
+        modelAndView.setViewName("beer_views/add_beer");
         return modelAndView;
     }
     @PostMapping(value = "/save_beer")
@@ -39,9 +39,4 @@ public class BeerController {
         beerService.addBeer(beer);
         return "redirect:/beerlist";
     }
-
-
-
-
-
 }

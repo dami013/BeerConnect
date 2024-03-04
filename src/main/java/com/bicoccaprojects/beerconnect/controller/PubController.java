@@ -21,7 +21,7 @@ public class PubController {
         ModelAndView model = new ModelAndView();
         Iterable<Pub> pubs = pubService.getAllPubs();
         model.addObject("allPubs", pubs);
-        model.setViewName("pubs");
+        model.setViewName("pub_views/pubs");
         System.out.println("Percorso della view: " + model.getViewName());
         return model;
     }
@@ -31,7 +31,7 @@ public class PubController {
         ModelAndView model = new ModelAndView();
         Pub pub = pubService.getPub(id);
         model.addObject("pub", pub);
-        model.setViewName("pub");
+        model.setViewName("pub_views/pub");
         System.out.println("Percorso della view: " + model.getViewName());
         return model;
     }
@@ -41,7 +41,7 @@ public class PubController {
         ModelAndView modelAndView = new ModelAndView();
         Pub pub = new Pub();
         modelAndView.addObject("pub", pub);
-        modelAndView.setViewName("add_pub");
+        modelAndView.setViewName("pub_views/add_pub");
         return modelAndView;
     }
 

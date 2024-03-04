@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Add Beer</title>
+  <title>Add Pub</title>
   <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -66,12 +66,12 @@
         </div>
 
         <div class="form-group">
-          <label for="type">Type:</label>
+          <label for="type">Country:</label>
           <input type="text" id="type" th:field="*{country}" class="form-control" placeholder="Enter pub country" required>
         </div>
 
         <div class="form-group">
-          <label for="aroma">Aroma:</label>
+          <label for="aroma">Foundation's Year:</label>
           <input type="text" id="aroma" th:field="*{yearOfFoundation}" class="form-control" placeholder="Enter pub's year of foundation" required>
         </div>
 
