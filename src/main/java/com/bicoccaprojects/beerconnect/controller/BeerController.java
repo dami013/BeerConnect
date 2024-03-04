@@ -37,9 +37,9 @@ public class BeerController {
         return modelAndView;
     }
     @PostMapping(value = "/save_beer")
-    public String savePaper(@ModelAttribute Beer beer) {
+    public String saveBeer(@ModelAttribute Beer beer) {
         beerService.addBeer(beer);
-        return "redirect:/beers";
+        return "redirect:/lista";
     }
 
 
