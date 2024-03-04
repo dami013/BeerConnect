@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pub details</title>
 </head>
 <body>
-    <h1 th:text="${nomeAttributo}"/>
+<h1>Pub's details</h1>
+<section>
+    <h2 th:text="${pub.idPub}"></h2>
+    <h2 th:text="${pub.namePub}"></h2>
+    <h2 th:text="${pub.country}"></h2>
+    <h2 th:text="${pub.yearOfFoundation}"></h2>
+</section>
 </body>
 </html>
