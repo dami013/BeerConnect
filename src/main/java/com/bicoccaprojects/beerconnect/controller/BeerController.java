@@ -4,26 +4,25 @@ import com.bicoccaprojects.beerconnect.entity.Beer;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 
 
-@CrossOrigin(origins = "http://localhost:8080")
-@RestController
-@RequestMapping("/api")
+@Controller
 public class BeerController {
 
     @Autowired
     private BeerService beerService;
 
-    @GetMapping("/lista")
+    @GetMapping(value = "/lista")
     public ModelAndView  getAllBeers() {
         ModelAndView model = new ModelAndView();
-        Iterable<Beer> lebirre = beerService.getAllBeers();
-        model.addObject("birre", lebirre);
-        model.setViewName("beers.html");
+        Iterable<Beer> beers = beerService.getAllBeers();
+        model.addObject("beers", beers);
+        model.setViewName("beers");
+        System.out.println("Percorso della view: " + model.getViewName());
         return model;
     }
 
