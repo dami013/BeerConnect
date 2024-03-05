@@ -59,6 +59,7 @@
             <th>Name</th>
             <th>Country</th>
             <th>Year of foundation</th>
+            <th>Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -68,6 +69,12 @@
             <td th:text="${pub.namePub}"></td>
             <td th:text="${pub.country}"></td>
             <td th:text="${pub.yearOfFoundation}"></td>
+            <td>
+                <form th:action="@{/update_pub}" th:object="${pub}" method="post">
+                    <button type="button" class="btn btn-primary" style="float:right;margin:5px;">Update</button>
+                </form>
+                <button type="button" class="btn btn-danger" style="float:right;margin:5px;">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
