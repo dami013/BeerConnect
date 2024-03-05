@@ -5,6 +5,7 @@ import com.bicoccaprojects.beerconnect.entity.Pub;
 import com.bicoccaprojects.beerconnect.service.BeerService;
 import com.bicoccaprojects.beerconnect.service.PubService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,9 +46,24 @@ public class PubController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/save_pub")
-    public String saveBeer(@ModelAttribute Pub pub) {
+    @PostMapping(value = "/save_add_pub")
+    public String saveAddPub(@ModelAttribute Pub pub) {
         pubService.addPub(pub);
+        return "redirect:/publist";
+    }
+
+    @GetMapping("/update_pub")
+    public ModelAndView updatePub(){
+        ModelAndView modelAndView = new ModelAndView();
+        Pub pub = new Pub();
+        modelAndView.addObject("pub", pub);
+        modelAndView.setViewName("pub_views/update_pub");
+        return  modelAndView;
+    }
+
+    @PostMapping(value = "/save_update_pub")
+    public String saveUpdatePub(@ModelAttribute Pub pub) {
+        pubService.updatePub(pub);
         return "redirect:/publist";
     }
 }
