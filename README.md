@@ -1,6 +1,6 @@
 # BEerConnect
 <div align="center">
-  <img src="beERconnect.jpeg" alt="Image" width="700"/>
+  <img src="beERconnect.jpeg" alt="Image" width="500"/>
 </div>
 
 ## Application Description.
