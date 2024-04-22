@@ -1,5 +1,7 @@
 # BEerConnect
-
+<div align="center">
+  <img src="logo.png" alt="Image" width="700"/>
+</div>
 ## Application Description.
 
 The application aims to propose an administration system for a network of beer lovers. The application is a JPA-based Java backend that implements CRUD (Create, Read, Update, Delete) operations for all entities in the system.
