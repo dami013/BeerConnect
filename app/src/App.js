@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import BeerList from './BeerList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <header>
+          <h1>BEerConnect</h1>
+        </header>
+        <nav>
+          {/* Add navigation links */}
+        </nav>
+        <section>
+          <center>
+            <p>Welcome to BEerConnect, a place where you can discover new Pub, new Beer and new mates</p>
+          </center>
+        </section>
+        <section id="beerList">
+          <BeerList />
+        </section>
+        {/* Add more sections for other parts of your application */}
+      </div>
   );
 }
 
